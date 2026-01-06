@@ -27,7 +27,7 @@ end
     sex: 1,                                         # 全員男性(1)とする
     email: "John#{idx + 1}@example.com",
     birthday: "1990-01-01",
-    password: "asagao!",
+    password: "password",
     price_per_hour: 1500,
     comment: "Hello.",
     special_member: (idx % 2 == 0),

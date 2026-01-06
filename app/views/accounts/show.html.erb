@@ -1,0 +1,35 @@
+<h1>マイページ</h1>
+
+<p>ようこそ、<%= @member.name %> さん</p>
+
+<table class="attr">
+  <tr>
+    <th>名前</th>
+    <td><%= @member.name %></td>
+  </tr>
+  <tr>
+    <th>メールアドレス</th>
+    <td><%= @member.email %></td>
+  </tr>
+  <tr>
+    <th>性別</th>
+    <td><%= @member.sex == 1 ? "男" : "女" %></td>
+  </tr>
+  <tr>
+    <th>誕生日</th>
+    <td><%= @member.birthday&.strftime("%Y年%m月%d日") %></td>
+  </tr>
+  <tr>
+    <th>時給</th>
+    <td><%= @member.price_per_hour %>円</td>
+  </tr>
+  <tr>
+    <th>自己紹介</th>
+    <td><%= simple_format(@member.comment) %></td>
+  </tr>
+</table>
+
+<div class="actions">
+  <%= link_to "登録情報の編集", :edit_account %> | 
+  <%= link_to "パスワードの変更", :edit_password %>
+</div>

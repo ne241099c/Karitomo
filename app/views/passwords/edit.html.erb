@@ -1,0 +1,22 @@
+<h1>パスワード変更</h1>
+<%= form_for @member, url: :password, method: :patch do |form| %>
+  
+  <div class="field">
+    <%= form.label :current_password, "現在のパスワード" %>
+    <%= form.password_field :current_password %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password, "新しいパスワード" %>
+    <%= form.password_field :password %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password_confirmation, "新しいパスワード（確認）" %>
+    <%= form.password_field :password_confirmation %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "変更する" %>
+  </div>
+<% end %>
