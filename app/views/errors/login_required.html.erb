@@ -1,18 +1,4 @@
 <% @page_title = "ログインが必要です" %>
 <h1><%= @page_title %></h1>
 
-<%= form_for :session, url: session_path do |f| %>
-  <div class="field">
-    <%= f.label :email, "メールアドレス" %>
-    <%= f.text_field :email %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password, "パスワード" %>
-    <%= f.password_field :password %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "ログイン" %>
-  </div>
-<% end %>
+<%= render "shared/login_form" %>

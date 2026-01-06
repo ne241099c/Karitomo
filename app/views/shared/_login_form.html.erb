@@ -1,47 +1,17 @@
-<% if flash[:alert] %>
-  <div class="alert alert-danger">
-    <%= flash[:alert] %>
+<% if flash.alert %><p class="alert"><%= flash.alert %></p><% end %>
+
+<%= form_for :session, url: session_path do |form| %>
+  <div class="field">
+    <%= form.label :email, "メールアドレス" %>
+    <%= form.text_field :email %>
   </div>
-<% end %>
 
-<div class="field">
-  <%= form.label :name, "名前" %>
-  <%= form.text_field :name %>
-</div>
-
-<div class="field">
-  <%= form.label :email, "メールアドレス" %>
-  <%= form.text_field :email %>
-</div>
-
-<div class="field">
-  <%= form.label :sex, "性別" %>
-  <%= form.radio_button :sex, 1 %> 男
-  <%= form.radio_button :sex, 2 %> 女
-</div>
-
-<div class="field">
-  <%= form.label :birthday, "誕生日" %>
-  <%= form.date_select :birthday, start_year: 1930, end_year: Time.now.year, use_month_numbers: true %>
-</div>
-
-<div class="field">
-  <%= form.label :price_per_hour, "時給" %>
-  <%= form.number_field :price_per_hour %>
-</div>
-
-<div class="field">
-  <%= form.label :comment, "自己紹介" %>
-  <%= form.text_area :comment %>
-</div>
-
-<% if @member.new_record? %>
   <div class="field">
     <%= form.label :password, "パスワード" %>
     <%= form.password_field :password %>
   </div>
-  <div class="field">
-    <%= form.label :password_confirmation, "パスワード（確認）" %>
-    <%= form.password_field :password_confirmation %>
+
+  <div class="actions">
+    <%= form.submit "ログイン" %>
   </div>
 <% end %>

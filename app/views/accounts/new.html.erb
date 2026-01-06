@@ -1,6 +1,6 @@
 <h1>会員登録</h1>
 <%= form_for @member, url: :account do |form| %>
-  <%= render "shared/login_form", form: form %>
+  <%= render "shared/member_form", form: form %>
   <div class="actions">
     <%= form.submit "登録する" %>
   </div>
