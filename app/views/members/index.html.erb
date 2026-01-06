@@ -2,20 +2,25 @@
 <h1><%= @page_title %></h1>
 
 <h2>会員検索</h2>
-<%= form_tag(members_path, method: :get) do %>
+<%= form_tag(search_members_path, method: :get) do %>
 
-  <details class="search-accordion">
-    <summary>タグで絞り込む</summary>
-    <div class="search-content">
-      <p>検索したいタグを選択してください</p>
-      
-      <%= render partial: 'tag_selection' %>
+    <div class="search-field">
+        <%= label_tag :search_name, "名前" %>
+        <%= text_field_tag :search_name, params[:search_name], placeholder: "名前の一部を入力" %>
     </div>
-  </details>
 
-  <div class="actions">
-    <%= submit_tag "検索する", name: nil %>
-  </div>
+    <details class="search-accordion">
+        <summary>タグで絞り込む</summary>
+        <div class="search-content">
+        <p>検索したいタグを選択してください</p>
+        
+        <%= render 'tag_selection' %>
+        </div>
+    </details>
+
+    <div class="actions">
+        <%= submit_tag "検索する", name: nil %>
+    </div>
 
 <% end %>
 

@@ -8,6 +8,10 @@
         <td><%= @member.sex == 1 ? "男" : "女" %></td>
     </tr>
     <tr>
+        <th>タグ</th>
+        <td><%= @member.tags.map(&:name).join(", ") %></td>
+    </tr>
+    <tr>
         <th>値段</th>
         <td><%= @member.price_per_hour %> 円</td>
     </tr>

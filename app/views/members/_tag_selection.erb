@@ -1,14 +1,22 @@
+<div class="search-method-selection">
+    <p>検索方法：</p>
+    <label>
+        <%= radio_button_tag :search_method, :and, params[:search_method] == 'and' || params[:search_method].blank? %>
+        AND
+    </label>
+    <label>
+        <%= radio_button_tag :search_method, :or, params[:search_method] == 'or' %>
+        OR
+    </label>
+</div>
+
 <div class="tag-checkboxes">
   <% @tags.each do |tag| %>
     
     <div class="checkbox-item">
-      <%# --- ここが重要 --- %>
-      <%# 第1引数: 名前。'tag_ids[]' と書くことで、コントローラ側で配列として受け取れます %>
-      <%# 第2引数: 送信する値（タグのID） %>
-      <%# 第3引数: 初期状態でチェックするかどうか（検索後にチェックを残すための判定） %>
+      
       <%= check_box_tag 'tag_ids[]', tag.id, params[:tag_ids]&.include?(tag.id.to_s), id: "tag_#{tag.id}" %>
       
-      <%# ラベル（クリックしやすくするため） %>
       <%= label_tag "tag_#{tag.id}", tag.name %>
     </div>
 
