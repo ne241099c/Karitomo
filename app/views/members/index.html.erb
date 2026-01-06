@@ -1,6 +1,24 @@
 <% @page_title = "特別会員名簿" %>
 <h1><%= @page_title %></h1>
 
+<h2>会員検索</h2>
+<%= form_tag(members_path, method: :get) do %>
+
+  <details class="search-accordion">
+    <summary>タグで絞り込む</summary>
+    <div class="search-content">
+      <p>検索したいタグを選択してください</p>
+      
+      <%= render partial: 'tag_selection' %>
+    </div>
+  </details>
+
+  <div class="actions">
+    <%= submit_tag "検索する", name: nil %>
+  </div>
+
+<% end %>
+
 <% if @members.present? %>
     <table class="list">
         <thead>

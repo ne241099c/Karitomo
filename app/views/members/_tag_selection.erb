@@ -1,0 +1,16 @@
+<div class="tag-checkboxes">
+  <% @tags.each do |tag| %>
+    
+    <div class="checkbox-item">
+      <%# --- ここが重要 --- %>
+      <%# 第1引数: 名前。'tag_ids[]' と書くことで、コントローラ側で配列として受け取れます %>
+      <%# 第2引数: 送信する値（タグのID） %>
+      <%# 第3引数: 初期状態でチェックするかどうか（検索後にチェックを残すための判定） %>
+      <%= check_box_tag 'tag_ids[]', tag.id, params[:tag_ids]&.include?(tag.id.to_s), id: "tag_#{tag.id}" %>
+      
+      <%# ラベル（クリックしやすくするため） %>
+      <%= label_tag "tag_#{tag.id}", tag.name %>
+    </div>
+
+  <% end %>
+</div>
