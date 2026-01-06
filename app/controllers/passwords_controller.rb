@@ -2,7 +2,7 @@ class PasswordsController < ApplicationController
   before_action :login_required
 
   def show
-    redirect_to account_path
+    redirect_to :account
   end
 
   def edit
@@ -15,7 +15,7 @@ class PasswordsController < ApplicationController
 
     if current_password.present?
       if @member.authenticate(current_password)
-        @member.assign_attributes(params[:member].permit!)
+        @member.assign_attributes(params[:member].except(:current_password).permit!)
         if @member.save
           redirect_to account_path, notice: "パスワードを変更しました。"
         else

@@ -9,7 +9,6 @@ class SessionsController < ApplicationController
         redirect_to :account, notice: "ログインしました"
       else
         flash.alert = "名前とパスワードが一致しません"
-		render :new
       end
   end
 

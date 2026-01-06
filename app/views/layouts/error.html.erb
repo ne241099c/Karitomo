@@ -8,17 +8,11 @@
   <body>
     <div id="container">
       <header>
-        <%= image_tag("karitomo.png", size: "272x48", alt: "Karitomo") %>
-        <nav class="menubar">
-          <a href="/">TOP</a>
-        </nav>
+        <a href="/">TOP</a>
       </header>
       <main>
         <%= yield %>
       </main>
-      <footer>
-        <%= render "shared/footer" %>
-      </footer>
     </div>
   </body>
 </html>
