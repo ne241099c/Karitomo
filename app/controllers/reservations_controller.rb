@@ -21,7 +21,7 @@ class ReservationsController < ApplicationController
   end
   
   def logged_in_member
-    unless logged_in?
+    unless current_member.present?
       flash[:danger] = "ログインしてください"
       redirect_to login_url
     end
