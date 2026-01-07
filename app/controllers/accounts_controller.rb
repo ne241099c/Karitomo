@@ -17,9 +17,9 @@ class AccountsController < ApplicationController
     @member = Member.new(params[:member].permit!)
     if @member.save
       cookies_login(@member.id)
-      redirect_to root_path, notice: "会員を登録しました。"
+      redirect_to :account, notice: "会員を登録しました。"
     else
-      render :account
+      render :new
     end
   end
 

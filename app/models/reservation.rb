@@ -4,7 +4,8 @@ class Reservation < ApplicationRecord
   has_many :reserved_dates, dependent: :destroy
 
   validate :check_availability
-  validates :hours, numericality: { greater_than: 0 }
+  validates :start_at, presence: true
+  validates :hours, presence: true, numericality: { greater_than: 0 }
 
   after_create :create_reserved_dates_records
 
