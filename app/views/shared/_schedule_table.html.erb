@@ -1,26 +1,26 @@
-<%# locals: (member:, data:) %>
-<%# data は MembersHelper#schedule_data の戻り値を受け取る %>
+<%# locals: (member:, schedule_info:) %>
+<%# schedule_info は MembersHelper#schedule_data の戻り値を受け取る %>
 <%# スケジュール表を描画するパーシャル %>
 
 <table class="schedule-table">
   <thead>
     <tr>
       <th>時間</th>
-      <% data[:days].each do |day| %>
+      <% schedule_info[:days].each do |day| %>
         <th><%= day %></th>
       <% end %>
     </tr>
   </thead>
   <tbody>
-    <% data[:hours].each do |hour| %>
+    <% schedule_info[:hours].each do |hour| %>
       <tr>
         <th><%= "#{hour}:00" %></th>
-        <% data[:days].each do |day| %>
+        <% schedule_info[:days].each do |day| %>
           <%
              # View内での判定ロジックは単純な包含確認のみにする
              # キーの形式は "曜日:時間" (例: "月:10")
              key = "#{day}:#{hour}"
-             is_checked = data[:checked_schedules].include?(key)
+             is_checked = schedule_info[:checked_schedules].include?(key)
           %>
           <td>
             <%# チェックボックスのname属性は params[:member][:free_candidates][] となる %>

@@ -30,5 +30,5 @@
   <label>出勤可能な日時</label>
   <%# Helperでデータを準備し、専用のパーシャルで描画する %>
   <% schedule_data = schedule_data(member) %>
-  <%= render "shared/schedule_table", member: member, data: schedule_data %>
+  <%= render "shared/schedule_table", member: member, schedule_info: schedule_data %>
 </div>
