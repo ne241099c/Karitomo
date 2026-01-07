@@ -51,23 +51,24 @@
   </div>
 
   <div class="field">
-    <label>出勤可能な地域</label>
-    <div class="checkbox-list">
-      <%= form.collection_check_boxes :region_ids, Region.all, :id, :name do |b| %>
-        <%= b.check_box + b.text %>
-      <% end %>
-    </div>
+      <label>出勤可能な地域</label>
+      <div class="checkbox-list">
+        <%= form.collection_check_boxes :region_ids, Region.all, :id, :name do |b| %>
+          <%= b.check_box + b.text %>
+        <% end %>
+      </div>
   </div>
 
   <div class="field">
     <label>出勤可能な日時</label>
+    <p class="notes">※ドラッグで連続選択できます</p>
     <table class="schedule-table">
       <thead>
         <tr>
           <th>時間</th>
           <% days = %w(月 火 水 木 金 土 日) %>
-          <% days.each_with_index do |day, idx| %>
-            <th class="day-header" onclick="toggleColumn('<%= day %>')"><%= day %></th>
+          <% days.each do |day| %>
+            <th><%= day %></th>
           <% end %>
         </tr>
       </thead>
@@ -79,13 +80,7 @@
             <% days.each do |day| %>
               <td>
                 <% is_checked = @member.free_dates.any? { |fd| fd.day == day && fd.free_hour.hour == hour } %>
-                <% check_id = "check_#{day}_#{hour}" %>
-                
-                <%= check_box_tag "member[free_candidates][]", "#{day}:#{hour}", is_checked, id: check_id, class: "schedule-check day-#{day}" %>
-                
-                <label for="<%= check_id %>" class="schedule-label">
-                  <%= hour %>時
-                </label>
+                <%= check_box_tag "member[free_candidates][]", "#{day}:#{hour}", is_checked %>
               </td>
             <% end %>
           </tr>
@@ -94,7 +89,6 @@
     </table>
   </div>
 </div>
-
 
 <% if @member.new_record? %>
   <div class="field">
@@ -106,20 +100,3 @@
     <%= form.password_field :password_confirmation %>
   </div>
 <% end %>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const checkbox = document.getElementById("special_member_checkbox");
-    const specialFields = document.getElementById("special_member_fields");
-
-    if (checkbox && specialFields) {
-      checkbox.addEventListener("change", function() {
-        if (this.checked) {
-          specialFields.style.display = "block";
-        } else {
-          specialFields.style.display = "none";
-        }
-      });
-    }
-  });
-</script>
