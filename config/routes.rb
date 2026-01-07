@@ -13,7 +13,8 @@ Rails.application.routes.draw do
     post :details, on: :member
   end
   resource :password, only: [:show, :edit, :update]
-  resources :reservations, only: [:create, :show] do
+  resources :reservations, only: [:index, :create, :show] do
     post :confirm, on: :collection
+    patch :update_status, on: :member
   end
 end

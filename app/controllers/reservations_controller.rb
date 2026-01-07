@@ -1,6 +1,31 @@
 class ReservationsController < ApplicationController
   before_action :logged_in_member
 
+  def index
+    @reservations = Reservation.where("member_id = ? OR target_member_id = ?", current_member.id, current_member.id)
+                               .order(start_at: :desc)
+
+    if params[:sort] == "status"
+      @reservations = @reservations.order(:status)
+    elsif params[:sort] == "date_asc"
+      @reservations = @reservations.reorder(start_at: :asc)
+    end
+  end
+
+  def show
+    @reservation = Reservation.find(params[:id])
+    
+    unless @reservation.member_id == current_member.id || @reservation.target_member_id == current_member.id
+      flash[:alert] = "アクセス権限がありません"
+      redirect_to root_path
+      return
+    end
+
+    @reservation.update_status_if_completed
+
+    flash.now[:success] = "予約が完了しました！" if params[:created]
+  end
+
   def confirm
     @reservation = current_member.reservations.build(reservation_params)
     @target_member = Member.find(reservation_params[:target_member_id])
@@ -19,13 +44,24 @@ class ReservationsController < ApplicationController
       redirect_to reservation_path(@reservation, created: true)
     else
       flash[:alert] = "予約に失敗しました: " + @reservation.errors.full_messages.join(", ")
-      redirect_to reservation_path(@reservation)
+      redirect_to member_path(@target_member)
     end
   end
 
-  def show
+  def update_status
     @reservation = Reservation.find(params[:id])
-    flash.now[:success] = "予約が完了しました！" if params[:created]
+
+    if @reservation.target_member_id != current_member.id
+      flash[:alert] = "操作権限がありません"
+      return redirect_to reservation_path(@reservation)
+    end
+
+    if @reservation.update(status: params[:status])
+      flash[:success] = "予約ステータスを更新しました"
+    else
+      flash[:alert] = "更新に失敗しました"
+    end
+    redirect_to reservation_path(@reservation)
   end
 
   private

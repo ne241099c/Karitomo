@@ -1,8 +1,18 @@
-<% @page_title = "予約完了" %>
-<h1>予約が完了しました</h1>
+<% @page_title = "予約詳細" %>
+<h1>予約詳細</h1>
 
 <div class="completion-box">
-  <p class="success-message">以下の内容で予約を確定しました。</p>
+  <div class="status-display" style="margin-bottom: 15px; font-weight: bold;">
+    現在のステータス: 
+    <span class="status-<%= @reservation.status %>">
+      <% case @reservation.status
+         when 'pending' then '未定（返答待ち）'
+         when 'approved' then '承諾済み'
+         when 'rejected' then '却下'
+         when 'completed' then '完了（済み）'
+         end %>
+    </span>
+  </div>
 
   <table class="attr">
     <tr>
@@ -10,12 +20,27 @@
       <td><%= @reservation.id %></td>
     </tr>
     <tr>
-      <th>予約相手</th>
-      <td><%= @reservation.target_member.name %> さん</td>
+      <th>
+        <% if @reservation.member_id == current_member.id %>
+          予約相手（特別会員）
+        <% else %>
+          予約者
+        <% end %>
+      </th>
+      <td>
+        <% if @reservation.member_id == current_member.id %>
+          <%= @reservation.target_member.name %> さん
+        <% else %>
+          <%= @reservation.member.name %> さん
+        <% end %>
+      </td>
     </tr>
     <tr>
       <th>日時</th>
-      <td><%= @reservation.start_at.strftime("%Y年%m月%d日 %H:%M") %></td>
+      <td>
+        <%= @reservation.start_at.strftime("%Y年%m月%d日 %H:%M") %> 〜 
+        <%= @reservation.end_at.strftime("%H:%M") %>
+      </td>
     </tr>
     <tr>
       <th>利用時間</th>
@@ -30,8 +55,32 @@
     </tr>
   </table>
 
-  <div class="actions">
-    <%= link_to "トップページへ戻る", root_path %> | 
-    <%= link_to "マイページへ", account_path %>
+  <% if current_member.id == @reservation.target_member_id && @reservation.pending? %>
+    <div class="reservation-actions" style="margin-top: 20px;">
+      <h3>この予約への回答</h3>
+      
+      <div style="display: flex; gap: 10px;">
+        <%= button_to "予約を承諾する（OK）", update_status_reservation_path(@reservation), 
+            method: :patch, params: { status: "approved" }, 
+            class: "btn-primary", data: { confirm: "予約を承諾しますか？" } %>
+        
+        <%= button_to "予約を却下する（キャンセル）", update_status_reservation_path(@reservation), 
+            method: :patch, params: { status: "rejected" }, 
+            class: "btn-danger", style: "background-color: #d9534f; color: white;", data: { confirm: "本当に却下しますか？" } %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if current_member.id == @reservation.target_member_id && @reservation.approved? %>
+    <div class="reservation-actions" style="margin-top: 20px;">
+       <%= button_to "承諾を取り消す（却下にする）", update_status_reservation_path(@reservation), 
+          method: :patch, params: { status: "rejected" }, 
+          class: "btn-secondary", data: { confirm: "承諾を取り消しますか？" } %>
+    </div>
+  <% end %>
+
+  <div class="actions" style="margin-top: 20px;">
+    <%= link_to "予約一覧へ戻る", reservations_path %> | 
+    <%= link_to "トップページへ", root_path %>
   </div>
 </div>

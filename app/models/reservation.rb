@@ -3,11 +3,23 @@ class Reservation < ApplicationRecord
   belongs_to :target_member, class_name: "Member"
   has_many :reserved_dates, dependent: :destroy
 
+  enum status: { pending: 0, approved: 1, rejected: 2, completed: 3 }
+
   validate :check_availability
   validates :start_at, presence: true
   validates :hours, presence: true, numericality: { greater_than: 0 }
 
   after_create :create_reserved_dates_records
+
+  def end_at
+    start_at + hours.hours
+  end
+
+  def update_status_if_completed
+    if approved? && Time.current > end_at
+      update(status: :completed)
+    end
+  end
 
   private
 
