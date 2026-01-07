@@ -13,4 +13,5 @@ Rails.application.routes.draw do
     post :details, on: :member
   end
   resource :password, only: [:show, :edit, :update]
+  resources :reservations, only: [:create]
 end

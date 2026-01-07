@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_01_07_064247) do
+ActiveRecord::Schema[7.0].define(version: 2026_01_07_121028) do
   create_table "free_dates", force: :cascade do |t|
     t.integer "member_id", null: false
     t.datetime "free_hour", null: false
@@ -59,6 +59,30 @@ ActiveRecord::Schema[7.0].define(version: 2026_01_07_064247) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "reservations", force: :cascade do |t|
+    t.integer "member_id", null: false
+    t.integer "target_member_id", null: false
+    t.datetime "start_at", null: false
+    t.integer "hours", null: false
+    t.string "place", null: false
+    t.integer "status", default: 0, null: false
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["member_id"], name: "index_reservations_on_member_id"
+    t.index ["target_member_id"], name: "index_reservations_on_target_member_id"
+  end
+
+  create_table "reserved_dates", force: :cascade do |t|
+    t.integer "reservation_id", null: false
+    t.integer "target_member_id", null: false
+    t.datetime "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reservation_id"], name: "index_reserved_dates_on_reservation_id"
+    t.index ["target_member_id"], name: "index_reserved_dates_on_target_member_id"
+  end
+
   create_table "tags", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -70,4 +94,8 @@ ActiveRecord::Schema[7.0].define(version: 2026_01_07_064247) do
   add_foreign_key "member_regions", "regions"
   add_foreign_key "member_tags", "members"
   add_foreign_key "member_tags", "tags"
+  add_foreign_key "reservations", "members"
+  add_foreign_key "reservations", "members", column: "target_member_id"
+  add_foreign_key "reserved_dates", "members", column: "target_member_id"
+  add_foreign_key "reserved_dates", "reservations"
 end

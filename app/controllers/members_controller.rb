@@ -46,5 +46,7 @@ class MembersController < ApplicationController
     
     def show
         @member = Member.where(special_member: true).find(params[:id])
+        @dates = (Date.today..Date.today + 13.days).to_a
+        @reservation = Reservation.new
     end
 end

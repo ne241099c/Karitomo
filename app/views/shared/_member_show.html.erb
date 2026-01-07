@@ -35,4 +35,117 @@
     <th>自己紹介</th>
     <td><%= simple_format(@member.comment) %></td>
   </tr>
+
+  <% if @member.special_member? && current_member != @member %>
+  <div class="reservation-section">
+    <h3>予約状況・予約フォーム</h3>
+    <p>「○」をクリックすると予約日時がセットされます。</p>
+
+    <%# 予約フォーム（JavaScriptで値をセットします） %>
+    <%= form_with(model: @reservation, local: true, id: "reservation-form") do |f| %>
+      <%= f.hidden_field :target_member_id, value: @member.id %>
+      
+      <div class="form-group selected-info" style="margin-bottom: 20px; padding: 10px; background: #f9f9f9; border: 1px solid #ddd;">
+        <div>
+          <strong>開始日時: </strong>
+          <span id="display-start-at">未選択</span>
+          <%= f.hidden_field :start_at, id: "input-start-at" %>
+        </div>
+        <div style="margin-top: 10px;">
+          <strong>利用時間: </strong>
+          <%= f.select :hours, [1, 2, 3, 4, 5], {}, class: "form-control", style: "width: auto; display: inline-block;" %> 時間
+        </div>
+        <div style="margin-top: 10px;">
+          <%= f.submit "この内容で予約する", class: "btn btn-primary", disabled: true, id: "submit-button" %>
+        </div>
+      </div>
+    <% end %>
+
+    <%# カレンダー表示 %>
+    <div class="schedule-container" style="overflow-x: auto;">
+      <table class="schedule-table">
+        <thead>
+          <tr>
+            <th>時間</th>
+            <% @dates.each do |date| %>
+              <th>
+                <%= date.strftime("%-m/%-d") %>
+                <br>
+                (<%= %w(日 月 火 水 木 金 土)[date.wday] %>)
+              </th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% (0..23).each do |hour| %>
+            <tr>
+              <th><%= "#{hour}:00" %></th>
+              <% @dates.each do |date| %>
+                <% 
+                   current_datetime = Time.zone.parse("#{date} #{hour}:00:00")
+                   # モデルで定義したreservable?メソッドを使って判定
+                   is_reservable = @member.reservable?(current_datetime)
+                %>
+                
+                <td class="<%= is_reservable ? 'reservable' : 'not-reservable' %>">
+                  <% if is_reservable %>
+                    <%# クリック可能な○ %>
+                    <a href="javascript:void(0)" 
+                       class="reservation-slot" 
+                       data-datetime="<%= current_datetime %>"
+                       data-display="<%= current_datetime.strftime('%Y年%m月%d日 %H:%M') %>">
+                       ◎
+                    </a>
+                  <% else %>
+                    <%# 予約不可の場合は - %>
+                    <span style="color: #ccc;">-</span>
+                  <% end %>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <%# JavaScript: ○を押した時の動作 %>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const slots = document.querySelectorAll(".reservation-slot");
+      const inputStartAt = document.getElementById("input-start-at");
+      const displayStartAt = document.getElementById("display-start-at");
+      const submitButton = document.getElementById("submit-button");
+
+      slots.forEach(slot => {
+        slot.addEventListener("click", function() {
+          // すべての◎の選択状態をリセット
+          slots.forEach(s => s.style.color = "");
+          slots.forEach(s => s.style.fontWeight = "");
+          
+          // クリックされた◎を強調
+          this.style.color = "red";
+          this.style.fontWeight = "bold";
+
+          // フォームに値をセット
+          inputStartAt.value = this.dataset.datetime;
+          displayStartAt.textContent = this.dataset.display;
+          
+          // 送信ボタンを有効化
+          submitButton.disabled = false;
+        });
+      });
+    });
+  </script>
+
+  <style>
+    .schedule-table { width: 100%; border-collapse: collapse; min-width: 600px; }
+    .schedule-table th, .schedule-table td { border: 1px solid #ccc; text-align: center; padding: 5px; font-size: 12px; }
+    .schedule-table th { background: #eee; }
+    .reservable { background-color: #fff; }
+    .not-reservable { background-color: #f0f0f0; }
+    .reservation-slot { text-decoration: none; color: #007bff; font-size: 1.2em; display: block; width: 100%; height: 100%; }
+    .reservation-slot:hover { background-color: #eef; }
+  </style>
+<% end %>
 </table>
