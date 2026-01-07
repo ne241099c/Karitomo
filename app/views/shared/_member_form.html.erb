@@ -1,9 +1,3 @@
-<% if flash[:alert] %>
-  <div class="alert alert-danger">
-    <%= flash[:alert] %>
-  </div>
-<% end %>
-
 <%= render "shared/basic_info_fields", form: form %>
 
 <% unless form.object.new_record? %>
@@ -13,7 +7,7 @@
   </div>
 
   <div id="special_member_fields" class="<%= form.object.special_member? ? '' : 'hidden' %>">
-    <%= render "shared/special_member_fields", form: form %>
+    <%= render "shared/special_member_fields", form: form, member: form.object %>
   </div>
 <% end %>
 

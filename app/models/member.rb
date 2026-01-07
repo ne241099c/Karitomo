@@ -1,4 +1,7 @@
 class Member < ApplicationRecord
+	DAYS_OF_WEEK = %w(月 火 水 木 金 土 日)
+    HOURS = 0..23
+	
     has_secure_password
 
     has_many :member_tags, dependent: :destroy

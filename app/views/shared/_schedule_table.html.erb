@@ -1,0 +1,23 @@
+<table class="schedule-table">
+  <thead>
+    <tr>
+      <th>時間</th>
+      <% Member::DAYS_OF_WEEK.each do |day| %>
+        <th><%= day %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% Member::HOURS.each do |hour| %>
+      <tr>
+        <th><%= "#{hour}:00" %></th>
+        <% Member::DAYS_OF_WEEK.each do |day| %>
+          <% is_checked = free_schedule_set.include?("#{day}:#{hour}") %>
+          <td>
+            <%= check_box_tag "member[free_candidates][]", "#{day}:#{hour}", is_checked %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
