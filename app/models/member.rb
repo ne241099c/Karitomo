@@ -20,7 +20,7 @@ class Member < ApplicationRecord
 
 	scope :search_name, ->(query) {
 		if query.present?
-		where("name LIKE ?", "%#{query}%")
+		where("members.name LIKE ?", "%#{query}%")
 		end
 	}
 	private

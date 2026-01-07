@@ -17,6 +17,14 @@
         <%= render 'tag_selection' %>
         </div>
     </details>
+    <details class="search-accordion">
+        <summary>地域で絞り込む</summary>
+        <div class="search-content">
+        <p>検索したい地域を選択してください</p>
+        
+        <%= render 'region_selecion' %>
+        </div>
+    </details>
 
     <div class="actions">
         <%= submit_tag "検索する", name: nil %>

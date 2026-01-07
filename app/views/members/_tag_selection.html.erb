@@ -1,11 +1,11 @@
 <div class="search-method-selection">
     <p>検索方法：</p>
     <label>
-        <%= radio_button_tag :search_method, :and, params[:search_method] == 'and' || params[:search_method].blank? %>
+        <%= radio_button_tag :tag_search_method, :and, params[:tag_search_method] == 'and' || params[:tag_search_method].blank? %>
         AND
     </label>
     <label>
-        <%= radio_button_tag :search_method, :or, params[:search_method] == 'or' %>
+        <%= radio_button_tag :tag_search_method, :or, params[:tag_search_method] == 'or' %>
         OR
     </label>
 </div>

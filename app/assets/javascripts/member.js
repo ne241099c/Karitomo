@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
+  
   const checkbox = document.getElementById("special_member_checkbox");
   const specialFields = document.getElementById("special_member_fields");
 
@@ -10,9 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
         specialFields.style.display = "none";
       }
     };
-    
     toggleFields();
-    
     checkbox.addEventListener("change", toggleFields);
   }
 
@@ -29,12 +28,15 @@ document.addEventListener("DOMContentLoaded", function() {
       const targetCheckbox = td.querySelector("input[type='checkbox']");
       if (!targetCheckbox) return;
 
+      if (e.target === targetCheckbox) {
+        isDragging = true;
+        shouldCheck = !targetCheckbox.checked;
+        return; 
+      }
+
       isDragging = true;
-      
       shouldCheck = !targetCheckbox.checked;
       targetCheckbox.checked = shouldCheck;
-
-      e.preventDefault();
     });
 
     table.addEventListener("mouseover", function(e) {
