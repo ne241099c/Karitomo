@@ -1,5 +1,4 @@
 <%# locals: (form:, member:) %>
-<%# 基本情報の入力フィールドを表示するパーシャル %>
 
 <div class="field">
   <%= form.label :name, "名前" %>
@@ -11,15 +10,20 @@
   <%= form.text_field :email %>
 </div>
 
-<div class="field">
-  <%= form.label :sex, "性別" %>
-  <%= form.radio_button :sex, 1 %> 男
-  <%= form.radio_button :sex, 2 %> 女
-</div>
-
-<div class="field">
-  <%= form.label :birthday, "誕生日" %>
-  <%= form.date_select :birthday, start_year: 1930, end_year: Time.now.year, use_month_numbers: true %>
+<div class="field-row">
+  <div class="field-col">
+    <div class="field">
+      <%= form.label :sex, "性別" %>
+      <%= form.radio_button :sex, 1 %> 男
+      <%= form.radio_button :sex, 2 %> 女
+    </div>
+  </div>
+  <div class="field-col">
+    <div class="field">
+      <%= form.label :birthday, "誕生日" %>
+      <%= form.date_select :birthday, start_year: 1930, end_year: Time.now.year, use_month_numbers: true %>
+    </div>
+  </div>
 </div>
 
 <div class="field">
