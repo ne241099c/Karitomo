@@ -1,0 +1,20 @@
+<%= form_for(reservation, url: reservations_path, html: { id: "reservation-form" }) do |f| %>
+  <%= f.hidden_field :target_member_id, value: member.id %>
+  
+  <div class="form-group selected-info" style="margin-bottom: 20px; padding: 10px; background: #f9f9f9; border: 1px solid #ddd;">
+    <div>
+      <strong>開始日時: </strong>
+      <span id="display-start-at">未選択</span>
+      <%= f.hidden_field :start_at, id: "input-start-at" %>
+    </div>
+    
+    <div style="margin-top: 10px;">
+      <strong>利用時間: </strong>
+      <%= f.select :hours, [1], {}, class: "form-control", id: "reservation-hours", style: "width: auto; display: inline-block;" %> 時間
+    </div>
+    
+    <div style="margin-top: 10px;">
+      <%= f.submit "この内容で予約する", class: "btn btn-primary", disabled: true, id: "submit-button" %>
+    </div>
+  </div>
+<% end %>
