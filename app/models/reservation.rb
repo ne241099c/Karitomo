@@ -2,6 +2,7 @@ class Reservation < ApplicationRecord
   belongs_to :member
   belongs_to :target_member, class_name: "Member"
   has_many :reserved_dates, dependent: :destroy
+  has_many :chats, dependent: :destroy
 
   enum status: { pending: 0, approved: 1, rejected: 2, completed: 3 }
 

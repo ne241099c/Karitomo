@@ -16,6 +16,7 @@
         <th>相手の名前</th>
         <th>予約日時</th>
         <th>状態</th>
+        <th>チャット</th>
         <th></th>
       </tr>
     </thead>
@@ -46,6 +47,9 @@
                when 'completed' then '済み'
                end %>
             <%= status_label %>
+          </td>
+          <td>
+            <%= link_to "チャットへ", reservation_chats_path(reservation), class: "btn-secondary" %>
           </td>
           <td>
             <%= link_to "詳細", reservation_path(reservation), class: "btn-sm" %>

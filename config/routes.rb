@@ -16,5 +16,7 @@ Rails.application.routes.draw do
   resources :reservations, only: [:index, :create, :show] do
     post :confirm, on: :collection
     patch :update_status, on: :member
+    resources :chats, only: [:index, :create]
   end
+  mount ActionCable.server => '/cable'
 end

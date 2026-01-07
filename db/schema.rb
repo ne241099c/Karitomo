@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_01_07_154156) do
+ActiveRecord::Schema[7.0].define(version: 2026_01_07_180417) do
+  create_table "chats", force: :cascade do |t|
+    t.integer "reservation_id", null: false
+    t.integer "member_id", null: false
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["member_id"], name: "index_chats_on_member_id"
+    t.index ["reservation_id"], name: "index_chats_on_reservation_id"
+  end
+
   create_table "free_dates", force: :cascade do |t|
     t.integer "member_id", null: false
     t.datetime "free_hour", null: false
@@ -88,6 +98,8 @@ ActiveRecord::Schema[7.0].define(version: 2026_01_07_154156) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "chats", "members"
+  add_foreign_key "chats", "reservations"
   add_foreign_key "free_dates", "members"
   add_foreign_key "member_regions", "members"
   add_foreign_key "member_regions", "regions"
