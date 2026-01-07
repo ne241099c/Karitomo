@@ -3,10 +3,14 @@
     <th>名前</th>
     <td><%= @member.name %></td>
   </tr>
-  <tr>
-    <th>メールアドレス</th>
-    <td><%= @member.email %></td>
-  </tr>
+  
+  <% if current_member == @member %>
+    <tr>
+      <th>メールアドレス</th>
+      <td><%= @member.email %></td>
+    </tr>
+  <% end %>
+
   <tr>
     <th>性別</th>
     <td><%= @member.sex == 1 ? "男" : "女" %></td>
@@ -15,10 +19,18 @@
     <th>誕生日</th>
     <td><%= @member.birthday&.strftime("%Y年%m月%d日") %></td>
   </tr>
-  <tr>
-    <th>時給</th>
-    <td><%= @member.price_per_hour %>円</td>
-  </tr>
+
+  <% if @member.special_member? %>
+      <tr>
+        <th>タグ</th>
+        <td><%= @member.tags.map(&:name).join(", ") %></td>
+    </tr>
+    <tr>
+      <th>時給</th>
+      <td><%= @member.price_per_hour %>円</td>
+    </tr>
+  <% end %>
+
   <tr>
     <th>自己紹介</th>
     <td><%= simple_format(@member.comment) %></td>
