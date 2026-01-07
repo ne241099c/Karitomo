@@ -22,7 +22,7 @@
       <div style="text-align: <%= chat.member_id == current_member.id ? 'right' : 'left' %>; margin-bottom: 5px;">
         <small style="color: #888;"><%= chat.member.name %> (<%= chat.created_at.strftime("%H:%M") %>)</small><br>
         <span style="background: <%= chat.member_id == current_member.id ? '#d1e7dd' : '#f8f9fa' %>; display: inline-block; padding: 5px 10px; border-radius: 5px;">
-          <%= chat.message %>
+          <%= chat.content %>
         </span>
       </div>
     <% end %>

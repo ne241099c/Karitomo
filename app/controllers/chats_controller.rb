@@ -27,7 +27,7 @@ class ChatsController < ApplicationController
 
     if @chat.save
       ActionCable.server.broadcast("room_channel_#{@reservation.id}", {
-        message: @chat.message,
+        message: @chat.content,
         member_name: @chat.member.name,
         member_id: @chat.member.id,
         created_at: @chat.created_at.strftime("%H:%M"),
