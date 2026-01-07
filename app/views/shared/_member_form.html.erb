@@ -4,93 +4,16 @@
   </div>
 <% end %>
 
-<div class="field">
-  <%= form.label :name, "名前" %>
-  <%= form.text_field :name %>
-</div>
-
-<div class="field">
-  <%= form.label :email, "メールアドレス" %>
-  <%= form.text_field :email %>
-</div>
-
-<div class="field">
-  <%= form.label :sex, "性別" %>
-  <%= form.radio_button :sex, 1 %> 男
-  <%= form.radio_button :sex, 2 %> 女
-</div>
-
-<div class="field">
-  <%= form.label :birthday, "誕生日" %>
-  <%= form.date_select :birthday, start_year: 1930, end_year: Time.now.year, use_month_numbers: true %>
-</div>
-
-<div class="field">
-  <%= form.label :comment, "自己紹介" %>
-  <%= form.text_area :comment %>
-</div>
+<%= render "shared/basic_info_fields", form: form %>
 
 <div class="field">
   <%= form.label :special_member, "特別会員になる" %>
   <%= form.check_box :special_member, id: "special_member_checkbox" %>
 </div>
 
-<div id="special_member_fields" style="<%= @member.special_member? ? '' : 'display: none;' %>">
-  <div class="field">
-    <%= form.label :price_per_hour, "時給" %>
-    <%= form.number_field :price_per_hour %>
-  </div>
-
-  <div class="field">
-    <label>タグ</label>
-    <div class="checkbox-list">
-      <%= form.collection_check_boxes :tag_ids, Tag.all, :id, :name do |b| %>
-        <%= b.check_box + b.text %>
-      <% end %>
-    </div>
-  </div>
-
-  <div class="field">
-      <label>出勤可能な地域</label>
-      <div class="checkbox-list">
-        <%= form.collection_check_boxes :region_ids, Region.all, :id, :name do |b| %>
-          <%= b.check_box + b.text %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-
-  <div class="field">
-    <label>出勤可能な日時</label>
-    <table class="schedule-table">
-      <thead>
-        <tr>
-          <th>時間</th>
-          <% days = %w(月 火 水 木 金 土 日) %>
-          <% days.each do |day| %>
-            <th><%= day %></th>
-          <% end %>
-        </tr>
-      </thead>
-      <tbody>
-        <% (0..23).each do |hour| %>
-          <% time_str = "#{hour}:00" %>
-          <tr>
-            <th><%= time_str %></th>
-            <% days.each do |day| %>
-              <td
-                <% is_checked = @member.free_dates.any? { |fd| fd.day == day && fd.free_hour.hour == hour } %>
-                <%= check_box_tag "member[free_candidates][]", "#{day}:#{hour}", is_checked %>
-              </td>
-            <% end %>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+<div id="special_member_fields" class="<%= @member.special_member? ? '' : 'hidden' %>">
+  <%= render "shared/special_member_fields", form: form %>
 </div>
-
-
 
 <% if @member.new_record? %>
   <div class="field">
@@ -102,20 +25,3 @@
     <%= form.password_field :password_confirmation %>
   </div>
 <% end %>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const checkbox = document.getElementById("special_member_checkbox");
-    const specialFields = document.getElementById("special_member_fields");
-
-    if (checkbox && specialFields) {
-      checkbox.addEventListener("change", function() {
-        if (this.checked) {
-          specialFields.style.display = "block";
-        } else {
-          specialFields.style.display = "none";
-        }
-      });
-    }
-  });
-</script>
