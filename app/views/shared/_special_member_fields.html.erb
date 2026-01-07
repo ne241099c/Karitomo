@@ -1,3 +1,6 @@
+<%# locals: (form:, member:, tags:, regions:) %>
+<%# 特別会員情報の入力フィールドを表示するパーシャル %>
+
 <div class="field">
   <%= form.label :price_per_hour, "時給" %>
   <%= form.number_field :price_per_hour %>
@@ -6,7 +9,8 @@
 <div class="field">
   <label>タグ</label>
   <div class="checkbox-list">
-    <%= form.collection_check_boxes :tag_ids, Tag.all, :id, :name do |b| %>
+    <%# Tag.all ではなく、Controllerから渡されたローカル変数 tags を使用 %>
+    <%= form.collection_check_boxes :tag_ids, tags, :id, :name do |b| %>
       <%= b.check_box + b.text %>
     <% end %>
   </div>
@@ -15,7 +19,8 @@
 <div class="field">
     <label>出勤可能な地域</label>
     <div class="checkbox-list">
-      <%= form.collection_check_boxes :region_ids, Region.all, :id, :name do |b| %>
+      <%# Region.all ではなく、Controllerから渡されたローカル変数 regions を使用 %>
+      <%= form.collection_check_boxes :region_ids, regions, :id, :name do |b| %>
         <%= b.check_box + b.text %>
       <% end %>
     </div>
@@ -23,5 +28,7 @@
 
 <div class="field">
   <label>出勤可能な日時</label>
-  <%= schedule_table_tag(@member) %>
+  <%# Helperでデータを準備し、専用のパーシャルで描画する %>
+  <% schedule_data = schedule_data(member) %>
+  <%= render "shared/schedule_table", member: member, data: schedule_data %>
 </div>

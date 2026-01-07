@@ -1,10 +1,7 @@
-<% if flash[:alert] %>
-  <div class="alert alert-danger">
-    <%= flash[:alert] %>
-  </div>
-<% end %>
+<%# locals: (form:) %>
+<%# インスタンス変数(@memberなど)への直接依存を減らし、呼び出し元からローカル変数として渡すように変更 %>
 
-<%= render "shared/basic_info_fields", form: form %>
+<%= render "shared/basic_info_fields", form: form, member: @member %>
 
 <div class="field">
   <%= form.label :special_member, "特別会員になる" %>
@@ -12,7 +9,8 @@
 </div>
 
 <div id="special_member_fields" class="<%= @member.special_member? ? '' : 'hidden' %>">
-  <%= render "shared/special_member_fields", form: form %>
+  <%# ここで @tags, @regions をローカル変数として渡す %>
+  <%= render "shared/special_member_fields", form: form, member: @member, tags: @tags, regions: @regions %>
 </div>
 
 <% if @member.new_record? %>
