@@ -3,12 +3,14 @@ function setupMemberForm() {
   const specialFields = document.getElementById("special_member_fields");
 
   if (checkbox && specialFields) {
+    const hiddenClass = specialFields.dataset.hiddenClass || "hidden";
+
     const toggleFields = () => {
       if (checkbox.checked) {
-        specialFields.classList.remove("hidden");
+        specialFields.classList.remove(hiddenClass);
         specialFields.style.display = "block";
       } else {
-        specialFields.classList.add("hidden");
+        specialFields.classList.add(hiddenClass);
         specialFields.style.display = "none";
       }
     };

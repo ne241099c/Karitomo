@@ -8,7 +8,9 @@
     <%= form.check_box :special_member, id: "special_member_checkbox" %>
   </div>
 
-  <div id="special_member_fields" class="<%= form.object.special_member? ? '' : 'hidden' %>">
+  <div id="special_member_fields" 
+       class="<%= form.object.special_member? ? '' : 'hidden' %>"
+       data-hidden-class="hidden">
     <%= render "shared/special_member_fields", form: form, member: form.object %>
   </div>
 <% end %>

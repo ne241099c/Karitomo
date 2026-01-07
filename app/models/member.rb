@@ -1,5 +1,5 @@
 class Member < ApplicationRecord
-	DAYS_OF_WEEK = %w(月 火 水 木 金 土 日)
+	DAYS_OF_WEEK = %w(月 火 水 木 金 土 日).freeze
     HOURS = 0..23
 	
     has_secure_password
@@ -34,16 +34,17 @@ class Member < ApplicationRecord
 	}
 
 	def reservable?(datetime)
-		# FreeDateに含まれているか
-		wday_str = %w(日 月 火 水 木 金 土)[datetime.wday]
-		hour_val = datetime.hour
-		
-		is_free = free_dates.any? { |fd| fd.day == wday_str && fd.free_hour.hour == hour_val }
-		return false unless is_free
+    wday_index = (datetime.wday - 1) % 7
+    wday_str = DAYS_OF_WEEK[wday_index]
+    
+    hour_val = datetime.hour
+    
+    is_free = free_dates.any? { |fd| fd.day == wday_str && fd.free_hour.hour == hour_val }
+    return false unless is_free
 
-		# すでに予約が入っていないか
-		!reserved_dates.exists?(date: datetime)
-  	end
+    # すでに予約が入っていないか
+    !reserved_dates.exists?(date: datetime)
+  end
 
 	private
 	def save_free_dates
