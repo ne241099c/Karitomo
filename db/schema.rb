@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_01_07_121028) do
+ActiveRecord::Schema[7.0].define(version: 2026_01_07_154156) do
   create_table "free_dates", force: :cascade do |t|
     t.integer "member_id", null: false
     t.datetime "free_hour", null: false
@@ -64,7 +64,6 @@ ActiveRecord::Schema[7.0].define(version: 2026_01_07_121028) do
     t.integer "target_member_id", null: false
     t.datetime "start_at", null: false
     t.integer "hours", null: false
-    t.string "place", null: false
     t.integer "status", default: 0, null: false
     t.text "comment"
     t.datetime "created_at", null: false

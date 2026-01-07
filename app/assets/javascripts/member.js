@@ -1,30 +1,33 @@
-document.addEventListener("DOMContentLoaded", function() {
-  
+function setupMemberForm() {
   const checkbox = document.getElementById("special_member_checkbox");
   const specialFields = document.getElementById("special_member_fields");
 
   if (checkbox && specialFields) {
     const toggleFields = () => {
       if (checkbox.checked) {
+        specialFields.classList.remove("hidden");
         specialFields.style.display = "block";
       } else {
+        specialFields.classList.add("hidden");
         specialFields.style.display = "none";
       }
     };
+    
     toggleFields();
+    
+    checkbox.removeEventListener("change", toggleFields);
     checkbox.addEventListener("change", toggleFields);
   }
 
   const table = document.querySelector(".schedule-table");
-  
   if (table) {
+    
     let isDragging = false;
     let shouldCheck = false;
 
-    table.addEventListener("mousedown", function(e) {
+    table.onmousedown = function(e) {
       const td = e.target.closest("td");
       if (!td) return;
-
       const targetCheckbox = td.querySelector("input[type='checkbox']");
       if (!targetCheckbox) return;
 
@@ -33,26 +36,27 @@ document.addEventListener("DOMContentLoaded", function() {
         shouldCheck = !targetCheckbox.checked;
         return; 
       }
-
       isDragging = true;
       shouldCheck = !targetCheckbox.checked;
       targetCheckbox.checked = shouldCheck;
-    });
+    };
 
-    table.addEventListener("mouseover", function(e) {
+    table.onmouseover = function(e) {
       if (!isDragging) return;
-
       const td = e.target.closest("td");
       if (!td) return;
-
       const targetCheckbox = td.querySelector("input[type='checkbox']");
       if (targetCheckbox) {
         targetCheckbox.checked = shouldCheck;
       }
-    });
+    };
 
-    document.addEventListener("mouseup", function() {
+    document.onmouseup = function() {
       isDragging = false;
-    });
+    };
   }
-});
+}
+
+document.addEventListener("DOMContentLoaded", setupMemberForm);
+document.addEventListener("turbo:load", setupMemberForm);
+document.addEventListener("turbolinks:load", setupMemberForm);
