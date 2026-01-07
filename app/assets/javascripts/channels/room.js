@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   const chatForm = document.getElementById("chat-form");
-  const messageInput = document.getElementById("chat-message-input");
+  const messageInput = document.getElementById("chat-input");
 
   if (chatForm) {
     chatForm.addEventListener("submit", function() {

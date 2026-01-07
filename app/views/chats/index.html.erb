@@ -30,7 +30,7 @@
 
   <%= form_with model: [@reservation, @chat], local: false, id: "chat-form" do |f| %>
     <div style="display: flex; gap: 10px;">
-      <%= f.text_field :message, id: "chat-input", style: "flex-grow: 1;", placeholder: "メッセージを入力" %>
+      <%= f.text_field :content, id: "chat-input", style: "flex-grow: 1;", placeholder: "メッセージを入力" %>
       <%= f.submit "送信", class: "btn-primary" %>
     </div>
   <% end %>
