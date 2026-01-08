@@ -63,6 +63,26 @@ Reservation.destroy_all
 Review.destroy_all
 Report.destroy_all
 
+puts "特定のテスト用データを生成中..."
+
+# 0番目のメンバー（佐藤 太郎）と相手役（鈴木 次郎）
+taro = Member.find_by(name: "佐藤 太郎")
+jiro = Member.find_by(name: "鈴木 次郎")
+
+if taro && jiro
+  # 評価待ちを再現する completed 予約（Review を作らない）
+  past_date = 5.days.ago.beginning_of_day + 13.hours
+
+  Reservation.create!(
+    member: taro,
+    target_member: jiro,
+    start_at: past_date,
+    hours: 1,
+    status: :completed
+  )
+  puts "  佐藤 太郎さんの『評価待ち』予約データを作成しました。"
+end
+
 special_members = Member.where(special_member: true)
 regular_members = Member.where(special_member: false)
 
