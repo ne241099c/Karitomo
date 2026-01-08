@@ -29,5 +29,17 @@ Rails.application.routes.draw do
 
   resources :contacts, only: [:new, :create]
 
+  namespace :admin do
+    root "top#index"
+    resource :session, only: [:new, :create, :destroy]
+    
+    resources :members        # 会員管理
+    resources :tags           # タグ管理
+    resources :regions        # 地域管理
+    resources :reservations   # 予約管理
+    resources :contacts       # お問い合わせ管理
+    resources :reports        # 通報管理
+  end
+
   mount ActionCable.server => '/cable'
 end
