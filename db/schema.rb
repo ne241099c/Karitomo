@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_01_07_201341) do
+ActiveRecord::Schema[7.0].define(version: 2026_01_08_173806) do
   create_table "blocked_members", force: :cascade do |t|
     t.integer "member_id", null: false
     t.integer "blocked_id", null: false
@@ -89,6 +89,16 @@ ActiveRecord::Schema[7.0].define(version: 2026_01_07_201341) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "reports", force: :cascade do |t|
+    t.integer "reservation_id", null: false
+    t.integer "reporter_id", null: false
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reporter_id"], name: "index_reports_on_reporter_id"
+    t.index ["reservation_id"], name: "index_reports_on_reservation_id"
+  end
+
   create_table "reservations", force: :cascade do |t|
     t.integer "member_id", null: false
     t.integer "target_member_id", null: false
@@ -112,6 +122,15 @@ ActiveRecord::Schema[7.0].define(version: 2026_01_07_201341) do
     t.index ["target_member_id"], name: "index_reserved_dates_on_target_member_id"
   end
 
+  create_table "reviews", force: :cascade do |t|
+    t.integer "reservation_id", null: false
+    t.integer "score"
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reservation_id"], name: "index_reviews_on_reservation_id"
+  end
+
   create_table "tags", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -129,8 +148,11 @@ ActiveRecord::Schema[7.0].define(version: 2026_01_07_201341) do
   add_foreign_key "member_regions", "regions"
   add_foreign_key "member_tags", "members"
   add_foreign_key "member_tags", "tags"
+  add_foreign_key "reports", "reporters"
+  add_foreign_key "reports", "reservations"
   add_foreign_key "reservations", "members"
   add_foreign_key "reservations", "members", column: "target_member_id"
   add_foreign_key "reserved_dates", "members", column: "target_member_id"
   add_foreign_key "reserved_dates", "reservations"
+  add_foreign_key "reviews", "reservations"
 end

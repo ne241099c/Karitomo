@@ -4,6 +4,9 @@ class Reservation < ApplicationRecord
   has_many :reserved_dates, dependent: :destroy
   has_many :chats, dependent: :destroy
 
+  has_one :review, dependent: :destroy
+  has_many :reports, dependent: :destroy
+
   enum status: { pending: 0, approved: 1, rejected: 2, completed: 3 }
 
   validate :check_availability, on: :create

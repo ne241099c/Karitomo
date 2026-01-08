@@ -30,7 +30,7 @@ class Member < ApplicationRecord
 	validates :birthday, presence: true
 	validates :sex, presence: true
 	validates :comment, length: { maximum: 200 }
-	validates :password, presence: true, length: { minimum: 4 }
+	validates :password, presence: true, length: { minimum: 4 }, on: :create
 
 	validates :price_per_hour, presence: true, numericality: { greater_than: 0 }, if: :special_member?
 
