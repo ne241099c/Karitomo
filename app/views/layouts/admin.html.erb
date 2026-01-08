@@ -16,6 +16,7 @@
         <nav class="admin-nav">
           <% if current_admin %>
             <ul>
+              <li><%= link_to "ダッシュボード", :admin_root %></li>  
               <li><%= link_to "会員管理", :admin_members %></li>
               <li><%= link_to "タグ管理", :admin_tags %></li>
               <li><%= link_to "地域管理", :admin_regions %></li>

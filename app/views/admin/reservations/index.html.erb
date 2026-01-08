@@ -1,0 +1,35 @@
+<% @page_title = @member ? "#{@member.name} 様の予約管理" : "全予約管理" %>
+<h1><%= @page_title %></h1>
+
+<% if @reservations.present? %>
+  <table class="list">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>開始日時</th>
+        <th>予約者(一般)</th>
+        <th>対象(特別)</th>
+        <th>ステータス</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @reservations.each do |res| %>
+        <tr>
+          <td><%= res.id %></td>
+          <td><%= res.start_at.strftime("%Y/%m/%d %H:%M") %></td>
+          <td><%= link_to res.member.name, admin_member_path(res.member) %></td>
+          <td><%= link_to res.target_member.name, admin_member_path(res.target_member) %></td>
+          <td><%= I18n.t("activerecord.attributes.reservation.status.#{res.status}") %></td>
+          <td><%= link_to "詳細", admin_reservation_path(res) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>予約データがありません。</p>
+<% end %>
+
+<div class="actions">
+  <%= link_to "会員一覧へ戻る", admin_members_path %>
+</div>

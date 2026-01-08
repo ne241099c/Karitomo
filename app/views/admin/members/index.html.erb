@@ -1,0 +1,29 @@
+<% @page_title = "会員管理" %>
+<h1><%= @page_title %></h1>
+
+<table class="list">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>氏名</th>
+      <th>区分</th>
+      <th>メールアドレス</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @members.each do |member| %>
+      <tr>
+        <td><%= member.id %></td>
+        <td><%= link_to member.name, [:admin, member] %></td>
+        <td><%= member.special_member ? "特別" : "一般" %></td>
+        <td><%= member.email %></td>
+        <td>
+          <%= link_to "予約管理", admin_reservations_path(member_id: member.id), class: "btn-small" %> |
+          <%= link_to "詳細", [:admin, member] %> |
+          <%= link_to "削除", [:admin, member], method: :delete, data: { confirm: "この会員を削除しますか？" }, style: "color: red;" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
