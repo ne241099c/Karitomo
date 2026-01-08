@@ -13,6 +13,7 @@ class Reservation < ApplicationRecord
   validate :check_blocking_status
 
   after_create :create_reserved_dates_records
+  after_update :release_reserved_dates_if_rejected
 
   def end_at
     start_at + hours.hours
@@ -25,6 +26,12 @@ class Reservation < ApplicationRecord
   end
 
   private
+
+  def release_reserved_dates_if_rejected
+    if saved_change_to_status? && rejected?
+      reserved_dates.destroy_all
+    end
+  end
 
   def check_blocking_status
     if member.blocking?(target_member)
