@@ -1,0 +1,30 @@
+<% @page_title = "ブロック中のユーザー" %>
+<h1><%= @page_title %></h1>
+
+<% if @blocked_members.present? %>
+  <table class="list">
+    <thead>
+      <tr>
+        <th>ユーザー名</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @blocked_members.each do |member| %>
+        <tr>
+          <td><%= link_to member.name, member %></td>
+          <td>
+            <%= button_to "ブロック解除", member_block_path(member), method: :delete, 
+                class: "btn-danger", form: { data: { turbo_confirm: "ブロックを解除しますか？" } } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>ブロックしているユーザーはいません。</p>
+<% end %>
+
+<div class="actions">
+  <%= link_to "マイページへ戻る", :account %>
+</div>

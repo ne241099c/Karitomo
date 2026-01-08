@@ -1,5 +1,9 @@
 class BlocksController < ApplicationController
     before_action :login_required
+    
+    def index
+        @blocked_members = current_member.blocking_members
+    end
 
     def create
         @target_member = Member.find(params[:member_id])
@@ -13,6 +17,6 @@ class BlocksController < ApplicationController
         @target_member = Member.find(params[:member_id])
         block = current_member.active_blocks.find_by(blocked_id: @target_member.id)
         block&.destroy
-        redirect_to member_path(@target_member), notice: "ブロックを解除しました"
+        redirect_back fallback_location: member_path(@target_member), notice: "ブロックを解除しました"
     end
 end

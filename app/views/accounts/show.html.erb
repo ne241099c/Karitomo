@@ -9,5 +9,8 @@
 <div class="actions">
   <%= link_to "登録情報の編集", :edit_account %> | 
   <%= link_to "パスワードの変更", :edit_password %>
-  <p><%= link_to "予約一覧・履歴を見る", reservations_path, class: "btn-primary" %></p>
+  <p>
+    <%= link_to "予約一覧・履歴を見る", :reservations, class: "btn-primary" %>
+    <%= link_to "ブロックしたユーザー一覧", :blocks, class: "btn-primary" %>
+  </p>
 </div>

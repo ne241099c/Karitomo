@@ -8,6 +8,12 @@
         <%= label_tag :search_name, "名前" %>
         <%= text_field_tag :search_name, params[:search_name], placeholder: "名前の一部を入力" %>
     </div>
+    <% if current_member %>
+      <div class="search-field">
+          <%= check_box_tag :only_bookmarks, "1", params[:only_bookmarks] == "1" %>
+          <%= label_tag :only_bookmarks, "ブックマークした会員のみ表示" %>
+      </div>
+    <% end %>
 
     <details class="search-accordion">
         <summary>タグで絞り込む</summary>
@@ -17,6 +23,7 @@
         <%= render 'tag_selection' %>
         </div>
     </details>
+    
     <details class="search-accordion">
         <summary>地域で絞り込む</summary>
         <div class="search-content">
@@ -37,12 +44,23 @@
         <thead>
             <tr>
                 <th>ユーザ名</th>
+                <th>ステータス</th>
             </tr>
         </thead>
         <tbody>
             <% @members.each do |member| %>
                 <tr>
                     <td><%= link_to member.name, member %></td>
+                    <td>
+                      <% if current_member %>
+                        <% if current_member.bookmarked?(member) %>
+                          <span style="color: #ff9f1c;">★ ブックマーク中</span>
+                        <% end %>
+                        <% if current_member.blocking?(member) %>
+                          <span style="color: #e71d36;">ブロック中</span>
+                        <% end %>
+                      <% end %>
+                    </td>
                 </tr>
             <% end %>
         </tbody>

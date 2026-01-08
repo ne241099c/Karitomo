@@ -14,11 +14,15 @@ Rails.application.routes.draw do
   resource :account, only: [:new, :create, :show, :edit, :update] do
     post :details, on: :member
   end
+
   resource :password, only: [:show, :edit, :update]
   resources :reservations, only: [:index, :create, :show] do
     post :confirm, on: :collection
     patch :update_status, on: :member
     resources :chats, only: [:index, :create]
   end
+
+  resources :blocks, only: [:index]
+  
   mount ActionCable.server => '/cable'
 end

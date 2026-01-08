@@ -15,6 +15,10 @@ class MembersController < ApplicationController
             @members = @members.search_name(params[:search_name])
         end
 
+        if params[:only_bookmarks] == "1" && current_member
+            @members = @members.where(id: current_member.bookmarked_members.select(:id))
+        end
+
         selected_tag_ids = params[:tag_ids]&.compact_blank
 
         if selected_tag_ids.present?
