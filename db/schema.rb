@@ -91,11 +91,11 @@ ActiveRecord::Schema[7.0].define(version: 2026_01_08_173806) do
 
   create_table "reports", force: :cascade do |t|
     t.integer "reservation_id", null: false
-    t.integer "reporter_id", null: false
+    t.integer "member_id", null: false
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["reporter_id"], name: "index_reports_on_reporter_id"
+    t.index ["member_id"], name: "index_reports_on_member_id"
     t.index ["reservation_id"], name: "index_reports_on_reservation_id"
   end
 
@@ -148,7 +148,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_01_08_173806) do
   add_foreign_key "member_regions", "regions"
   add_foreign_key "member_tags", "members"
   add_foreign_key "member_tags", "tags"
-  add_foreign_key "reports", "reporters"
+  add_foreign_key "reports", "members"
   add_foreign_key "reports", "reservations"
   add_foreign_key "reservations", "members"
   add_foreign_key "reservations", "members", column: "target_member_id"
