@@ -1,0 +1,28 @@
+<% @page_title = "地域管理" %>
+
+<div class="admin-header" style="display: flex; justify-content: space-between; align-items: center;">
+  <h1><%= @page_title %></h1>
+  <%= link_to "新規地域追加", new_admin_region_path, class: "btn-primary" %>
+</div>
+
+<table class="list">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>地域名</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @regions.each do |region| %>
+      <tr>
+        <td><%= region.id %></td>
+        <td><%= region.name %></td>
+        <td>
+          <%= link_to "編集", edit_admin_region_path(region) %> |
+          <%= link_to "削除", admin_region_path(region), method: :delete, data: { confirm: "本当に削除しますか？" }, style: "color: red;" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
