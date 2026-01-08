@@ -30,7 +30,7 @@ class ReservationsController < ApplicationController
     @reservation = current_member.reservations.build(reservation_params)
     @target_member = Member.find(reservation_params[:target_member_id])
 
-    if @reservation.invalid?
+    if @reservation.invalid?(:create)
       flash[:alert] = "入力内容に不備があります: " + @reservation.errors.full_messages.join(", ")
       redirect_to member_path(@target_member)
     end
@@ -57,9 +57,9 @@ class ReservationsController < ApplicationController
     end
 
     if @reservation.update(status: params[:status])
-      flash[:success] = "予約ステータスを更新しました"
+      redirect_to reservation_path(@reservation), notice: "ステータスを更新しました", status: :see_other
     else
-      redirect_to reservation_path(@reservation), alert: "更新できませんでした: " + @reservation.errors.full_messages.join("、")
+      redirect_to reservation_path(@reservation), alert: "更新できませんでした: " + @reservation.errors.full_messages.join("、"), status: :see_other
     end
   end
 

@@ -1,18 +1,18 @@
 <h1>パスワード変更</h1>
 <%= form_for @member, url: :password, method: :patch do |form| %>
-  
+  <%= render "shared/error_messages", object: form.object %>
   <div class="field">
-    <%= form.label :current_password, "現在のパスワード" %>
+    <%= form.label :current_password, "現在のパスワード", required: true %>
     <%= form.password_field :current_password %>
   </div>
 
   <div class="field">
-    <%= form.label :password, "新しいパスワード" %>
+    <%= form.label :password, "新しいパスワード", required: true %>
     <%= form.password_field :password %>
   </div>
 
   <div class="field">
-    <%= form.label :password_confirmation, "新しいパスワード（確認）" %>
+    <%= form.label :password_confirmation, "新しいパスワード（確認）", required: true %>
     <%= form.password_field :password_confirmation %>
   </div>
 

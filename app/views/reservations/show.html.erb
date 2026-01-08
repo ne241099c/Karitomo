@@ -55,37 +55,31 @@
         </tr>
     </table>
 
-    <% if current_member.id == @reservation.target_member_id && @reservation.member_id != current_member.id && @reservation.pending? %>
-        <div class="reservation-actions" style="margin-top: 20px;">
-            <h3>この予約への回答</h3>
-            
-            <div style="display: flex; gap: 10px;">
-                <%= button_to "予約を承諾する", update_status_reservation_path(@reservation), 
-                    method: :patch, params: { status: "approved" }, 
-                    class: "btn-primary", data: { confirm: "予約を承諾しますか？" } %>
-                
-                <%= button_to "予約を却下する", update_status_reservation_path(@reservation), 
-                    method: :patch, params: { status: "rejected" }, 
-                    class: "btn-danger", style: "background-color: #d9534f; color: white;", data: { confirm: "本当に却下しますか？" } %>
-            </div>
+<div class="action-buttons" style="margin-top: 20px;">
+    <% if current_member.id == @reservation.target_member_id %>
+        
+        <% if @reservation.pending? %>
+        <div style="display: flex; gap: 10px;">
+            <%= button_to "承諾する", update_status_reservation_path(@reservation, status: 'approved'), method: :patch, class: "btn-primary", form: { data: { turbo_confirm: "承諾しますか？" } } %>
+            <%= button_to "却下する", update_status_reservation_path(@reservation, status: 'rejected'), method: :patch, class: "btn-danger", form: { data: { turbo_confirm: "却下しますか？" } } %>
         </div>
-    <% end %>
 
-    <% if current_member.id == @reservation.target_member_id && @reservation.member_id != current_member.id && @reservation.approved? %>
-        <div class="reservation-actions" style="margin-top: 20px;">
-            <%= button_to "承諾を取り消す", update_status_reservation_path(@reservation), 
-                method: :patch, params: { status: "pending" }, 
-                class: "btn-secondary", data: { confirm: "承諾を取り消しますか？" } %>
+        <% elsif @reservation.approved? %>
+        <div class="status-message" style="margin-bottom: 10px; color: green; font-weight: bold;">
+            現在「承諾」しています。
         </div>
-    <% end %>
+        <%= button_to "承諾を取り消す", update_status_reservation_path(@reservation, status: 'pending'), method: :patch, class: "btn-secondary" %>
 
-    <% if current_member.id == @reservation.target_member_id && @reservation.member_id != current_member.id && @reservation.rejected? %>
-        <div class="reservation-actions" style="margin-top: 20px;">
-            <%= button_to "却下を取り消す", update_status_reservation_path(@reservation), 
-                method: :patch, params: { status: "pending" }, 
-                class: "btn-secondary", data: { confirm: "却下を取り消しますか？" } %>
+        <% elsif @reservation.rejected? %>
+        <div class="status-message" style="margin-bottom: 10px; color: red; font-weight: bold;">
+            現在「却下」しています。
         </div>
+        <%= button_to "却下を取り消す", update_status_reservation_path(@reservation, status: 'pending'), method: :patch, class: "btn-secondary" %>
+        
+        <% end %>
+
     <% end %>
+</div>
 
     <div class="actions" style="margin-top: 20px;">
         <%= link_to "予約一覧へ戻る", reservations_path %> | 

@@ -30,11 +30,16 @@ class Member < ApplicationRecord
 	validates :birthday, presence: true
 	validates :sex, presence: true
 	validates :comment, length: { maximum: 200 }
+	validates :password, presence: true, length: { minimum: 4 }
 
 	validates :price_per_hour, presence: true, numericality: { greater_than: 0 }, if: :special_member?
 
 	attr_accessor :free_candidates
 	before_save :save_free_dates
+
+	attr_accessor :current_password
+	validates :current_password, presence: true, on: :update_password
+  	validate :check_password, on: :update_password
 
 	scope :search_name, ->(query) {
 		if query.present?
@@ -64,6 +69,13 @@ class Member < ApplicationRecord
 	end
 
 	private
+
+	def check_password
+		if current_password.present? && !authenticate(current_password)
+		errors.add(:current_password, :current_password_invalid)
+		end
+  	end
+
 	def save_free_dates
       return if free_candidates.nil?
 
