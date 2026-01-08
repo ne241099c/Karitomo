@@ -11,9 +11,10 @@ class Reservation < ApplicationRecord
   validates :hours, presence: true, numericality: { greater_than: 0 }
 
   validate :check_blocking_status
+  validate :check_availability_on_revival, on: :update
 
   after_create :create_reserved_dates_records
-  after_update :release_reserved_dates_if_rejected
+  after_update :manage_reserved_dates_on_status_change
 
   def end_at
     start_at + hours.hours
@@ -27,9 +28,19 @@ class Reservation < ApplicationRecord
 
   private
 
-  def release_reserved_dates_if_rejected
-    if saved_change_to_status? && rejected?
+  def manage_reserved_dates_on_status_change
+    return unless saved_change_to_status?
+
+    if rejected?
       reserved_dates.destroy_all
+    elsif status_before_last_save == "rejected"
+      create_reserved_dates_records
+    end
+  end
+
+  def check_availability_on_revival
+    if will_save_change_to_status? && status_was == "rejected" && !rejected?
+      check_availability
     end
   end
 
@@ -55,6 +66,8 @@ class Reservation < ApplicationRecord
   end
 
   def create_reserved_dates_records
+    reserved_dates.destroy_all
+
     (0...hours).each do |i|
       current_time = start_at + i.hours
       reserved_dates.create!(

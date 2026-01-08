@@ -59,9 +59,8 @@ class ReservationsController < ApplicationController
     if @reservation.update(status: params[:status])
       flash[:success] = "予約ステータスを更新しました"
     else
-      flash[:alert] = "更新に失敗しました"
+      redirect_to reservation_path(@reservation), alert: "更新できませんでした: " + @reservation.errors.full_messages.join("、")
     end
-    redirect_to reservation_path(@reservation)
   end
 
   private
