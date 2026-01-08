@@ -25,6 +25,8 @@ class Member < ApplicationRecord
 	has_many :bookmarks, dependent: :destroy
 	has_many :bookmarked_members, through: :bookmarks, source: :bookmarked
 
+	has_many :contacts, dependent: :destroy
+
 	validates :name, presence: true
 	validates :email, presence: true, uniqueness: true
 	validates :birthday, presence: true

@@ -27,5 +27,7 @@ Rails.application.routes.draw do
 
   resources :blocks, only: [:index]
 
+  resources :contacts, only: [:new, :create]
+
   mount ActionCable.server => '/cable'
 end

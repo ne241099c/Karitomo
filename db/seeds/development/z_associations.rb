@@ -73,12 +73,11 @@ if taro && jiro
   # 評価待ちを再現する completed 予約（Review を作らない）
   past_date = 5.days.ago.beginning_of_day + 13.hours
 
-  Reservation.create!(
-    member: taro,
-    target_member: jiro,
-    start_at: past_date,
-    hours: 1,
-    status: :completed
+  day_name = Member::DAYS_OF_WEEK[(past_date.wday - 1) % 7]
+  FreeDate.find_or_create_by!(
+    member: jiro, 
+    day: day_name, 
+    free_hour: past_date.change(year: 2000, month: 1, day: 1, min: 0, sec: 0)
   )
   puts "  佐藤 太郎さんの『評価待ち』予約データを作成しました。"
 end

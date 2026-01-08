@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_01_08_173806) do
+ActiveRecord::Schema[7.0].define(version: 2026_01_08_194433) do
   create_table "blocked_members", force: :cascade do |t|
     t.integer "member_id", null: false
     t.integer "blocked_id", null: false
@@ -39,6 +39,14 @@ ActiveRecord::Schema[7.0].define(version: 2026_01_08_173806) do
     t.datetime "updated_at", null: false
     t.index ["member_id"], name: "index_chats_on_member_id"
     t.index ["reservation_id"], name: "index_chats_on_reservation_id"
+  end
+
+  create_table "contacts", force: :cascade do |t|
+    t.integer "member_id", null: false
+    t.text "message", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["member_id"], name: "index_contacts_on_member_id"
   end
 
   create_table "free_dates", force: :cascade do |t|
@@ -143,6 +151,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_01_08_173806) do
   add_foreign_key "bookmarks", "members", column: "bookmarked_id"
   add_foreign_key "chats", "members"
   add_foreign_key "chats", "reservations"
+  add_foreign_key "contacts", "members"
   add_foreign_key "free_dates", "members"
   add_foreign_key "member_regions", "members"
   add_foreign_key "member_regions", "regions"
