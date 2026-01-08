@@ -16,10 +16,11 @@
         <%= render "shared/header" %>
       </header>
       <main>
-      <% flash.each do |key, value| %>
-         <% key = "notice" if key == "success" %>
-         <% key = "alert" if key == "danger" %>
-         <%= content_tag :p, value, class: key %>
+      <% if flash.notice %>
+        <p class="notice"><%= flash.notice %></p>
+      <% end %>
+      <% if flash.alert %>
+        <p class="alert"><%= flash.alert %></p>
       <% end %>
 
         <%= yield %>

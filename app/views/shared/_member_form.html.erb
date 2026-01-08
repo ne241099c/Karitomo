@@ -11,11 +11,11 @@
   <div id="special_member_fields" 
        class="<%= form.object.special_member? ? '' : 'hidden' %>"
        data-hidden-class="hidden">
-    <%= render "shared/special_member_fields", form: form, member: form.object %>
+    <%= render "shared/special_member_fields", form: form, member: @member, tags: @tags, regions: @regions %>
   </div>
 <% end %>
 
-<% if form.object.new_record? %>
+<% if  @member.new_record? %>
   <div class="field">
     <%= form.label :password, "パスワード" %>
     <%= form.password_field :password %>

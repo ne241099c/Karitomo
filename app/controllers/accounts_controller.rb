@@ -1,5 +1,6 @@
 class AccountsController < ApplicationController
   before_action :login_required, except: [:new, :create]
+  before_action :prepare_master_data, only: [:new, :edit, :create, :update]
 
   def new
     @member = Member.new(birthday: Date.new(1980, 1, 1))
@@ -50,5 +51,10 @@ class AccountsController < ApplicationController
       region_ids: [], 
       free_candidates: []
     )
+  end
+
+  def prepare_master_data
+    @tags = Tag.all
+    @regions = Region.all
   end
 end

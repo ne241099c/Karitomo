@@ -10,6 +10,8 @@ class Reservation < ApplicationRecord
   validates :start_at, presence: true
   validates :hours, presence: true, numericality: { greater_than: 0 }
 
+  validate :check_blocking_status
+
   after_create :create_reserved_dates_records
 
   def end_at
@@ -23,6 +25,16 @@ class Reservation < ApplicationRecord
   end
 
   private
+
+  def check_blocking_status
+    if member.blocking?(target_member)
+      errors.add(:base, "このユーザーはブロックしているため予約できません")
+    end
+
+    if target_member.blocking?(member)
+      errors.add(:base, "このユーザーにブロックされているため予約できません")
+    end
+  end
 
   def check_availability
     return unless start_at && hours && target_member

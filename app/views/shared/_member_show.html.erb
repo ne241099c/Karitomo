@@ -1,3 +1,21 @@
+<% if current_member && current_member != @member %>
+  <div class="action-buttons" style="margin: 20px 0; display: flex; gap: 10px;">
+    
+    <% if current_member.bookmarked?(@member) %>
+      <%= button_to "ブックマーク解除", member_bookmark_path(@member), method: :delete, class: "btn-secondary" %>
+    <% else %>
+      <%= button_to "ブックマークする", member_bookmark_path(@member), method: :post, class: "btn-primary" %>
+    <% end %>
+
+    <% if current_member.blocking?(@member) %>
+      <%= button_to "ブロック解除", member_block_path(@member), method: :delete, class: "btn-danger", form: { data: { turbo_confirm: "本当に解除しますか？" } } %>
+    <% else %>
+      <%= button_to "ブロックする", member_block_path(@member), method: :post, class: "btn-outline-danger", form: { data: { turbo_confirm: "本当にブロックしますか？" } } %>
+    <% end %>
+
+  </div>
+<% end %>
+
 <table class="attr">
   <tr>
     <th>名前</th>

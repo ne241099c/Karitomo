@@ -16,7 +16,7 @@
 
 <div class="field">
   <%= form.label :birthday, "誕生日" %>
-  <%= form.date_field :birthday, min: "1930-01-01", max: Time.now.to_date %>
+  <%= form.date_select :birthday, start_year: 1930, end_year: Time.now.year, use_month_numbers: true %>
 </div>
 
 <div class="field">

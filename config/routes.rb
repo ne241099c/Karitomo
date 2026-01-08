@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   resources :members, only: [:index, :show] do
     get "search", on: :collection
+    resource :block, only: [:create, :destroy]
+    resource :bookmark, only: [:create, :destroy]
   end
 
   resource :session, only: [:new, :create, :destroy]

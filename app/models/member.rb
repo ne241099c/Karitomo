@@ -16,6 +16,15 @@ class Member < ApplicationRecord
 	has_many :passive_reservations, class_name: "Reservation", foreign_key: "target_member_id", dependent: :destroy
 	has_many :reserved_dates, foreign_key: "target_member_id", dependent: :destroy
 
+	has_many :active_blocks, class_name: "BlockedMember", foreign_key: "member_id", dependent: :destroy
+	has_many :blocking_members, through: :active_blocks, source: :blocked
+
+	has_many :passive_blocks, class_name: "BlockedMember", foreign_key: "blocked_id", dependent: :destroy
+	has_many :blockers, through: :passive_blocks, source: :member
+
+	has_many :bookmarks, dependent: :destroy
+	has_many :bookmarked_members, through: :bookmarks, source: :bookmarked
+
 	validates :name, presence: true
 	validates :email, presence: true, uniqueness: true
 	validates :birthday, presence: true
@@ -34,17 +43,25 @@ class Member < ApplicationRecord
 	}
 
 	def reservable?(datetime)
-    wday_index = (datetime.wday - 1) % 7
-    wday_str = DAYS_OF_WEEK[wday_index]
-    
-    hour_val = datetime.hour
-    
-    is_free = free_dates.any? { |fd| fd.day == wday_str && fd.free_hour.hour == hour_val }
-    return false unless is_free
+		wday_index = (datetime.wday - 1) % 7
+		wday_str = DAYS_OF_WEEK[wday_index]
+		
+		hour_val = datetime.hour
+		
+		is_free = free_dates.any? { |fd| fd.day == wday_str && fd.free_hour.hour == hour_val }
+		return false unless is_free
 
-    # すでに予約が入っていないか
-    !reserved_dates.exists?(date: datetime)
-  end
+		# すでに予約が入っていないか
+		!reserved_dates.exists?(date: datetime)
+  	end
+
+	def blocking?(target_member)
+   		blocking_members.include?(target_member)
+  	end
+
+	def bookmarked?(target_member)
+		bookmarked_members.include?(target_member)
+	end
 
 	private
 	def save_free_dates

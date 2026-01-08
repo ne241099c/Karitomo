@@ -2,19 +2,22 @@
   <thead>
     <tr>
       <th>時間</th>
-      <% Member::DAYS_OF_WEEK.each do |day| %>
+      <% schedule_info[:days].each do |day| %>
         <th><%= day %></th>
       <% end %>
     </tr>
   </thead>
   <tbody>
-    <% Member::HOURS.each do |hour| %>
+    <% schedule_info[:hours].each do |hour| %>
       <tr>
         <th><%= "#{hour}:00" %></th>
-        <% Member::DAYS_OF_WEEK.each do |day| %>
-          <% is_checked = free_schedule_set.include?("#{day}:#{hour}") %>
+        <% schedule_info[:days].each do |day| %>
+          <% 
+             key = "#{day}:#{hour}"
+             is_checked = schedule_info[:checked_schedules].include?(key)
+          %>
           <td>
-            <%= check_box_tag "member[free_candidates][]", "#{day}:#{hour}", is_checked %>
+            <%= check_box_tag "member[free_candidates][]", key, is_checked, id: nil %>
           </td>
         <% end %>
       </tr>

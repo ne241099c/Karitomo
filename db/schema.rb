@@ -10,7 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_01_07_180417) do
+ActiveRecord::Schema[7.0].define(version: 2026_01_07_201341) do
+  create_table "blocked_members", force: :cascade do |t|
+    t.integer "member_id", null: false
+    t.integer "blocked_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["blocked_id"], name: "index_blocked_members_on_blocked_id"
+    t.index ["member_id", "blocked_id"], name: "index_blocked_members_on_member_id_and_blocked_id", unique: true
+    t.index ["member_id"], name: "index_blocked_members_on_member_id"
+  end
+
+  create_table "bookmarks", force: :cascade do |t|
+    t.integer "member_id", null: false
+    t.integer "bookmarked_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bookmarked_id"], name: "index_bookmarks_on_bookmarked_id"
+    t.index ["member_id", "bookmarked_id"], name: "index_bookmarks_on_member_id_and_bookmarked_id", unique: true
+    t.index ["member_id"], name: "index_bookmarks_on_member_id"
+  end
+
   create_table "chats", force: :cascade do |t|
     t.integer "reservation_id", null: false
     t.integer "member_id", null: false
@@ -98,6 +118,10 @@ ActiveRecord::Schema[7.0].define(version: 2026_01_07_180417) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "blocked_members", "members"
+  add_foreign_key "blocked_members", "members", column: "blocked_id"
+  add_foreign_key "bookmarks", "members"
+  add_foreign_key "bookmarks", "members", column: "bookmarked_id"
   add_foreign_key "chats", "members"
   add_foreign_key "chats", "reservations"
   add_foreign_key "free_dates", "members"
