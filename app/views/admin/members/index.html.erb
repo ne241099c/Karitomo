@@ -33,36 +33,36 @@
 <% end %>
 
 <table class="list">
-  <thead>
-	<tr>
-	  <th>ID</th>
-	  <th>氏名</th>
-	  <th>区分</th>
-	  <th>メールアドレス</th>
-	  <th>操作</th>
-	</tr>
-  </thead>
-  <tbody>
-	<% @members.each do |member| %>
-	  <tr>
-		<td><%= member.id %></td>
-		<td><%= link_to member.name, [:admin, member] %></td>
-		<td><%= member.special_member ? "特別" : "一般" %></td>
-		<td><%= member.email %></td>
-		<td>
-		  <%= link_to "予約管理", admin_reservations_path(member_id: member.id), class: "btn-small" %> |
-		  <%= link_to "詳細", [:admin, member] %> |
-		  <% if member.is_banned %>
-			<%= button_to "BAN解除", unban_admin_member_path(member), method: :patch,
-				  data: { confirm: "会員『#{member.name}』のBANを解除しますか？" },
-				  class: "btn-secondary", form: { style: "display:inline" } %>
-		  <% else %>
-			<%= button_to "BAN", ban_admin_member_path(member), method: :patch,
-				  data: { confirm: "会員『#{member.name}』をBANします。未完了の予約は全てキャンセルされます。続行しますか？" },
-				  class: "btn-danger", form: { style: "display:inline" } %>
-		  <% end %>
-		</td>
-	  </tr>
-	<% end %>
-  </tbody>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>氏名</th>
+            <th>区分</th>
+            <th>メールアドレス</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @members.each do |member| %>
+            <tr>
+                <td><%= member.id %></td>
+                <td><%= link_to member.name, [:admin, member] %></td>
+                <td><%= member.special_member ? "特別" : "一般" %></td>
+                <td><%= member.email %></td>
+                <td>
+                    <%= link_to "予約管理", admin_reservations_path(member_id: member.id), class: "btn-small" %> |
+                    <%= link_to "詳細", [:admin, member] %> |
+                    <% if member.is_banned %>
+                        <%= button_to "BAN解除", unban_admin_member_path(member), method: :patch,
+                            data: { confirm: "会員『#{member.name}』のBANを解除しますか？" },
+                            class: "btn-secondary", form: { style: "display:inline" } %>
+                    <% else %>
+                        <%= button_to "BAN", ban_admin_member_path(member), method: :patch,
+                            data: { confirm: "会員『#{member.name}』をBANします。未完了の予約は全てキャンセルされます。続行しますか？" },
+                            class: "btn-danger", form: { style: "display:inline" } %>
+                    <% end %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
 </table>

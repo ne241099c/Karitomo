@@ -2,35 +2,35 @@
 <h1><%= @page_title %></h1>
 
 <%= form_with model: [:admin, @member], local: true do |f| %>
-  <%= render "shared/error_messages", object: f.object %>
+  	<%= render "shared/error_messages", object: f.object %>
 
-  <table class="attr">
-	<tr>
-	  <th><%= f.label :name, "名前" %></th>
-	  <td><%= f.text_field :name %></td>
-	</tr>
-	<tr>
-	  <th><%= f.label :email, "メールアドレス" %></th>
-	  <td><%= f.email_field :email %></td>
-	</tr>
-	<tr>
-	  <th><%= f.label :special_member, "会員区分" %></th>
-	  <td>
-		<%= f.check_box :special_member %> 特別会員として扱う
-	  </td>
-	</tr>
-	<tr>
-	  <th><%= f.label :price_per_hour, "時給単価" %></th>
-	  <td><%= f.number_field :price_per_hour %> 円</td>
-	</tr>
-	<tr>
-	  <th><%= f.label :comment, "自己紹介" %></th>
-	  <td><%= f.text_area :comment, rows: 5, cols: 60 %></td>
-	</tr>
-  </table>
+  	<table class="attr">
+		<tr>
+			<th><%= f.label :name, "名前" %></th>
+			<td><%= f.text_field :name %></td>
+		</tr>
+		<tr>
+			<th><%= f.label :email, "メールアドレス" %></th>
+			<td><%= f.email_field :email %></td>
+		</tr>
+		<tr>
+			<th><%= f.label :special_member, "会員区分" %></th>
+			<td>
+				<%= f.check_box :special_member %> 特別会員として扱う
+			</td>
+		</tr>
+		<tr>
+			<th><%= f.label :price_per_hour, "時給単価" %></th>
+			<td><%= f.number_field :price_per_hour %> 円</td>
+		</tr>
+		<tr>
+			<th><%= f.label :comment, "自己紹介" %></th>
+			<td><%= f.text_area :comment, rows: 5, cols: 60 %></td>
+		</tr>
+  	</table>
 
-  <div class="actions" style="margin-top: 20px;">
-	<%= f.submit "更新する", class: "btn-primary" %>
-	<%= link_to "キャンセル", [:admin, @member] %>
-  </div>
+  	<div class="actions" style="margin-top: 20px;">
+		<%= f.submit "更新する", class: "btn-primary" %>
+		<%= link_to "キャンセル", [:admin, @member] %>
+  	</div>
 <% end %>

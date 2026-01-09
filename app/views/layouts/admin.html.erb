@@ -1,51 +1,51 @@
 <!DOCTYPE html>
 <html>
-  <head>
-	<title><%= @page_title %> - 管理画面</title>
-	<%= csrf_meta_tags %>
-	<%= csp_meta_tag %>
+	<head>
+		<title><%= @page_title %> - 管理画面</title>
+		<%= csrf_meta_tags %>
+		<%= csp_meta_tag %>
 
-	<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-	<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+		<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+		<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+	</head>
 
-  <body class="admin">
-	<header>
-	  <div class="container">
-		<span class="logo">管理画面</span>
-		<nav class="admin-nav">
-		  <% if current_admin %>
-			<ul>
-			  <li><%= link_to "ダッシュボード", :admin_root %></li>  
-			  <li><%= link_to "会員管理", :admin_members %></li>
-			  <li><%= link_to "タグ管理", :admin_tags %></li>
-			  <li><%= link_to "地域管理", :admin_regions %></li>
-			  <li><%= link_to "予約管理", :admin_reservations %></li>
-			  <li><%= link_to "お問い合わせ", :admin_contacts %></li>
-			  <li><%= link_to "通報", :admin_reports %></li>
-			  <li><%= link_to "評価管理", :admin_reviews %></li>
-			  <li><%= button_to "ログアウト", :admin_session, method: :delete, class: "link-button" %></li>
-			</ul>
-		  <% end %>
-		</nav>
-	  </div>
-	</header>
+	<body class="admin">
+		<header>
+			<div class="container">
+				<span class="logo">管理画面</span>
+				<nav class="admin-nav">
+					<% if current_admin %>
+						<ul>
+						<li><%= link_to "ダッシュボード", :admin_root %></li>  
+						<li><%= link_to "会員管理", :admin_members %></li>
+						<li><%= link_to "タグ管理", :admin_tags %></li>
+						<li><%= link_to "地域管理", :admin_regions %></li>
+						<li><%= link_to "予約管理", :admin_reservations %></li>
+						<li><%= link_to "お問い合わせ", :admin_contacts %></li>
+						<li><%= link_to "通報", :admin_reports %></li>
+						<li><%= link_to "評価管理", :admin_reviews %></li>
+						<li><%= button_to "ログアウト", :admin_session, method: :delete, class: "link-button" %></li>
+						</ul>
+					<% end %>
+				</nav>
+			</div>
+		</header>
 
-	<main class="container">
-	  <% if flash.notice %>
-		<p class="notice"><%= flash.notice %></p>
-	  <% end %>
-	  <% if flash.alert %>
-		<p class="alert"><%= flash.alert %></p>
-	  <% end %>
+		<main class="container">
+			<% if flash.notice %>
+				<p class="notice"><%= flash.notice %></p>
+			<% end %>
+			<% if flash.alert %>
+				<p class="alert"><%= flash.alert %></p>
+			<% end %>
 
-	  <%= yield %>
-	</main>
+			<%= yield %>
+		</main>
 
-	<footer>
-	  <div class="container">
-		<p>&copy; 2026 Karitomo Admin Panel</p>
-	  </div>
-	</footer>
-  </body>
+		<footer>
+			<div class="container">
+				<p>&copy; 2026 Karitomo Admin Panel</p>
+			</div>
+		</footer>
+	</body>
 </html>

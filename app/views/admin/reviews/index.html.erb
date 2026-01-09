@@ -2,56 +2,56 @@
 <h1><%= @page_title %></h1>
 
 <div class="admin-table-container">
-  <table class="list">
-	<thead>
-	  <tr>
-		<th>ID</th>
-		<th>投稿日時</th>
-		<th>投稿者</th>
-		<th>スコア</th>
-		<th>内容</th>
-		<th>対象予約</th>
-		<th>操作</th>
-	  </tr>
-	</thead>
-	<tbody>
-	  <% @reviews.each do |review| %>
-		<tr>
-		  <td><%= review.id %></td>
-		  <td><%= review.created_at.strftime("%Y/%m/%d %H:%M") %></td>
-		  <td>
-			<% if review.reservation.member %>
-			  <%= link_to review.reservation.member.name, admin_member_path(review.reservation.member) %>
-			<% else %>
-			  退会済みユーザー
+	<table class="list">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>投稿日時</th>
+				<th>投稿者</th>
+				<th>スコア</th>
+				<th>内容</th>
+				<th>対象予約</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @reviews.each do |review| %>
+				<tr>
+					<td><%= review.id %></td>
+					<td><%= review.created_at.strftime("%Y/%m/%d %H:%M") %></td>
+					<td>
+						<% if review.reservation.member %>
+						<%= link_to review.reservation.member.name, admin_member_path(review.reservation.member) %>
+						<% else %>
+						退会済みユーザー
+						<% end %>
+					</td>
+					<td style="color: #f39c12; font-weight: bold;">
+						<%= "★" * review.score %>
+					</td>
+					<td>
+						<div style="max-width: 300px; font-size: 0.9em; line-height: 1.4;">
+						<%= truncate(review.content, length: 50) %>
+						</div>
+					</td>
+					<td>
+						<%= link_to "予約ID: ##{review.reservation_id}", admin_reservation_path(review.reservation) %>
+					</td>
+					<td>
+						<%= link_to "削除", admin_review_path(review), method: :delete, 
+									data: { confirm: "この評価を削除してよろしいですか？" }, 
+									style: "color: red;" %>
+					</td>
+				</tr>
 			<% end %>
-		  </td>
-		  <td style="color: #f39c12; font-weight: bold;">
-			<%= "★" * review.score %>
-		  </td>
-		  <td>
-			<div style="max-width: 300px; font-size: 0.9em; line-height: 1.4;">
-			  <%= truncate(review.content, length: 50) %>
-			</div>
-		  </td>
-		  <td>
-			<%= link_to "予約ID: ##{review.reservation_id}", admin_reservation_path(review.reservation) %>
-		  </td>
-		  <td>
-			<%= link_to "削除", admin_review_path(review), method: :delete, 
-						data: { confirm: "この評価を削除してよろしいですか？" }, 
-						style: "color: red;" %>
-		  </td>
-		</tr>
-	  <% end %>
-	</tbody>
-  </table>
+		</tbody>
+	</table>
 </div>
 
 <% if @reviews.empty? %>
-  <p style="text-align: center; margin-top: 20px;">評価データがまだありません。</p>
+  	<p style="text-align: center; margin-top: 20px;">評価データがまだありません。</p>
 <% end %>
 
 <div class="actions" style="margin-top: 20px;">
-  <%= link_to "ダッシュボードへ戻る", :admin_root %>
+  	<%= link_to "ダッシュボードへ戻る", :admin_root %>
 </div>

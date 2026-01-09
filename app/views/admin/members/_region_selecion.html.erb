@@ -9,14 +9,15 @@
 		OR
 	</label>
 </div>
+
 <div class="filter-section">
-  <h3>地域</h3>
-  <div class="tag-checkboxes">
-	<% @regions.each do |region| %>
-	  <div class="checkbox-item">
-		<%= check_box_tag 'region_ids[]', region.id, params[:region_ids]&.include?(region.id.to_s), id: "region_#{region.id}" %>
-		<%= label_tag "region_#{region.id}", region.name %>
-	  </div>
-	<% end %>
-  </div>
+  	<h3>地域</h3>
+  	<div class="tag-checkboxes">
+		<% @regions.each do |region| %>
+		<div class="checkbox-item">
+			<%= check_box_tag 'region_ids[]', region.id, params[:region_ids]&.include?(region.id.to_s), id: "region_#{region.id}" %>
+			<%= label_tag "region_#{region.id}", region.name %>
+		</div>
+		<% end %>
+  	</div>
 </div>

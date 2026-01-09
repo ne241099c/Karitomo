@@ -2,20 +2,20 @@
 <h1><%= @page_title %></h1>
 
 <div class="contact-form">
-  <%= form_with model: @contact, local: true do |form| %>
-	<%= render "shared/error_messages", object: form.object %>
+    <%= form_with model: @contact, local: true do |form| %>
+		<%= render "shared/error_messages", object: form.object %>
 
-	<div class="field">
-	  <%= form.label :message, "お問い合わせ内容" %><br>
-	  <%= form.text_area :message, rows: 10, cols: 45, placeholder: "不具合報告やご要望などをご記入ください" %>
-	</div>
+		<div class="field">
+			<%= form.label :message, "お問い合わせ内容" %><br>
+			<%= form.text_area :message, rows: 10, cols: 45, placeholder: "不具合報告やご要望などをご記入ください" %>
+		</div>
 
-	<div class="actions">
-	  <%= form.submit "送信する", class: "btn-primary" %>
-	</div>
-  <% end %>
+		<div class="actions">
+			<%= form.submit "送信する", class: "btn-primary" %>
+		</div>
+    <% end %>
 </div>
 
 <div class="actions">
-  <%= link_to "トップページへ戻る", root_path %>
+    <%= link_to "トップページへ戻る", root_path %>
 </div>

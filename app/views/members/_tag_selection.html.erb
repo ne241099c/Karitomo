@@ -11,14 +11,10 @@
 </div>
 
 <div class="tag-checkboxes">
-  <% @tags.each do |tag| %>
-	
-	<div class="checkbox-item">
-	  
-	  <%= check_box_tag 'tag_ids[]', tag.id, params[:tag_ids]&.include?(tag.id.to_s), id: "tag_#{tag.id}" %>
-	  
-	  <%= label_tag "tag_#{tag.id}", tag.name %>
-	</div>
-
-  <% end %>
+	<% @tags.each do |tag| %>
+		<div class="checkbox-item">
+			<%= check_box_tag 'tag_ids[]', tag.id, params[:tag_ids]&.include?(tag.id.to_s), id: "tag_#{tag.id}" %>
+		<%= label_tag "tag_#{tag.id}", tag.name %>
+		</div>
+	<% end %>
 </div>

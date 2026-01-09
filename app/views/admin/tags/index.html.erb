@@ -1,28 +1,28 @@
 <% @page_title = "タグ管理" %>
 
 <div class="admin-header" style="display: flex; justify-content: space-between; align-items: center;">
-  <h1><%= @page_title %></h1>
-  <%= link_to "新規タグ追加", new_admin_tag_path, class: "btn-primary" %>
+	<h1><%= @page_title %></h1>
+	<%= link_to "新規タグ追加", new_admin_tag_path, class: "btn-primary" %>
 </div>
 
 <table class="list">
-  <thead>
-	<tr>
-	  <th>ID</th>
-	  <th>タグ名</th>
-	  <th>操作</th>
-	</tr>
-  </thead>
-  <tbody>
-	<% @tags.each do |tag| %>
-	  <tr>
-		<td><%= tag.id %></td>
-		<td><%= tag.name %></td>
-		<td>
-		  <%= link_to "編集", edit_admin_tag_path(tag) %> |
-		  <%= link_to "削除", admin_tag_path(tag), method: :delete, data: { confirm: "本当に削除しますか？" }, style: "color: red;" %>
-		</td>
-	  </tr>
-	<% end %>
-  </tbody>
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>タグ名</th>
+			<th>操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @tags.each do |tag| %>
+			<tr>
+				<td><%= tag.id %></td>
+				<td><%= tag.name %></td>
+				<td>
+				<%= link_to "編集", edit_admin_tag_path(tag) %> |
+				<%= link_to "削除", admin_tag_path(tag), method: :delete, data: { confirm: "本当に削除しますか？" }, style: "color: red;" %>
+				</td>
+			</tr>
+		<% end %>
+	</tbody>
 </table>

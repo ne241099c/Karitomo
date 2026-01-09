@@ -2,36 +2,36 @@
 <h1>予約内容の確認</h1>
 
 <div class="confirm-box">
-  <table class="attr">
-	<tr>
-	  <th>予約相手</th>
-	  <td><%= @target_member.name %> さん</td>
-	</tr>
-	<tr>
-	  <th>日時</th>
-	  <td><%= @reservation.start_at.strftime("%Y年%m月%d日 %H:%M") %></td>
-	</tr>
-	<tr>
-	  <th>利用時間</th>
-	  <td><%= @reservation.hours %> 時間</td>
-	</tr>
-	<tr>
-	  <th>合計金額</th>
-	  <td>
-		<% total_price = @reservation.hours * @target_member.price_per_hour %>
-		<%= number_with_delimiter(total_price) %> 円
-	  </td>
-	</tr>
-  </table>
+	<table class="attr">
+		<tr>
+			<th>予約相手</th>
+			<td><%= @target_member.name %> さん</td>
+		</tr>
+		<tr>
+			<th>日時</th>
+			<td><%= @reservation.start_at.strftime("%Y年%m月%d日 %H:%M") %></td>
+		</tr>
+		<tr>
+			<th>利用時間</th>
+			<td><%= @reservation.hours %> 時間</td>
+		</tr>
+		<tr>
+			<th>合計金額</th>
+			<td>
+				<% total_price = @reservation.hours * @target_member.price_per_hour %>
+				<%= number_with_delimiter(total_price) %> 円
+			</td>
+		</tr>
+	</table>
 
-  <div class="actions">
-	<%= form_for(@reservation, url: reservations_path, method: :post) do |f| %>
-	  <%= f.hidden_field :target_member_id %>
-	  <%= f.hidden_field :start_at %>
-	  <%= f.hidden_field :hours %>
-	  
-	  <%= f.submit "予約を確定する", class: "btn-primary" %>
-	  <%= link_to "キャンセル", member_path(@target_member), class: "btn-secondary" %>
-	<% end %>
-  </div>
+	<div class="actions">
+		<%= form_for(@reservation, url: reservations_path, method: :post) do |f| %>
+			<%= f.hidden_field :target_member_id %>
+			<%= f.hidden_field :start_at %>
+			<%= f.hidden_field :hours %>
+			
+			<%= f.submit "予約を確定する", class: "btn-primary" %>
+			<%= link_to "キャンセル", member_path(@target_member), class: "btn-secondary" %>
+		<% end %>
+	</div>
 </div>
