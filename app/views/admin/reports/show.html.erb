@@ -1,0 +1,29 @@
+<% @page_title = "通報詳細" %>
+<h1><%= @page_title %></h1>
+
+<div class="actions" style="margin-bottom: 20px;">
+  <%= link_to "この予約のチャット履歴を確認", chats_admin_reservation_path(@report.reservation), class: "btn-primary" %>
+</div>
+
+<table class="attr">
+  <tr>
+    <th>通報日時</th>
+    <td><%= @report.created_at.strftime("%Y/%m/%d %H:%M") %></td>
+  </tr>
+  <tr>
+    <th>通報者</th>
+    <td><%= link_to @report.member.name, admin_member_path(@report.member) %></td>
+  </tr>
+  <tr>
+    <th>対象予約</th>
+    <td><%= link_to "予約ID: #{@report.reservation_id}", admin_reservation_path(@report.reservation) %></td>
+  </tr>
+  <tr>
+    <th>通報内容</th>
+    <td><%= simple_format(@report.content) %></td>
+  </tr>
+</table>
+
+<div class="actions" style="margin-top: 20px;">
+  <%= link_to "一覧へ戻る", admin_reports_path %>
+</div>

@@ -1,0 +1,21 @@
+<% @page_title = "お問い合わせ詳細" %>
+<h1><%= @page_title %></h1>
+
+<table class="attr">
+  <tr>
+    <th>送信日時</th>
+    <td><%= @contact.created_at.strftime("%Y/%m/%d %H:%M") %></td>
+  </tr>
+  <tr>
+    <th>送信者</th>
+    <td><%= link_to @contact.member.name, admin_member_path(@contact.member) %> (<%= @contact.member.email %>)</td>
+  </tr>
+  <tr>
+    <th>内容</th>
+    <td><%= simple_format(@contact.message) %></td>
+  </tr>
+</table>
+
+<div class="actions" style="margin-top: 20px;">
+  <%= link_to "一覧へ戻る", admin_contacts_path %>
+</div>
