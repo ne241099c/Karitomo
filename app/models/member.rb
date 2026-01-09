@@ -45,7 +45,7 @@ class Member < ApplicationRecord
 
 	scope :search_name, ->(query) {
 		if query.present?
-		where("members.name LIKE ?", "%#{query}%")
+			where("members.name LIKE ?", "%#{query}%")
 		end
 	}
 
@@ -76,7 +76,7 @@ class Member < ApplicationRecord
 
 	def check_password
 		if current_password.present? && !authenticate(current_password)
-		errors.add(:current_password, :current_password_invalid)
+			errors.add(:current_password, :current_password_invalid)
 		end
   	end
 
