@@ -1,29 +1,29 @@
 <% if member.is_banned %>
-  <div class="alert" style="padding: 12px; background: #fff0f0; border: 1px solid #e71d36; color: #e71d36; border-radius: 6px;">
+  <div class="alert">
 	この会員はBANされています。予約はできません。
   </div>
 <% elsif current_member&.is_banned %>
-  <div class="alert" style="padding: 12px; background: #fff0f0; border: 1px solid #e71d36; color: #e71d36; border-radius: 6px;">
+  <div class="alert">
 	あなたのアカウントはBANされています。予約はできません。
   </div>
 <% else %>
   <%= form_for(reservation, url: confirm_reservations_path, html: { id: "reservation-form" }) do |f| %>
 	<%= f.hidden_field :target_member_id, value: member.id %>
 	
-	<div class="form-group selected-info" style="margin-bottom: 20px; padding: 10px; background: #f9f9f9; border: 1px solid #ddd;">
+	<div class="selected-info">
 	  <div>
 		<strong>開始日時: </strong>
 		<span id="display-start-at">未選択</span>
 		<%= f.hidden_field :start_at, id: "input-start-at" %>
 	  </div>
 	  
-	  <div style="margin-top: 10px;">
+	  <div class="mt-10">
 		<strong>利用時間: </strong>
-		<%= f.select :hours, [1], {}, class: "form-control", id: "reservation-hours", style: "width: auto; display: inline-block;" %> 時間
+		<%= f.select :hours, [1], {}, class: "form-control w-auto d-inline", id: "reservation-hours" %> 時間
 	  </div>
 	  
-	  <div style="margin-top: 10px;">
-		<%= f.submit "この内容で予約する", class: "btn btn-primary", disabled: true, id: "submit-button" %>
+	  <div class="mt-10">
+		<%= f.submit "この内容で予約する", class: "btn-primary", disabled: true, id: "submit-button" %>
 	  </div>
 	</div>
   <% end %>

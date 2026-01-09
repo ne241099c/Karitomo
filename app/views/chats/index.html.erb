@@ -1,7 +1,7 @@
 <% @page_title = "チャットルーム" %>
 <h1>チャットルーム</h1>
 
-<div class="chat-info" style="margin-bottom: 20px;">
+<div class="chat-info">
 	<p>
 		<strong>予約相手:</strong> 
 		<% if @reservation.member_id == current_member.id %>
@@ -12,31 +12,30 @@
 	</p>
 </div>
 
-<div class="chat-section" style="border: 1px solid #eee; padding: 20px; border-radius: 5px;">
-	<div id="chat-messages" 
-		style="height: 400px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-bottom: 20px; background-color: #fff;"
+<div class="chat-section">
+	<div id="chat-messages" class="chat-history"
 		data-reservation-id="<%= @reservation.id %>"
 		data-current-user-id="<%= current_member.id %>">
 		
 		<% @chats.each do |chat| %>
-			<div style="text-align: <%= chat.member_id == current_member.id ? 'right' : 'left' %>; margin-bottom: 5px;">
-				<small style="color: #888;"><%= chat.member.name %> (<%= chat.created_at.strftime("%H:%M") %>)</small><br>
-				<span style="background: <%= chat.member_id == current_member.id ? '#d1e7dd' : '#f8f9fa' %>; display: inline-block; padding: 5px 10px; border-radius: 5px;">
+			<div class="chat-message <%= chat.member_id == current_member.id ? 'chat-message-right' : 'chat-message-left' %>">
+				<div class="chat-meta"><%= chat.member.name %> (<%= chat.created_at.strftime("%H:%M") %>)</div>
+				<div class="chat-bubble <%= chat.member_id == current_member.id ? 'chat-bubble-right' : 'chat-bubble-left' %>">
 					<%= chat.content %>
-				</span>
+				</div>
 			</div>
 		<% end %>
   	</div>
 
   <%= form_with model: [@reservation, @chat], local: false, id: "chat-form" do |f| %>
-		<div style="display: flex; gap: 10px;">
-			<%= f.text_field :content, id: "chat-input", style: "flex-grow: 1;", placeholder: "メッセージを入力" %>
+		<div class="d-flex gap-10">
+			<%= f.text_field :content, id: "chat-input", class: "field-col", placeholder: "メッセージを入力" %>
 			<%= f.submit "送信", class: "btn-primary" %>
 		</div>
   <% end %>
 </div>
 
-<div class="actions" style="margin-top: 20px;">
+<div class="actions">
   	<%= link_to "予約詳細に戻る", reservation_path(@reservation) %> |
   	<%= link_to "予約一覧に戻る", reservations_path %>
 </div>

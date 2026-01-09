@@ -1,0 +1,14 @@
+:root {
+  --primary-bg: #fffbf0;
+  --container-bg: #ffffff;
+  --text-color: #4a4a4a;
+  --accent-color: #ff9f1c; /* Pop Orange */
+  --secondary-accent: #2ec4b6; /* Turquoise */
+  --highlight-color: #ffbf69;
+  --danger-color: #e71d36;
+  --border-radius: 12px;
+  --box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  --input-border: #ddd;
+  --input-focus: #2ec4b6;
+  --font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+}
