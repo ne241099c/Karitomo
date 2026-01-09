@@ -49,6 +49,8 @@ class Admin::MembersController < Admin::BaseController
 
   def edit
     @member = Member.find(params[:id])
+    @tags = Tag.all
+    @regions = Region.all
   end
 
   def update
@@ -56,7 +58,9 @@ class Admin::MembersController < Admin::BaseController
     if @member.update(member_params)
       redirect_to [:admin, @member], notice: "会員情報を更新しました"
     else
-      render :edit
+        @tags = Tag.all
+        @regions = Region.all
+        render :edit
     end
   end
 
