@@ -1,0 +1,131 @@
+/* Placeholder for admin styles, will be populated from view extractions */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.admin-stats {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    flex: 1;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.stat-card-blue {
+    background: #e3f2fd;
+}
+
+.stat-card-orange {
+    background: #fff3e0;
+}
+
+.stat-number {
+    font-size: 2em;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.admin-login-container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.admin-ban {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.admin-quick-links {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.admin-quick-links li a {
+    display: block;
+    padding: 15px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center;
+    transition: background-color 0.2s;
+}
+
+.admin-quick-links li a:hover {
+    background-color: #f0f0f0;
+}
+
+/* Admin Specific Buttons or sections */
+.review-score {
+    color: #f39c12;
+    font-weight: bold;
+}
+
+.review-content {
+    max-width: 300px;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+/* Admin Chat Styles */
+.info-box {
+    margin-bottom: 20px;
+    padding: 10px;
+    background: #f0f0f0;
+}
+
+.message {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.message-meta {
+    color: #666;
+}
+
+.message-content {
+    padding-left: 10px;
+}
+
+.report-details-box {
+    border-left: 5px solid var(--danger-color);
+    margin-bottom: 10px;
+}
+
+.btn-sm {
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    border-radius: 4px;
+}
+
+.btn-outline-danger {
+    color: var(--danger-color);
+    border: 1px solid var(--danger-color);
+    background-color: transparent;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.btn-outline-danger:hover {
+    background-color: var(--danger-color);
+    color: white;
+}

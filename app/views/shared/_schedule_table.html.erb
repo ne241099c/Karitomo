@@ -17,7 +17,11 @@
 			 is_checked = schedule_info[:checked_schedules].include?(key)
 		  %>
 		  <td>
-			<%= check_box_tag "member[free_candidates][]", key, is_checked, id: nil %>
+            <div class="d-flex align-center justify-center">
+                <div class="simple-checkbox-wrapper no-border p-0 justify-center">
+			        <%= check_box_tag "member[free_candidates][]", key, is_checked, id: nil, class: "schedule-checkbox" %>
+                </div>
+            </div>
 		  </td>
 		<% end %>
 	  </tr>

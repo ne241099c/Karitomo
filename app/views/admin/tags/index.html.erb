@@ -1,6 +1,6 @@
 <% @page_title = "タグ管理" %>
 
-<div class="admin-header" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="admin-header">
 	<h1><%= @page_title %></h1>
 	<%= link_to "新規タグ追加", new_admin_tag_path, class: "btn-primary" %>
 </div>
@@ -20,7 +20,7 @@
 				<td><%= tag.name %></td>
 				<td>
 				<%= link_to "編集", edit_admin_tag_path(tag) %> |
-				<%= link_to "削除", admin_tag_path(tag), method: :delete, data: { confirm: "本当に削除しますか？" }, style: "color: red;" %>
+				<%= link_to "削除", admin_tag_path(tag), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "text-danger" %>
 				</td>
 			</tr>
 		<% end %>

@@ -1,7 +1,7 @@
 <% @page_title = "予約一覧" %>
 <h1>予約一覧</h1>
 
-<div class="sort-links" style="margin-bottom: 20px;">
+<div class="sort-links mb-20">
 	並び替え: 
 	<%= link_to "日時（新しい順）", reservations_path %> | 
 	<%= link_to "日時（古い順）", reservations_path(sort: "date_asc") %> | 
@@ -9,7 +9,7 @@
 </div>
 
 <% if @reservations.any? %>
-	<table class="list-table">
+	<table class="list">
 		<thead>
 			<tr>
 				<th>予約の種類</th>
@@ -26,9 +26,9 @@
 				<tr>
 					<td>
 						<% if reservation.member_id == current_member.id %>
-							<span style="color: blue;">あなたが予約</span>
+							<span class="text-success">あなたが予約</span>
 						<% else %>
-							<span style="color: orange;">あなたへの予約</span>
+							<span class="text-warning">あなたへの予約</span>
 						<% end %>
 					</td>
 					<td>
@@ -49,10 +49,10 @@
 						<%= status_label %>
 					</td>
 					<td>
-						<%= link_to "チャットへ", reservation_chats_path(reservation), class: "btn-secondary" %>
+						<%= link_to "チャットへ", reservation_chats_path(reservation), class: "btn" %>
 					</td>
 					<td>
-						<%= link_to "詳細", reservation_path(reservation), class: "btn-sm" %>
+						<%= link_to "詳細", reservation_path(reservation), class: "btn" %>
 					</td>
 				</tr>
 			<% end %>

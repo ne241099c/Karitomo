@@ -1,24 +1,24 @@
 <% @page_title = "チャット履歴 (予約ID: #{@reservation.id})" %>
 <h1><%= @page_title %></h1>
 
-<div class="info-box" style="margin-bottom: 20px; padding: 10px; background: #f0f0f0;">
+<div class="info-box">
 	<p><strong>予約者:</strong> <%= @reservation.member.name %></p>
 	<p><strong>対象者:</strong> <%= @reservation.target_member.name %></p>
 </div>
 
-<div class="chat-history" style="border: 1px solid #ccc; padding: 20px; border-radius: 5px;">
+<div class="chat-history">
 	<% if @chats.present? %>
 		<% @chats.each do |chat| %>
-			<div class="message" style="margin-bottom: 15px; border-bottom: 1px solid #eee;">
+			<div class="message">
 				<p>
 					<strong><%= chat.member.name %></strong> 
-					<small style="color: #666;"><%= chat.created_at.strftime("%Y/%m/%d %H:%M") %></small>
+					<small class="message-meta"><%= chat.created_at.strftime("%Y/%m/%d %H:%M") %></small>
 				</p>
-				<p style="padding-left: 10px;"><%= simple_format(chat.content) %></p>
+				<p class="message-content"><%= simple_format(chat.content) %></p>
 				<div>
 					<%= link_to "削除", admin_chat_path(chat), method: :delete, 
 					data: { confirm: "このメッセージを削除してよろしいですか？" }, 
-					style: "color: #e71d36; font-size: 0.8em; text-decoration: none; border: 1px solid #e71d36; padding: 2px 5px; border-radius: 3px;" %>
+					class: "btn-outline-danger btn-sm" %>
 				</div>
 			</div>
 		<% end %>
@@ -27,7 +27,7 @@
   	<% end %>
 </div>
 
-<div class="actions" style="margin-top: 20px;">
+<div class="actions mt-20">
 	<%= link_to "予約詳細へ戻る", admin_reservation_path(@reservation) %> |
 	<%= link_to "予約管理一覧へ", admin_reservations_path %>
 </div>

@@ -1,6 +1,6 @@
 <% @page_title = "地域管理" %>
 
-<div class="admin-header" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="admin-header">
 	<h1><%= @page_title %></h1>
 	<%= link_to "新規地域追加", new_admin_region_path, class: "btn-primary" %>
 </div>
@@ -20,7 +20,7 @@
 				<td><%= region.name %></td>
 				<td>
 					<%= link_to "編集", edit_admin_region_path(region) %> |
-					<%= link_to "削除", admin_region_path(region), method: :delete, data: { confirm: "本当に削除しますか？" }, style: "color: red;" %>
+					<%= link_to "削除", admin_region_path(region), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "text-danger" %>
 				</td>
 			</tr>
 		<% end %>

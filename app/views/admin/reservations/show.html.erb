@@ -1,13 +1,13 @@
 <% @page_title = "予約詳細 (ID: #{@reservation.id})" %>
 <h1><%= @page_title %></h1>
 
-<div class="actions" style="margin-bottom: 20px;">
+<div class="actions mb-20">
     <%= link_to "この予約のチャットを見る",
 			  chats_admin_reservation_path(@reservation),
 			  class: "btn-primary" %>
 </div>
 
-<div class="admin-ban" style="margin-bottom: 20px; display: flex; gap: 10px;">
+<div class="admin-ban mb-20 d-flex gap-10">
     <%= button_to "予約者をBAN",
 				ban_admin_member_path(@reservation.member),
 				method: :patch,
@@ -25,13 +25,13 @@
 				class: "btn-danger" %>
 
     <% if @reservation.member.is_banned || @reservation.target_member.is_banned %>
-        <span style="align-self: center; color: #e71d36; font-weight: bold;">
+        <span class="text-danger font-bold align-center">
             BAN済みのユーザーが含まれています
         </span>
     <% end %>
 </div>
 
-<table class="attr">
+<table class="list">
     <tr>
         <th>ステータス</th>
         <td>
@@ -63,7 +63,7 @@
 </table>
 
 <% if @reservation.review.present? %>
-    <h2 style="margin-top: 30px;">届いている評価</h2>
+    <h2 class="mt-30">届いている評価</h2>
     <div class="info-box">
         <p><strong>スコア:</strong> <%= "★" * @reservation.review.score %></p>
         <p><%= simple_format(@reservation.review.content) %></p>
@@ -71,10 +71,9 @@
 <% end %>
 
 <% if @reservation.reports.present? %>
-    <h2 style="margin-top: 30px; color: #e71d36;">通報内容</h2>
+    <h2 class="mt-30 text-danger">通報内容</h2>
     <% @reservation.reports.each do |report| %>
-        <div class="info-box"
-            style="border-left: 5px solid #e71d36; margin-bottom: 10px;">
+        <div class="info-box report-details-box">
             <p><strong>通報者:</strong> <%= report.member.name %></p>
             <p><%= simple_format(report.content) %></p>
             <p>
@@ -85,15 +84,14 @@
 <% end %>
 
 <% unless @reservation.completed? || @reservation.canceled? %>
-    <div class="actions" style="margin-top: 30px;">
+    <div class="actions mt-30">
         <%= button_to "予約をキャンセルする",
                     cancel_admin_reservation_path(@reservation),
                     method: :patch,
                     data: {
                         confirm: "この予約をキャンセルしますか？\n\n予約ID: #{@reservation.id}\n予約者: #{@reservation.member.name}\n対象者: #{@reservation.target_member.name}"
                     },
-                    class: "btn-danger",
-                    style: "margin-bottom: 15px;" %>
+                    class: "btn-danger mb-20" %>
     </div>
 <% end %>
 

@@ -26,11 +26,11 @@
 						退会済みユーザー
 						<% end %>
 					</td>
-					<td style="color: #f39c12; font-weight: bold;">
+					<td class="review-score">
 						<%= "★" * review.score %>
 					</td>
 					<td>
-						<div style="max-width: 300px; font-size: 0.9em; line-height: 1.4;">
+						<div class="review-content">
 						<%= truncate(review.content, length: 50) %>
 						</div>
 					</td>
@@ -40,7 +40,7 @@
 					<td>
 						<%= link_to "削除", admin_review_path(review), method: :delete, 
 									data: { confirm: "この評価を削除してよろしいですか？" }, 
-									style: "color: red;" %>
+									class: "text-danger" %>
 					</td>
 				</tr>
 			<% end %>
@@ -49,9 +49,9 @@
 </div>
 
 <% if @reviews.empty? %>
-  	<p style="text-align: center; margin-top: 20px;">評価データがまだありません。</p>
+	<p class="text-center mt-20">評価データがまだありません。</p>
 <% end %>
 
-<div class="actions" style="margin-top: 20px;">
+<div class="actions mt-20">
   	<%= link_to "ダッシュボードへ戻る", :admin_root %>
 </div>

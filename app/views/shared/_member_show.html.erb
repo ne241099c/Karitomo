@@ -1,5 +1,5 @@
 <% if current_member && current_member != @member %>
-  <div class="action-buttons" style="margin: 20px 0; display: flex; gap: 10px;">
+  <div class="action-buttons mb-20 d-flex gap-10">
 	
 	<% if current_member.bookmarked?(@member) %>
 	  <%= button_to "ブックマーク解除", member_bookmark_path(@member), method: :delete, class: "btn-secondary" %>
@@ -16,7 +16,7 @@
   </div>
 <% end %>
 
-<table class="attr">
+<table class="list">
   <tr>
 	<th>名前</th>
 	<td><%= @member.name %></td>
