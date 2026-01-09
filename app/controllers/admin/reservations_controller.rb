@@ -26,9 +26,18 @@ class Admin::ReservationsController < Admin::BaseController
     @chats = @reservation.chats.order(:created_at)
   end
 
-  def destroy
+  def cancel
     @reservation = Reservation.find(params[:id])
-    @reservation.destroy
-    redirect_to admin_reservations_path, notice: "予約ID: #{@reservation.id} を削除しました。"
+    if @reservation.completed?
+      redirect_to admin_reservation_path(@reservation), alert: "完了済みの予約はキャンセルできません。"
+      return
+    end
+
+    @reservation.admin_override = true
+    if @reservation.update(status: :canceled)
+      redirect_to admin_reservation_path(@reservation), notice: "予約をキャンセルしました。"
+    else
+      redirect_to admin_reservation_path(@reservation), alert: @reservation.errors.full_messages.join("、")
+    end
   end
 end

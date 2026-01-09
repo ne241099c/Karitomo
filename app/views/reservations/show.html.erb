@@ -55,6 +55,17 @@
         </tr>
     </table>
 
+        <% if @reservation.canceled? %>
+            <div class="status-message" style="margin: 20px 0; padding: 12px; background: #fff0f0; border: 1px solid #e71d36; border-radius: 6px; color: #e71d36;">
+                <% banned_name = @reservation.member.is_banned ? @reservation.member.name : (@reservation.target_member.is_banned ? @reservation.target_member.name : nil) %>
+                <% if banned_name.present? %>
+                    <strong><%= banned_name %></strong> さんがBANされたため、この取引はキャンセルされました。
+                <% else %>
+                    管理者によりこの取引はキャンセルされました。
+                <% end %>
+            </div>
+        <% end %>
+
     <% if @reservation.completed? %>
     <div class="review-section" style="margin-top: 30px; padding: 20px; border: 1px solid #ff9f1c; border-radius: 8px;">
         <h3>評価とコメント</h3>

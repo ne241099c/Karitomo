@@ -33,11 +33,15 @@ Rails.application.routes.draw do
     root "top#index"
     resource :session, only: [:new, :create, :destroy]
     
-    resources :members
+    resources :members do
+      patch :ban, on: :member
+      patch :unban, on: :member
+    end
     resources :tags
     resources :regions
-    resources :reservations, only: [:index, :show, :destroy] do
-      get :chats, on: :member 
+    resources :reservations, only: [:index, :show] do
+      get :chats, on: :member
+      patch :cancel, on: :member
     end
     resources :chats, only: [:destroy]
     resources :contacts

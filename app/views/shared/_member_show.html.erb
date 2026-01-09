@@ -55,7 +55,9 @@
     <p>「◎」をクリックすると予約開始時間がセットされます。</p>
 
     <%= render "shared/reservation_form", member: @member, reservation: @reservation %>
-    
-    <%= render "shared/reservation_calendar", member: @member, dates: @dates %>
+
+    <% unless @member.is_banned || current_member&.is_banned %>
+      <%= render "shared/reservation_calendar", member: @member, dates: @dates %>
+    <% end %>
   </div>
 <% end %>

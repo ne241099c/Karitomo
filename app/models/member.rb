@@ -50,6 +50,8 @@ class Member < ApplicationRecord
 	}
 
 	def reservable?(datetime)
+		# BANされている場合は予約不可
+		return false if is_banned
 		wday_index = (datetime.wday - 1) % 7
 		wday_str = DAYS_OF_WEEK[wday_index]
 		

@@ -39,5 +39,6 @@ en:
           approved: "承認済み"
           rejected: "却下"
           completed: "完了"
+          canceled: "キャンセル済み"
 
   

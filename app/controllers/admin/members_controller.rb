@@ -60,6 +60,29 @@ class Admin::MembersController < Admin::BaseController
     end
   end
 
+  # BAN実行: 会員をBANし、関連する未完了予約を全てキャンセル
+  def ban
+    @member = Member.find(params[:id])
+    @member.update!(is_banned: true)
+
+    affected = Reservation.where("member_id = :id OR target_member_id = :id", id: @member.id)
+                          .where.not(status: Reservation.statuses[:completed])
+
+    affected.find_each do |res|
+      res.admin_override = true
+      res.update(status: :canceled)
+    end
+
+    redirect_to [:admin, @member], notice: "会員『#{@member.name}』をBANし、関連する未完了予約をキャンセルしました。"
+  end
+
+  # BAN解除: is_banned を false に戻す（予約の復帰は行わない）
+  def unban
+    @member = Member.find(params[:id])
+    @member.update!(is_banned: false)
+    redirect_to [:admin, @member], notice: "会員『#{@member.name}』のBANを解除しました。"
+  end
+
   private
 
   def member_params

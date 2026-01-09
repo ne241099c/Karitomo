@@ -52,7 +52,15 @@
         <td>
           <%= link_to "予約管理", admin_reservations_path(member_id: member.id), class: "btn-small" %> |
           <%= link_to "詳細", [:admin, member] %> |
-          <%= link_to "削除", [:admin, member], method: :delete, data: { confirm: "この会員を削除しますか？" }, style: "color: red;" %>
+          <% if member.is_banned %>
+            <%= button_to "BAN解除", unban_admin_member_path(member), method: :patch,
+                  data: { confirm: "会員『#{member.name}』のBANを解除しますか？" },
+                  class: "btn-secondary", form: { style: "display:inline" } %>
+          <% else %>
+            <%= button_to "BAN", ban_admin_member_path(member), method: :patch,
+                  data: { confirm: "会員『#{member.name}』をBANします。未完了の予約は全てキャンセルされます。続行しますか？" },
+                  class: "btn-danger", form: { style: "display:inline" } %>
+          <% end %>
         </td>
       </tr>
     <% end %>
