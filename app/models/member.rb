@@ -43,11 +43,20 @@ class Member < ApplicationRecord
 	validates :current_password, presence: true, on: :update_password
   	validate :check_password, on: :update_password
 
+	scope :active, -> { where(is_banned: false) }
 	scope :search_name, ->(query) {
 		if query.present?
 		where("members.name LIKE ?", "%#{query}%")
 		end
 	}
+
+	def ban!
+		transaction do
+			update!(is_banned: true)
+			reservations.where(status: [:pending, :approved]).find_each { |r| r.update!(status: :rejected) }
+			passive_reservations.where(status: [:pending, :approved]).find_each { |r| r.update!(status: :rejected) }
+		end
+	end
 
 	def reservable?(datetime)
 		wday_index = (datetime.wday - 1) % 7

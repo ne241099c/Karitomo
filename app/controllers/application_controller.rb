@@ -1,6 +1,11 @@
 class ApplicationController < ActionController::Base
   private def current_member
-    Member.find_by(id: cookies.signed[:member_id]) if cookies.signed[:member_id]
+    member = Member.find_by(id: cookies.signed[:member_id]) if cookies.signed[:member_id]
+    if member&.is_banned?
+      cookies.delete(:member_id)
+      return nil
+    end
+    member
   end
   helper_method :current_member
 

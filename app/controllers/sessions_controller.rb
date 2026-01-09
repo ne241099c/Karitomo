@@ -4,13 +4,16 @@ class SessionsController < ApplicationController
 
   def create
     member = Member.find_by(email: params[:session][:email])
-      if member&.authenticate(params[:session][:password])
-        cookies_login(member.id)
-        redirect_to :account, notice: "ログインしました"
-      else
-        flash.alert = "名前とパスワードが一致しません"
-		redirect_to :login
-      end
+    if member&.is_banned?
+      flash.alert = "利用停止されています"
+      redirect_to :login
+    elsif member&.authenticate(params[:session][:password])
+      cookies_login(member.id)
+      redirect_to :account, notice: "ログインしました"
+    else
+      flash.alert = "名前とパスワードが一致しません"
+      redirect_to :login
+    end
   end
 
   def destroy

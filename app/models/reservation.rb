@@ -14,6 +14,7 @@ class Reservation < ApplicationRecord
   validates :hours, presence: true, numericality: { greater_than: 0 }
 
   validate :check_blocking_status
+  validate :check_if_banned
   validate :check_availability_on_revival, on: :update
 
   after_create :create_reserved_dates_records
@@ -44,6 +45,15 @@ class Reservation < ApplicationRecord
   def check_availability_on_revival
     if will_save_change_to_status? && status_was == "rejected" && !rejected?
       check_availability
+    end
+  end
+
+  def check_if_banned
+    if member&.is_banned?
+      errors.add(:base, "利用停止されているため予約できません")
+    end
+    if target_member&.is_banned?
+      errors.add(:base, "予約相手が利用停止されているため予約できません")
     end
   end
 

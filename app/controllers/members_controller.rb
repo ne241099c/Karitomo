@@ -2,14 +2,14 @@ class MembersController < ApplicationController
     def index
         @tags = Tag.all
         @regions = Region.all
-        @members = Member.where(special_member: true)        
+        @members = Member.active.where(special_member: true)
     end
 
     def search
         @tags = Tag.all
         @regions = Region.all
     
-        @members = Member.where(special_member: true)
+        @members = Member.active.where(special_member: true)
 
         if params[:search_name].present?
             @members = @members.search_name(params[:search_name])
@@ -49,7 +49,7 @@ class MembersController < ApplicationController
     end
     
     def show
-        @member = Member.find(params[:id])
+        @member = Member.active.find(params[:id])
         @dates = (Date.today..Date.today + 13.days).to_a
         @reservation = Reservation.new
     end
