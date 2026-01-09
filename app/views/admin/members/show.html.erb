@@ -1,12 +1,12 @@
 <% @page_title = "会員詳細: #{@member.name}" %>
 <h1><%= @page_title %></h1>
 
-<div class="actions" style="margin-bottom: 20px;">
+<div class="actions mb-20">
 	<%= link_to "プロフィールを編集する", edit_admin_member_path(@member), class: "btn-secondary" %> |
 	<%= link_to "この会員の予約履歴を見る", admin_reservations_path(member_id: @member.id), class: "btn-primary" %>
 </div>
 
-<table class="attr">
+<table class="list">
 	<tr>
 		<th>氏名</th>
 		<td><%= @member.name %></td>

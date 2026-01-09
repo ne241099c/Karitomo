@@ -1,56 +1,12 @@
-a {
-  color: var(--secondary-accent);
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-a:hover {
-  color: var(--accent-color);
-}
-
-nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  gap: 20px;
-}
-
-nav ul li a {
-  font-weight: bold;
-  font-size: 1.1rem;
-  color: var(--text-color);
-  padding: 8px 12px;
-  border-radius: 8px;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-nav ul li a:hover {
-  background-color: var(--accent-color);
-  color: white;
-}
-
-@media (max-width: 600px) {
-  nav ul {
-    gap: 10px;
-  }
-  
-  nav ul li a {
-    padding: 6px 8px;
-    font-size: 0.9rem;
-  }
-}
-
 /* Forms */
 form {
   margin-top: 20px;
 }
 
 .field {
-  margin-bottom: 15px; /* Reduced from 20px */
+  margin-bottom: 15px;
 }
 
-/* Compact field styles */
 .field-row {
   display: flex;
   gap: 20px;
@@ -64,7 +20,7 @@ form {
 label {
   display: block;
   font-weight: bold;
-  margin-bottom: 5px; /* Reduced from 8px */
+  margin-bottom: 5px;
   color: #555;
   font-size: 0.95rem;
 }
@@ -76,10 +32,10 @@ input[type="number"],
 textarea,
 select {
   width: 100%;
-  padding: 10px; /* Reduced from 12px */
+  padding: 10px;
   border: 2px solid var(--input-border);
   border-radius: 8px;
-  font-size: 0.95rem; /* Slightly smaller font */
+  font-size: 0.95rem;
   box-sizing: border-box;
   transition: border-color 0.3s;
 }
@@ -96,7 +52,7 @@ select:focus {
 }
 
 textarea {
-  min-height: 100px; /* Reduced from 120px */
+  min-height: 100px;
   resize: vertical;
 }
 
@@ -105,46 +61,102 @@ textarea {
   text-align: center;
 }
 
+/* Buttons */
 input[type="submit"],
-button {
-  background-color: var(--accent-color);
-  color: white;
-  border: none;
+button,
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-danger,
+.btn-outline-danger {
+  display: inline-block;
   padding: 12px 30px;
   font-size: 1.1rem;
   font-weight: bold;
   border-radius: 30px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.1s;
+  transition: all 0.3s;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  text-decoration: none;
+  border: none;
+  text-align: center;
+}
+
+input[type="submit"],
+button,
+.btn,
+.btn-primary {
+  background-color: var(--accent-color);
+  color: white;
 }
 
 input[type="submit"]:hover,
-button:hover {
+button:hover,
+.btn:hover,
+.btn-primary:hover {
   background-color: #e88b0b;
   transform: translateY(-2px);
+  color: white;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-accent);
+    color: white;
+}
+.btn-secondary:hover {
+    background-color: #249d92;
+    transform: translateY(-2px);
+    color: white;
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    color: white;
+}
+.btn-danger:hover {
+    background-color: #bd152a;
+    transform: translateY(-2px);
+    color: white;
+}
+
+.btn-outline-danger {
+    background-color: transparent;
+    border: 2px solid var(--danger-color);
+    color: var(--danger-color);
+    box-shadow: none;
+}
+.btn-outline-danger:hover {
+    background-color: var(--danger-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn-sm {
+    padding: 6px 15px;
+    font-size: 0.9rem;
 }
 
 input[type="submit"]:active,
-button:active {
+button:active,
+.btn:active {
   transform: translateY(0);
 }
 
 /* Alerts */
-.notice, .alert {
+.notice, .alert, .status-alert, .status-alert-success {
   padding: 15px;
   border-radius: 8px;
   margin-bottom: 20px;
   font-weight: bold;
 }
 
-.notice {
+.notice, .status-alert-success {
   background-color: #d4edda;
   color: #155724;
   border: 1px solid #c3e6cb;
 }
 
-.alert {
+.alert, .status-alert {
   background-color: #f8d7da;
   color: #721c24;
   border: 1px solid #f5c6cb;
@@ -158,14 +170,15 @@ table.list, table.schedule-table {
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  background: white;
 }
 
 table.list th, table.list td,
 table.schedule-table th, table.schedule-table td {
-  padding: 10px 12px; /* Reduced padding */
+  padding: 12px 15px;
   text-align: left;
   border-bottom: 1px solid #eee;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
 table.list th, table.schedule-table th {
@@ -183,17 +196,24 @@ table.schedule-table td {
   text-align: center;
 }
 
-/* Schedule Table Specifics */
-.schedule-table {
-  display: block;
-  overflow-x: auto;
-  white-space: nowrap;
+/* Status Tags */
+.status-tag {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: white;
 }
+.status-pending { background-color: #bbb; }
+.status-approved { background-color: #28a745; }
+.status-rejected { background-color: var(--danger-color); }
+.status-completed { background-color: var(--secondary-accent); }
 
 /* Search Area */
 .search-field {
   background-color: #fdfdfd;
-  padding: 15px; /* Reduced padding */
+  padding: 15px;
   border-radius: 8px;
   border: 1px solid #eee;
   margin-bottom: 15px;
@@ -204,6 +224,7 @@ table.schedule-table td {
   border-radius: 8px;
   margin-bottom: 20px;
   overflow: hidden;
+  background-color: white;
 }
 
 .search-accordion summary {
@@ -211,7 +232,7 @@ table.schedule-table td {
   background-color: #f4f4f4;
   cursor: pointer;
   font-weight: bold;
-  list-style: none; /* Hide default triangle */
+  list-style: none;
 }
 
 .search-accordion summary::-webkit-details-marker {
@@ -233,29 +254,116 @@ table.schedule-table td {
   background-color: white;
 }
 
-/* Checkbox List */
-.checkbox-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px; /* Reduced gap */
+
+/* New Custom Checkbox Style */
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 5px;
 }
 
-.checkbox-list label {
-  display: inline-flex;
-  align-items: center;
-  background-color: #f0f0f0;
-  padding: 6px 10px; /* Reduced padding */
-  border-radius: 20px;
-  cursor: pointer;
-  font-weight: normal;
-  transition: background-color 0.2s;
-  font-size: 0.9rem;
+.custom-checkbox-label {
+    position: relative;
+    padding: 10px 15px 10px 40px;
+    background-color: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    font-size: 0.95rem;
+    color: #495057;
 }
 
-.checkbox-list label:hover {
-  background-color: #e0e0e0;
+.custom-checkbox-label:hover {
+    background-color: #e2e6ea;
+    border-color: #dee2e6;
 }
 
-.checkbox-list input[type="checkbox"] {
-  margin-right: 8px;
+.custom-checkbox-label input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    height: 20px;
+    width: 20px;
+    background-color: #fff;
+    border: 2px solid #adb5bd;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.custom-checkbox-label input:checked ~ .checkmark {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.custom-checkbox-label input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.custom-checkbox-label .checkmark:after {
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.custom-checkbox-label input:checked ~ .label-text {
+    color: var(--text-color);
+    font-weight: bold;
+}
+
+/* Simple wrapper for single checkboxes */
+.simple-checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+.simple-checkbox-wrapper:hover {
+    background-color: #f8f9fa;
+}
+.simple-checkbox-wrapper input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--accent-color);
+}
+
+.simple-checkbox-wrapper.no-border {
+    border: none;
+}
+.simple-checkbox-wrapper.p-0 {
+    padding: 0;
+}
+
+.schedule-checkbox {
+    width: 20px;
+    height: 20px;
+    margin: 0;
 }

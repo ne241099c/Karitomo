@@ -5,18 +5,26 @@
 
 <div class="field">
   <label>タグ</label>
-  <div class="checkbox-list">
+  <div class="checkbox-group">
 	<%= form.collection_check_boxes :tag_ids, tags, :id, :name do |b| %>
-	  <%= b.check_box + b.text %>
+      <label class="custom-checkbox-label">
+        <%= b.check_box %>
+        <span class="checkmark"></span>
+        <span class="label-text"><%= b.text %></span>
+      </label>
 	<% end %>
   </div>
 </div>
 
 <div class="field">
 	<label>出勤可能な地域</label>
-	<div class="checkbox-list">
+	<div class="checkbox-group">
 	  <%= form.collection_check_boxes :region_ids, regions, :id, :name do |b| %>
-		<%= b.check_box + b.text %>
+        <label class="custom-checkbox-label">
+            <%= b.check_box %>
+            <span class="checkmark"></span>
+            <span class="label-text"><%= b.text %></span>
+        </label>
 	  <% end %>
 	</div>
   </div>

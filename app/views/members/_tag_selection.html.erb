@@ -1,20 +1,21 @@
-<div class="search-method-selection">
+<div class="search-method-selection mb-20">
 	<p>検索方法：</p>
-	<label>
+	<label class="d-inline mr-10">
 		<%= radio_button_tag :tag_search_method, :and, params[:tag_search_method] == 'and' || params[:tag_search_method].blank? %>
 		AND
 	</label>
-	<label>
+	<label class="d-inline">
 		<%= radio_button_tag :tag_search_method, :or, params[:tag_search_method] == 'or' %>
 		OR
 	</label>
 </div>
 
-<div class="tag-checkboxes">
+<div class="checkbox-group">
 	<% @tags.each do |tag| %>
-		<div class="checkbox-item">
+		<label class="custom-checkbox-label">
 			<%= check_box_tag 'tag_ids[]', tag.id, params[:tag_ids]&.include?(tag.id.to_s), id: "tag_#{tag.id}" %>
-		<%= label_tag "tag_#{tag.id}", tag.name %>
-		</div>
+			<span class="checkmark"></span>
+			<span class="label-text"><%= tag.name %></span>
+		</label>
 	<% end %>
 </div>

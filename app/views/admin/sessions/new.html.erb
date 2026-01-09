@@ -1,25 +1,25 @@
 <% @page_title = "管理者ログイン" %>
 
-<div class="admin-login-container" style="max-width: 400px; margin: 100px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
-	<h1 style="text-align: center; margin-bottom: 20px;"><%= @page_title %></h1>
+<div class="admin-login-container">
+	<h1 class="text-center mb-20"><%= @page_title %></h1>
 
 	<%= form_tag :admin_session do %>
-		<div class="field" style="margin-bottom: 15px;">
+		<div class="field mb-20">
 			<%= label_tag :name, "名前" %><br>
-			<%= text_field_tag :name, params[:name], style: "width: 100%; padding: 8px; box-sizing: border-box;" %>
+			<%= text_field_tag :name, params[:name] %>
 		</div>
 
-		<div class="field" style="margin-bottom: 15px;">
+		<div class="field mb-20">
 			<%= label_tag :password, "パスワード" %><br>
-			<%= password_field_tag :password, nil, style: "width: 100%; padding: 8px; box-sizing: border-box;" %>
+			<%= password_field_tag :password, nil %>
 		</div>
 
-		<div class="actions" style="text-align: center;">
-			<%= submit_tag "ログイン", class: "btn-primary", style: "width: 100%; padding: 10px; cursor: pointer;" %>
+		<div class="actions text-center">
+			<%= submit_tag "ログイン", class: "btn-primary w-100" %>
 		</div>
 	<% end %>
 	
-	<div style="margin-top: 20px; text-align: center;">
+	<div class="mt-20 text-center">
 		<%= link_to "サービスTOPへ戻る", root_path %>
 	</div>
 </div>
