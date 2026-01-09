@@ -36,7 +36,7 @@ Rails.application.routes.draw do
     resources :members
     resources :tags
     resources :regions
-    resources :reservations, only: [:index, :show] do
+    resources :reservations, only: [:index, :show, :destroy] do
       get :chats, on: :member 
     end
     resources :chats, only: [:destroy]

@@ -52,5 +52,9 @@
 <% end %>
 
 <div class="actions" style="margin-top: 30px;">
+  <%= button_to "この予約を削除（キャンセル）", admin_reservation_path(@reservation), method: :delete, 
+                data: { confirm: "本当にこの予約を削除しますか？\n\n予約ID: #{@reservation.id}\n予約者: #{@reservation.member.name}\n対象者: #{@reservation.target_member.name}\n\nこの操作は取り消せません。" }, 
+                class: "btn-danger", 
+                style: "margin-bottom: 15px;" %>
   <%= link_to "予約管理一覧へ戻る", admin_reservations_path %>
 </div>

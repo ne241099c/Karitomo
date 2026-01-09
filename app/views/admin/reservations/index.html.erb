@@ -1,6 +1,13 @@
 <% @page_title = @member ? "#{@member.name} 様の予約管理" : "全予約管理" %>
 <h1><%= @page_title %></h1>
 
+<div class="sort-links" style="margin-bottom: 20px;">
+  並び替え: 
+  <%= link_to "日時（新しい順）", @member ? admin_reservations_path(member_id: @member.id) : admin_reservations_path %> | 
+  <%= link_to "日時（古い順）", @member ? admin_reservations_path(member_id: @member.id, sort: "date_asc") : admin_reservations_path(sort: "date_asc") %> | 
+  <%= link_to "ステータス順", @member ? admin_reservations_path(member_id: @member.id, sort: "status") : admin_reservations_path(sort: "status") %>
+</div>
+
 <% if @reservations.present? %>
   <table class="list">
     <thead>
