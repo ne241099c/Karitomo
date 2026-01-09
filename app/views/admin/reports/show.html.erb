@@ -7,20 +7,20 @@
 
 <table class="attr">
   <tr>
-    <th>通報日時</th>
-    <td><%= @report.created_at.strftime("%Y/%m/%d %H:%M") %></td>
+	<th>通報日時</th>
+	<td><%= @report.created_at.strftime("%Y/%m/%d %H:%M") %></td>
   </tr>
   <tr>
-    <th>通報者</th>
-    <td><%= link_to @report.member.name, admin_member_path(@report.member) %></td>
+	<th>通報者</th>
+	<td><%= link_to @report.member.name, admin_member_path(@report.member) %></td>
   </tr>
   <tr>
-    <th>対象予約</th>
-    <td><%= link_to "予約ID: #{@report.reservation_id}", admin_reservation_path(@report.reservation) %></td>
+	<th>対象予約</th>
+	<td><%= link_to "予約ID: #{@report.reservation_id}", admin_reservation_path(@report.reservation) %></td>
   </tr>
   <tr>
-    <th>通報内容</th>
-    <td><%= simple_format(@report.content) %></td>
+	<th>通報内容</th>
+	<td><%= simple_format(@report.content) %></td>
   </tr>
 </table>
 

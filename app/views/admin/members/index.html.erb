@@ -3,66 +3,66 @@
 <h2>会員検索</h2>
 <%= form_tag(admin_members_path, method: :get) do %>
 
-    <div class="search-field">
-        <%= label_tag :search_name, "名前" %>
-        <%= text_field_tag :search_name, params[:search_name], placeholder: "名前の一部を入力" %>
-    </div>
+	<div class="search-field">
+		<%= label_tag :search_name, "名前" %>
+		<%= text_field_tag :search_name, params[:search_name], placeholder: "名前の一部を入力" %>
+	</div>
 
-    <details class="search-accordion">
-        <summary>タグで絞り込む</summary>
-        <div class="search-content">
-        <p>検索したいタグを選択してください</p>
-        
-        <%= render 'tag_selection' %>
-        </div>
-    </details>
-    
-    <details class="search-accordion">
-        <summary>地域で絞り込む</summary>
-        <div class="search-content">
-        <p>検索したい地域を選択してください</p>
-        
-        <%= render 'region_selecion' %>
-        </div>
-    </details>
+	<details class="search-accordion">
+		<summary>タグで絞り込む</summary>
+		<div class="search-content">
+		<p>検索したいタグを選択してください</p>
+		
+		<%= render 'tag_selection' %>
+		</div>
+	</details>
+	
+	<details class="search-accordion">
+		<summary>地域で絞り込む</summary>
+		<div class="search-content">
+		<p>検索したい地域を選択してください</p>
+		
+		<%= render 'region_selecion' %>
+		</div>
+	</details>
 
-    <div class="actions">
-        <%= submit_tag "検索する", name: nil %>
-    </div>
+	<div class="actions">
+		<%= submit_tag "検索する", name: nil %>
+	</div>
 
 <% end %>
 
 <table class="list">
   <thead>
-    <tr>
-      <th>ID</th>
-      <th>氏名</th>
-      <th>区分</th>
-      <th>メールアドレス</th>
-      <th>操作</th>
-    </tr>
+	<tr>
+	  <th>ID</th>
+	  <th>氏名</th>
+	  <th>区分</th>
+	  <th>メールアドレス</th>
+	  <th>操作</th>
+	</tr>
   </thead>
   <tbody>
-    <% @members.each do |member| %>
-      <tr>
-        <td><%= member.id %></td>
-        <td><%= link_to member.name, [:admin, member] %></td>
-        <td><%= member.special_member ? "特別" : "一般" %></td>
-        <td><%= member.email %></td>
-        <td>
-          <%= link_to "予約管理", admin_reservations_path(member_id: member.id), class: "btn-small" %> |
-          <%= link_to "詳細", [:admin, member] %> |
-          <% if member.is_banned %>
-            <%= button_to "BAN解除", unban_admin_member_path(member), method: :patch,
-                  data: { confirm: "会員『#{member.name}』のBANを解除しますか？" },
-                  class: "btn-secondary", form: { style: "display:inline" } %>
-          <% else %>
-            <%= button_to "BAN", ban_admin_member_path(member), method: :patch,
-                  data: { confirm: "会員『#{member.name}』をBANします。未完了の予約は全てキャンセルされます。続行しますか？" },
-                  class: "btn-danger", form: { style: "display:inline" } %>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
+	<% @members.each do |member| %>
+	  <tr>
+		<td><%= member.id %></td>
+		<td><%= link_to member.name, [:admin, member] %></td>
+		<td><%= member.special_member ? "特別" : "一般" %></td>
+		<td><%= member.email %></td>
+		<td>
+		  <%= link_to "予約管理", admin_reservations_path(member_id: member.id), class: "btn-small" %> |
+		  <%= link_to "詳細", [:admin, member] %> |
+		  <% if member.is_banned %>
+			<%= button_to "BAN解除", unban_admin_member_path(member), method: :patch,
+				  data: { confirm: "会員『#{member.name}』のBANを解除しますか？" },
+				  class: "btn-secondary", form: { style: "display:inline" } %>
+		  <% else %>
+			<%= button_to "BAN", ban_admin_member_path(member), method: :patch,
+				  data: { confirm: "会員『#{member.name}』をBANします。未完了の予約は全てキャンセルされます。続行しますか？" },
+				  class: "btn-danger", form: { style: "display:inline" } %>
+		  <% end %>
+		</td>
+	  </tr>
+	<% end %>
   </tbody>
 </table>

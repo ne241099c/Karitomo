@@ -7,22 +7,22 @@
 
 <table class="list">
   <thead>
-    <tr>
-      <th>ID</th>
-      <th>地域名</th>
-      <th>操作</th>
-    </tr>
+	<tr>
+	  <th>ID</th>
+	  <th>地域名</th>
+	  <th>操作</th>
+	</tr>
   </thead>
   <tbody>
-    <% @regions.each do |region| %>
-      <tr>
-        <td><%= region.id %></td>
-        <td><%= region.name %></td>
-        <td>
-          <%= link_to "編集", edit_admin_region_path(region) %> |
-          <%= link_to "削除", admin_region_path(region), method: :delete, data: { confirm: "本当に削除しますか？" }, style: "color: red;" %>
-        </td>
-      </tr>
-    <% end %>
+	<% @regions.each do |region| %>
+	  <tr>
+		<td><%= region.id %></td>
+		<td><%= region.name %></td>
+		<td>
+		  <%= link_to "編集", edit_admin_region_path(region) %> |
+		  <%= link_to "削除", admin_region_path(region), method: :delete, data: { confirm: "本当に削除しますか？" }, style: "color: red;" %>
+		</td>
+	  </tr>
+	<% end %>
   </tbody>
 </table>

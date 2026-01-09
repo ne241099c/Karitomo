@@ -10,31 +10,31 @@
 
 <% if @reservations.present? %>
   <table class="list">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>開始日時</th>
-        <th>予約者</th>
-        <th>対象</th>
-        <th>ステータス</th>
-        <th>操作</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @reservations.each do |res| %>
-        <tr>
-          <td><%= res.id %></td>
-          <td><%= res.start_at.strftime("%Y/%m/%d %H:%M") %></td>
-          <td><%= link_to res.member.name, admin_member_path(res.member) %></td>
-          <td><%= link_to res.target_member.name, admin_member_path(res.target_member) %></td>
-          <td><%= I18n.t("activerecord.attributes.reservation.status.#{res.status}") %></td>
-          <td>
-            <%= link_to "詳細", admin_reservation_path(res) %> |
-            <%= link_to "チャット", chats_admin_reservation_path(res) %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
+	<thead>
+	  <tr>
+		<th>ID</th>
+		<th>開始日時</th>
+		<th>予約者</th>
+		<th>対象</th>
+		<th>ステータス</th>
+		<th>操作</th>
+	  </tr>
+	</thead>
+	<tbody>
+	  <% @reservations.each do |res| %>
+		<tr>
+		  <td><%= res.id %></td>
+		  <td><%= res.start_at.strftime("%Y/%m/%d %H:%M") %></td>
+		  <td><%= link_to res.member.name, admin_member_path(res.member) %></td>
+		  <td><%= link_to res.target_member.name, admin_member_path(res.target_member) %></td>
+		  <td><%= I18n.t("activerecord.attributes.reservation.status.#{res.status}") %></td>
+		  <td>
+			<%= link_to "詳細", admin_reservation_path(res) %> |
+			<%= link_to "チャット", chats_admin_reservation_path(res) %>
+		  </td>
+		</tr>
+	  <% end %>
+	</tbody>
   </table>
 <% else %>
   <p>予約データがありません。</p>

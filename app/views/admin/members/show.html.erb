@@ -8,28 +8,28 @@
 
 <table class="attr">
   <tr>
-    <th>氏名</th>
-    <td><%= @member.name %></td>
+	<th>氏名</th>
+	<td><%= @member.name %></td>
   </tr>
   <tr>
-    <th>区分</th>
-    <td><%= @member.special_member ? "特別会員" : "一般会員" %></td>
+	<th>区分</th>
+	<td><%= @member.special_member ? "特別会員" : "一般会員" %></td>
   </tr>
   <tr>
-    <th>メールアドレス</th>
-    <td><%= @member.email %></td>
+	<th>メールアドレス</th>
+	<td><%= @member.email %></td>
   </tr>
   <tr>
-    <th>誕生日</th>
-    <td><%= @member.birthday %></td>
+	<th>誕生日</th>
+	<td><%= @member.birthday %></td>
   </tr>
   <tr>
-    <th>性別</th>
-    <td><%= @member.sex == 1 ? "男性" : "女性" %></td>
+	<th>性別</th>
+	<td><%= @member.sex == 1 ? "男性" : "女性" %></td>
   </tr>
   <tr>
-    <th>自己紹介</th>
-    <td><%= simple_format(@member.comment) %></td>
+	<th>自己紹介</th>
+	<td><%= simple_format(@member.comment) %></td>
   </tr>
 </table>
 

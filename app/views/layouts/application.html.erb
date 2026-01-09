@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= page_title %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+	<title><%= page_title %></title>
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<%= csrf_meta_tags %>
+	<%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application" %>
-    <%= javascript_include_tag "application", defer: true %>
+	<%= stylesheet_link_tag "application" %>
+	<%= javascript_include_tag "application", defer: true %>
   </head>
 
   <body>
-    <div id="container">
-      <header>
-        <%= render "shared/header" %>
-      </header>
-      <main>
-      <% if flash.notice %>
-        <p class="notice"><%= flash.notice %></p>
-      <% end %>
-      <% if flash.alert %>
-        <p class="alert"><%= flash.alert %></p>
-      <% end %>
+	<div id="container">
+	  <header>
+		<%= render "shared/header" %>
+	  </header>
+	  <main>
+	  <% if flash.notice %>
+		<p class="notice"><%= flash.notice %></p>
+	  <% end %>
+	  <% if flash.alert %>
+		<p class="alert"><%= flash.alert %></p>
+	  <% end %>
 
-        <%= yield %>
-      </main>
-      <footer>
-        <%= render "shared/footer" %>
-      </footer>
-    </div>
+		<%= yield %>
+	  </main>
+	  <footer>
+		<%= render "shared/footer" %>
+	  </footer>
+	</div>
   </body>
 </html>

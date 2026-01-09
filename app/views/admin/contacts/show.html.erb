@@ -3,16 +3,16 @@
 
 <table class="attr">
   <tr>
-    <th>送信日時</th>
-    <td><%= @contact.created_at.strftime("%Y/%m/%d %H:%M") %></td>
+	<th>送信日時</th>
+	<td><%= @contact.created_at.strftime("%Y/%m/%d %H:%M") %></td>
   </tr>
   <tr>
-    <th>送信者</th>
-    <td><%= link_to @contact.member.name, admin_member_path(@contact.member) %> (<%= @contact.member.email %>)</td>
+	<th>送信者</th>
+	<td><%= link_to @contact.member.name, admin_member_path(@contact.member) %> (<%= @contact.member.email %>)</td>
   </tr>
   <tr>
-    <th>内容</th>
-    <td><%= simple_format(@contact.message) %></td>
+	<th>内容</th>
+	<td><%= simple_format(@contact.message) %></td>
   </tr>
 </table>
 

@@ -8,22 +8,22 @@
 
 <div class="chat-history" style="border: 1px solid #ccc; padding: 20px; border-radius: 5px;">
   <% if @chats.present? %>
-    <% @chats.each do |chat| %>
-        <div class="message" style="margin-bottom: 15px; border-bottom: 1px solid #eee;">
-            <p>
-            <strong><%= chat.member.name %></strong> 
-            <small style="color: #666;"><%= chat.created_at.strftime("%Y/%m/%d %H:%M") %></small>
-            </p>
-            <p style="padding-left: 10px;"><%= simple_format(chat.content) %></p>
-            <div>
-                <%= link_to "削除", admin_chat_path(chat), method: :delete, 
-                data: { confirm: "このメッセージを削除してよろしいですか？" }, 
-                style: "color: #e71d36; font-size: 0.8em; text-decoration: none; border: 1px solid #e71d36; padding: 2px 5px; border-radius: 3px;" %>
-            </div>
-        </div>
-    <% end %>
+	<% @chats.each do |chat| %>
+		<div class="message" style="margin-bottom: 15px; border-bottom: 1px solid #eee;">
+			<p>
+			<strong><%= chat.member.name %></strong> 
+			<small style="color: #666;"><%= chat.created_at.strftime("%Y/%m/%d %H:%M") %></small>
+			</p>
+			<p style="padding-left: 10px;"><%= simple_format(chat.content) %></p>
+			<div>
+				<%= link_to "削除", admin_chat_path(chat), method: :delete, 
+				data: { confirm: "このメッセージを削除してよろしいですか？" }, 
+				style: "color: #e71d36; font-size: 0.8em; text-decoration: none; border: 1px solid #e71d36; padding: 2px 5px; border-radius: 3px;" %>
+			</div>
+		</div>
+	<% end %>
   <% else %>
-    <p>チャットのやり取りはまだありません。</p>
+	<p>チャットのやり取りはまだありません。</p>
   <% end %>
 </div>
 

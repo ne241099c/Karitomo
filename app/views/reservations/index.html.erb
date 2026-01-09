@@ -10,53 +10,53 @@
 
 <% if @reservations.any? %>
   <table class="list-table">
-    <thead>
-      <tr>
-        <th>予約の種類</th>
-        <th>相手の名前</th>
-        <th>予約日時</th>
-        <th>状態</th>
-        <th>チャット</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @reservations.each do |reservation| %>
-        <% reservation.update_status_if_completed %>
-        <tr>
-          <td>
-            <% if reservation.member_id == current_member.id %>
-              <span style="color: blue;">あなたが予約</span>
-            <% else %>
-              <span style="color: orange;">あなたへの予約</span>
-            <% end %>
-          </td>
-          <td>
-            <% if reservation.member_id == current_member.id %>
-              <%= reservation.target_member.name %>
-            <% else %>
-              <%= reservation.member.name %>
-            <% end %>
-          </td>
-          <td><%= reservation.start_at.strftime("%Y/%m/%d %H:%M") %></td>
-          <td>
-            <% status_label = case reservation.status 
-               when 'pending' then '未定'
-               when 'approved' then '承諾'
-               when 'rejected' then '却下'
-               when 'completed' then '済み'
-               end %>
-            <%= status_label %>
-          </td>
-          <td>
-            <%= link_to "チャットへ", reservation_chats_path(reservation), class: "btn-secondary" %>
-          </td>
-          <td>
-            <%= link_to "詳細", reservation_path(reservation), class: "btn-sm" %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
+	<thead>
+	  <tr>
+		<th>予約の種類</th>
+		<th>相手の名前</th>
+		<th>予約日時</th>
+		<th>状態</th>
+		<th>チャット</th>
+		<th></th>
+	  </tr>
+	</thead>
+	<tbody>
+	  <% @reservations.each do |reservation| %>
+		<% reservation.update_status_if_completed %>
+		<tr>
+		  <td>
+			<% if reservation.member_id == current_member.id %>
+			  <span style="color: blue;">あなたが予約</span>
+			<% else %>
+			  <span style="color: orange;">あなたへの予約</span>
+			<% end %>
+		  </td>
+		  <td>
+			<% if reservation.member_id == current_member.id %>
+			  <%= reservation.target_member.name %>
+			<% else %>
+			  <%= reservation.member.name %>
+			<% end %>
+		  </td>
+		  <td><%= reservation.start_at.strftime("%Y/%m/%d %H:%M") %></td>
+		  <td>
+			<% status_label = case reservation.status 
+			   when 'pending' then '未定'
+			   when 'approved' then '承諾'
+			   when 'rejected' then '却下'
+			   when 'completed' then '済み'
+			   end %>
+			<%= status_label %>
+		  </td>
+		  <td>
+			<%= link_to "チャットへ", reservation_chats_path(reservation), class: "btn-secondary" %>
+		  </td>
+		  <td>
+			<%= link_to "詳細", reservation_path(reservation), class: "btn-sm" %>
+		  </td>
+		</tr>
+	  <% end %>
+	</tbody>
   </table>
 <% else %>
   <p>予約はありません。</p>

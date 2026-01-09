@@ -7,22 +7,22 @@
 
 <table class="list">
   <thead>
-    <tr>
-      <th>ID</th>
-      <th>タグ名</th>
-      <th>操作</th>
-    </tr>
+	<tr>
+	  <th>ID</th>
+	  <th>タグ名</th>
+	  <th>操作</th>
+	</tr>
   </thead>
   <tbody>
-    <% @tags.each do |tag| %>
-      <tr>
-        <td><%= tag.id %></td>
-        <td><%= tag.name %></td>
-        <td>
-          <%= link_to "編集", edit_admin_tag_path(tag) %> |
-          <%= link_to "削除", admin_tag_path(tag), method: :delete, data: { confirm: "本当に削除しますか？" }, style: "color: red;" %>
-        </td>
-      </tr>
-    <% end %>
+	<% @tags.each do |tag| %>
+	  <tr>
+		<td><%= tag.id %></td>
+		<td><%= tag.name %></td>
+		<td>
+		  <%= link_to "編集", edit_admin_tag_path(tag) %> |
+		  <%= link_to "削除", admin_tag_path(tag), method: :delete, data: { confirm: "本当に削除しますか？" }, style: "color: red;" %>
+		</td>
+	  </tr>
+	<% end %>
   </tbody>
 </table>

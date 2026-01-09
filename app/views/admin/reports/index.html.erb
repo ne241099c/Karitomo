@@ -3,29 +3,29 @@
 
 <% if @reports.present? %>
   <table class="list">
-    <thead>
-      <tr>
-        <th>発生日時</th>
-        <th>通報者</th>
-        <th>対象予約ID</th>
-        <th>内容（抜粋）</th>
-        <th>操作</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @reports.each do |report| %>
-        <tr>
-          <td><%= report.created_at.strftime("%Y/%m/%d %H:%M") %></td>
-          <td><%= link_to report.member.name, admin_member_path(report.member) %></td>
-          <td><%= link_to "##{report.reservation_id}", admin_reservation_path(report.reservation) %></td>
-          <td><%= truncate(report.content, length: 30) %></td>
-          <td>
-            <%= link_to "詳細", admin_report_path(report) %> |
-            <%= link_to "削除", admin_report_path(report), method: :delete, data: { confirm: "削除してよろしいですか？" }, style: "color: red;" %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
+	<thead>
+	  <tr>
+		<th>発生日時</th>
+		<th>通報者</th>
+		<th>対象予約ID</th>
+		<th>内容（抜粋）</th>
+		<th>操作</th>
+	  </tr>
+	</thead>
+	<tbody>
+	  <% @reports.each do |report| %>
+		<tr>
+		  <td><%= report.created_at.strftime("%Y/%m/%d %H:%M") %></td>
+		  <td><%= link_to report.member.name, admin_member_path(report.member) %></td>
+		  <td><%= link_to "##{report.reservation_id}", admin_reservation_path(report.reservation) %></td>
+		  <td><%= truncate(report.content, length: 30) %></td>
+		  <td>
+			<%= link_to "詳細", admin_report_path(report) %> |
+			<%= link_to "削除", admin_report_path(report), method: :delete, data: { confirm: "削除してよろしいですか？" }, style: "color: red;" %>
+		  </td>
+		</tr>
+	  <% end %>
+	</tbody>
   </table>
 <% else %>
   <p>通報はありません。</p>

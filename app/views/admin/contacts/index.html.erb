@@ -3,27 +3,27 @@
 
 <% if @contacts.present? %>
   <table class="list">
-    <thead>
-      <tr>
-        <th>送信日時</th>
-        <th>送信者</th>
-        <th>内容（抜粋）</th>
-        <th>操作</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @contacts.each do |contact| %>
-        <tr>
-          <td><%= contact.created_at.strftime("%Y/%m/%d %H:%M") %></td>
-          <td><%= link_to contact.member.name, admin_member_path(contact.member) %></td>
-          <td><%= truncate(contact.message, length: 30) %></td>
-          <td>
-            <%= link_to "詳細", admin_contact_path(contact) %> |
-            <%= link_to "削除", admin_contact_path(contact), method: :delete, data: { confirm: "削除してよろしいですか？" }, style: "color: red;" %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
+	<thead>
+	  <tr>
+		<th>送信日時</th>
+		<th>送信者</th>
+		<th>内容（抜粋）</th>
+		<th>操作</th>
+	  </tr>
+	</thead>
+	<tbody>
+	  <% @contacts.each do |contact| %>
+		<tr>
+		  <td><%= contact.created_at.strftime("%Y/%m/%d %H:%M") %></td>
+		  <td><%= link_to contact.member.name, admin_member_path(contact.member) %></td>
+		  <td><%= truncate(contact.message, length: 30) %></td>
+		  <td>
+			<%= link_to "詳細", admin_contact_path(contact) %> |
+			<%= link_to "削除", admin_contact_path(contact), method: :delete, data: { confirm: "削除してよろしいですか？" }, style: "color: red;" %>
+		  </td>
+		</tr>
+	  <% end %>
+	</tbody>
   </table>
 <% else %>
   <p>お問い合わせはありません。</p>

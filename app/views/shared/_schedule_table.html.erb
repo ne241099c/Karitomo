@@ -1,26 +1,26 @@
 <table class="schedule-table">
   <thead>
-    <tr>
-      <th>時間</th>
-      <% schedule_info[:days].each do |day| %>
-        <th><%= day %></th>
-      <% end %>
-    </tr>
+	<tr>
+	  <th>時間</th>
+	  <% schedule_info[:days].each do |day| %>
+		<th><%= day %></th>
+	  <% end %>
+	</tr>
   </thead>
   <tbody>
-    <% schedule_info[:hours].each do |hour| %>
-      <tr>
-        <th><%= "#{hour}:00" %></th>
-        <% schedule_info[:days].each do |day| %>
-          <% 
-             key = "#{day}:#{hour}"
-             is_checked = schedule_info[:checked_schedules].include?(key)
-          %>
-          <td>
-            <%= check_box_tag "member[free_candidates][]", key, is_checked, id: nil %>
-          </td>
-        <% end %>
-      </tr>
-    <% end %>
+	<% schedule_info[:hours].each do |hour| %>
+	  <tr>
+		<th><%= "#{hour}:00" %></th>
+		<% schedule_info[:days].each do |day| %>
+		  <% 
+			 key = "#{day}:#{hour}"
+			 is_checked = schedule_info[:checked_schedules].include?(key)
+		  %>
+		  <td>
+			<%= check_box_tag "member[free_candidates][]", key, is_checked, id: nil %>
+		  </td>
+		<% end %>
+	  </tr>
+	<% end %>
   </tbody>
 </table>

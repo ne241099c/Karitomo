@@ -4,24 +4,24 @@
 
 <% unless form.object.new_record? %>
   <div class="field">
-    <%= form.label :special_member, "特別会員になる" %>
-    <%= form.check_box :special_member, id: "special_member_checkbox" %>
+	<%= form.label :special_member, "特別会員になる" %>
+	<%= form.check_box :special_member, id: "special_member_checkbox" %>
   </div>
 
   <div id="special_member_fields" 
-       class="<%= form.object.special_member? ? '' : 'hidden' %>"
-       data-hidden-class="hidden">
-    <%= render "shared/special_member_fields", form: form, member: @member, tags: @tags, regions: @regions %>
+	   class="<%= form.object.special_member? ? '' : 'hidden' %>"
+	   data-hidden-class="hidden">
+	<%= render "shared/special_member_fields", form: form, member: @member, tags: @tags, regions: @regions %>
   </div>
 <% end %>
 
 <% if  @member.new_record? %>
   <div class="field">
-    <%= form.label :password, "パスワード" %>
-    <%= form.password_field :password %>
+	<%= form.label :password, "パスワード" %>
+	<%= form.password_field :password %>
   </div>
   <div class="field">
-    <%= form.label :password_confirmation, "パスワード（確認）" %>
-    <%= form.password_field :password_confirmation %>
+	<%= form.label :password_confirmation, "パスワード（確認）" %>
+	<%= form.password_field :password_confirmation %>
   </div>
 <% end %>

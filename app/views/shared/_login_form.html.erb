@@ -1,15 +1,15 @@
 <%= form_for :session, url: session_path do |form| %>
   <div class="field">
-    <%= form.label :email, "メールアドレス" %>
-    <%= form.text_field :email %>
+	<%= form.label :email, "メールアドレス" %>
+	<%= form.text_field :email %>
   </div>
 
   <div class="field">
-    <%= form.label :password, "パスワード" %>
-    <%= form.password_field :password %>
+	<%= form.label :password, "パスワード" %>
+	<%= form.password_field :password %>
   </div>
 
   <div class="actions">
-    <%= form.submit "ログイン" %>
+	<%= form.submit "ログイン" %>
   </div>
 <% end %>

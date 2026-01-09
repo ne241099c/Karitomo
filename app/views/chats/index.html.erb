@@ -3,36 +3,36 @@
 
 <div class="chat-info" style="margin-bottom: 20px;">
   <p>
-    <strong>予約相手:</strong> 
-    <% if @reservation.member_id == current_member.id %>
-      <%= @reservation.target_member.name %> さん
-    <% else %>
-      <%= @reservation.member.name %> さん
-    <% end %>
+	<strong>予約相手:</strong> 
+	<% if @reservation.member_id == current_member.id %>
+	  <%= @reservation.target_member.name %> さん
+	<% else %>
+	  <%= @reservation.member.name %> さん
+	<% end %>
   </p>
 </div>
 
 <div class="chat-section" style="border: 1px solid #eee; padding: 20px; border-radius: 5px;">
   <div id="chat-messages" 
-       style="height: 400px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-bottom: 20px; background-color: #fff;"
-       data-reservation-id="<%= @reservation.id %>"
-       data-current-user-id="<%= current_member.id %>">
-    
-    <% @chats.each do |chat| %>
-      <div style="text-align: <%= chat.member_id == current_member.id ? 'right' : 'left' %>; margin-bottom: 5px;">
-        <small style="color: #888;"><%= chat.member.name %> (<%= chat.created_at.strftime("%H:%M") %>)</small><br>
-        <span style="background: <%= chat.member_id == current_member.id ? '#d1e7dd' : '#f8f9fa' %>; display: inline-block; padding: 5px 10px; border-radius: 5px;">
-          <%= chat.content %>
-        </span>
-      </div>
-    <% end %>
+	   style="height: 400px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-bottom: 20px; background-color: #fff;"
+	   data-reservation-id="<%= @reservation.id %>"
+	   data-current-user-id="<%= current_member.id %>">
+	
+	<% @chats.each do |chat| %>
+	  <div style="text-align: <%= chat.member_id == current_member.id ? 'right' : 'left' %>; margin-bottom: 5px;">
+		<small style="color: #888;"><%= chat.member.name %> (<%= chat.created_at.strftime("%H:%M") %>)</small><br>
+		<span style="background: <%= chat.member_id == current_member.id ? '#d1e7dd' : '#f8f9fa' %>; display: inline-block; padding: 5px 10px; border-radius: 5px;">
+		  <%= chat.content %>
+		</span>
+	  </div>
+	<% end %>
   </div>
 
   <%= form_with model: [@reservation, @chat], local: false, id: "chat-form" do |f| %>
-    <div style="display: flex; gap: 10px;">
-      <%= f.text_field :content, id: "chat-input", style: "flex-grow: 1;", placeholder: "メッセージを入力" %>
-      <%= f.submit "送信", class: "btn-primary" %>
-    </div>
+	<div style="display: flex; gap: 10px;">
+	  <%= f.text_field :content, id: "chat-input", style: "flex-grow: 1;", placeholder: "メッセージを入力" %>
+	  <%= f.submit "送信", class: "btn-primary" %>
+	</div>
   <% end %>
 </div>
 

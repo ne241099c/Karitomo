@@ -46,6 +46,7 @@ Rails.application.routes.draw do
     resources :chats, only: [:destroy]
     resources :contacts
     resources :reports
+    resources :reviews, only: [:index, :destroy]
   end
 
   mount ActionCable.server => '/cable'

@@ -3,97 +3,97 @@
 
 <div class="actions" style="margin-bottom: 20px;">
   <%= link_to "この予約のチャットを見る",
-              chats_admin_reservation_path(@reservation),
-              class: "btn-primary" %>
+			  chats_admin_reservation_path(@reservation),
+			  class: "btn-primary" %>
 </div>
 
 <div class="admin-ban" style="margin-bottom: 20px; display: flex; gap: 10px;">
   <%= button_to "予約者をBAN",
-                ban_admin_member_path(@reservation.member),
-                method: :patch,
-                data: {
-                  confirm: "予約者『#{@reservation.member.name}』をBANします。未完了の予約は全てキャンセルされます。続行しますか？"
-                },
-                class: "btn-danger" %>
+				ban_admin_member_path(@reservation.member),
+				method: :patch,
+				data: {
+				  confirm: "予約者『#{@reservation.member.name}』をBANします。未完了の予約は全てキャンセルされます。続行しますか？"
+				},
+				class: "btn-danger" %>
 
   <%= button_to "対象者をBAN",
-                ban_admin_member_path(@reservation.target_member),
-                method: :patch,
-                data: {
-                  confirm: "対象者『#{@reservation.target_member.name}』をBANします。未完了の予約は全てキャンセルされます。続行しますか？"
-                },
-                class: "btn-danger" %>
+				ban_admin_member_path(@reservation.target_member),
+				method: :patch,
+				data: {
+				  confirm: "対象者『#{@reservation.target_member.name}』をBANします。未完了の予約は全てキャンセルされます。続行しますか？"
+				},
+				class: "btn-danger" %>
 
   <% if @reservation.member.is_banned || @reservation.target_member.is_banned %>
-    <span style="align-self: center; color: #e71d36; font-weight: bold;">
-      BAN済みのユーザーが含まれています
-    </span>
+	<span style="align-self: center; color: #e71d36; font-weight: bold;">
+	  BAN済みのユーザーが含まれています
+	</span>
   <% end %>
 </div>
 
 <table class="attr">
   <tr>
-    <th>ステータス</th>
-    <td>
-      <span class="status-tag <%= @reservation.status %>">
-        <%= I18n.t("activerecord.attributes.reservation.status.#{@reservation.status}") %>
-      </span>
-    </td>
+	<th>ステータス</th>
+	<td>
+	  <span class="status-tag <%= @reservation.status %>">
+		<%= I18n.t("activerecord.attributes.reservation.status.#{@reservation.status}") %>
+	  </span>
+	</td>
   </tr>
   <tr>
-    <th>予約者</th>
-    <td><%= link_to @reservation.member.name, [:admin, @reservation.member] %></td>
+	<th>予約者</th>
+	<td><%= link_to @reservation.member.name, [:admin, @reservation.member] %></td>
   </tr>
   <tr>
-    <th>対象者</th>
-    <td><%= link_to @reservation.target_member.name, [:admin, @reservation.target_member] %></td>
+	<th>対象者</th>
+	<td><%= link_to @reservation.target_member.name, [:admin, @reservation.target_member] %></td>
   </tr>
   <tr>
-    <th>開始日時</th>
-    <td><%= @reservation.start_at.strftime("%Y/%m/%d %H:%M") %></td>
+	<th>開始日時</th>
+	<td><%= @reservation.start_at.strftime("%Y/%m/%d %H:%M") %></td>
   </tr>
   <tr>
-    <th>利用時間</th>
-    <td><%= @reservation.hours %> 時間</td>
+	<th>利用時間</th>
+	<td><%= @reservation.hours %> 時間</td>
   </tr>
   <tr>
-    <th>合計金額</th>
-    <td><%= @reservation.hours * @reservation.target_member.price_per_hour %> 円</td>
+	<th>合計金額</th>
+	<td><%= @reservation.hours * @reservation.target_member.price_per_hour %> 円</td>
   </tr>
 </table>
 
 <% if @reservation.review.present? %>
   <h2 style="margin-top: 30px;">届いている評価</h2>
   <div class="info-box">
-    <p><strong>スコア:</strong> <%= "★" * @reservation.review.score %></p>
-    <p><%= simple_format(@reservation.review.content) %></p>
+	<p><strong>スコア:</strong> <%= "★" * @reservation.review.score %></p>
+	<p><%= simple_format(@reservation.review.content) %></p>
   </div>
 <% end %>
 
 <% if @reservation.reports.present? %>
   <h2 style="margin-top: 30px; color: #e71d36;">通報内容</h2>
   <% @reservation.reports.each do |report| %>
-    <div class="info-box"
-         style="border-left: 5px solid #e71d36; margin-bottom: 10px;">
-      <p><strong>通報者:</strong> <%= report.member.name %></p>
-      <p><%= simple_format(report.content) %></p>
-      <p>
-        <small><%= report.created_at.strftime("%Y/%m/%d %H:%M") %></small>
-      </p>
-    </div>
+	<div class="info-box"
+		 style="border-left: 5px solid #e71d36; margin-bottom: 10px;">
+	  <p><strong>通報者:</strong> <%= report.member.name %></p>
+	  <p><%= simple_format(report.content) %></p>
+	  <p>
+		<small><%= report.created_at.strftime("%Y/%m/%d %H:%M") %></small>
+	  </p>
+	</div>
   <% end %>
 <% end %>
 
 <% unless @reservation.completed? || @reservation.canceled? %>
   <div class="actions" style="margin-top: 30px;">
-    <%= button_to "予約をキャンセルする",
-                  cancel_admin_reservation_path(@reservation),
-                  method: :patch,
-                  data: {
-                    confirm: "この予約をキャンセルしますか？\n\n予約ID: #{@reservation.id}\n予約者: #{@reservation.member.name}\n対象者: #{@reservation.target_member.name}"
-                  },
-                  class: "btn-danger",
-                  style: "margin-bottom: 15px;" %>
+	<%= button_to "予約をキャンセルする",
+				  cancel_admin_reservation_path(@reservation),
+				  method: :patch,
+				  data: {
+					confirm: "この予約をキャンセルしますか？\n\n予約ID: #{@reservation.id}\n予約者: #{@reservation.member.name}\n対象者: #{@reservation.target_member.name}"
+				  },
+				  class: "btn-danger",
+				  style: "margin-bottom: 15px;" %>
   </div>
 <% end %>
 
