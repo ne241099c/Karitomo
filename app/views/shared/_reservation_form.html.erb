@@ -1,30 +1,30 @@
 <% if member.is_banned %>
-  <div class="alert">
-	この会員はBANされています。予約はできません。
-  </div>
-<% elsif current_member&.is_banned %>
-  <div class="alert">
-	あなたのアカウントはBANされています。予約はできません。
-  </div>
-<% else %>
-  <%= form_for(reservation, url: confirm_reservations_path, html: { id: "reservation-form" }) do |f| %>
-	<%= f.hidden_field :target_member_id, value: member.id %>
-	
-	<div class="selected-info">
-	  <div>
-		<strong>開始日時: </strong>
-		<span id="display-start-at">未選択</span>
-		<%= f.hidden_field :start_at, id: "input-start-at" %>
-	  </div>
-	  
-	  <div class="mt-10">
-		<strong>利用時間: </strong>
-		<%= f.select :hours, [1], {}, class: "form-control w-auto d-inline", id: "reservation-hours" %> 時間
-	  </div>
-	  
-	  <div class="mt-10">
-		<%= f.submit "この内容で予約する", class: "btn-primary", disabled: true, id: "submit-button" %>
-	  </div>
+	<div class="alert">
+		この会員はBANされています。予約はできません。
 	</div>
-  <% end %>
+<% elsif current_member&.is_banned %>
+	<div class="alert">
+		あなたのアカウントはBANされています。予約はできません。
+	</div>
+<% else %>
+	<%= form_for(reservation, url: confirm_reservations_path, html: { id: "reservation-form" }) do |f| %>
+		<%= f.hidden_field :target_member_id, value: member.id %>
+		
+		<div class="selected-info">
+		<div>
+			<strong>開始日時: </strong>
+			<span id="display-start-at">未選択</span>
+			<%= f.hidden_field :start_at, id: "input-start-at" %>
+		</div>
+		
+		<div class="mt-10">
+			<strong>利用時間: </strong>
+			<%= f.select :hours, [1], {}, class: "form-control w-auto d-inline", id: "reservation-hours" %> 時間
+		</div>
+		
+		<div class="mt-10">
+			<%= f.submit "この内容で予約する", class: "btn-primary", disabled: true, id: "submit-button" %>
+		</div>
+		</div>
+	<% end %>
 <% end %>
