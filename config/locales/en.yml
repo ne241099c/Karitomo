@@ -31,3 +31,13 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    attributes:
+      reservation:
+        status:
+          pending: "承認待ち"
+          approved: "承認済み"
+          rejected: "却下"
+          completed: "完了"
+
+  

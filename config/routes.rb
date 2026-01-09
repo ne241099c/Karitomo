@@ -33,12 +33,15 @@ Rails.application.routes.draw do
     root "top#index"
     resource :session, only: [:new, :create, :destroy]
     
-    resources :members        # 会員管理
-    resources :tags           # タグ管理
-    resources :regions        # 地域管理
-    resources :reservations   # 予約管理
-    resources :contacts       # お問い合わせ管理
-    resources :reports        # 通報管理
+    resources :members
+    resources :tags
+    resources :regions
+    resources :reservations, only: [:index, :show] do
+      get :chats, on: :member 
+    end
+    resources :chats, only: [:destroy]
+    resources :contacts
+    resources :reports
   end
 
   mount ActionCable.server => '/cable'

@@ -12,4 +12,9 @@ class Admin::ReservationsController < Admin::BaseController
   def show
     @reservation = Reservation.find(params[:id])
   end
+
+  def chats
+    @reservation = Reservation.find(params[:id])
+    @chats = @reservation.chats.order(:created_at)
+  end
 end
