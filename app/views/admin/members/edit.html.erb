@@ -3,53 +3,53 @@
 <h1>会員編集: <%= @member.name %></h1>
 
 <%= form_with(model: [:admin, @member], local: true) do |f| %>
-  <div class="field mb-20">
-	<%= f.label :name, "名前" %>
-	<%= f.text_field :name %>
-  </div>
-
-  <div class="field mb-20">
-	<%= f.label :email, "メールアドレス" %>
-	<%= f.email_field :email %>
-  </div>
-
-  <div class="field mb-20">
-	<label class="custom-checkbox-label">
-		<%= f.check_box :is_banned %>
-		<span class="checkmark"></span>
-		<span class="label-text">アカウントをBANする</span>
-	</label>
-	<p class="text-danger mt-10 small-text">
-		※ BANすると、この会員はログインできなくなり、予約も全てキャンセルされます。
-	</p>
-  </div>
-
-  <div class="field mb-20">
-	<label class="custom-checkbox-label">
-		<%= f.check_box :special_member %>
-		<span class="checkmark"></span>
-		<span class="label-text">特別会員として扱う</span>
-	</label>
-  </div>
-
-  <div class="field mb-20">
-    <%= f.label :comment, "自己紹介" %>
-    <%= f.text_area :comment %>
-  </div>
-
-  <div id="special_member_fields" class="<%= @member.special_member? ? '' : 'hidden' %>">
-	<%= render 'tag_selection' %>
-	<%= render 'region_selecion' %>
+	<div class="field mb-20">
+		<%= f.label :name, "名前" %>
+		<%= f.text_field :name %>
+	</div>
 
 	<div class="field mb-20">
-		<%= f.label :price_per_hour, "時給" %>
-		<%= f.number_field :price_per_hour %>
+		<%= f.label :email, "メールアドレス" %>
+		<%= f.email_field :email %>
 	</div>
-  </div>
 
-  <div class="actions">
-	<%= f.submit "更新する", class: "btn-primary" %>
-  </div>
+	<div class="field mb-20">
+		<label class="custom-checkbox-label">
+			<%= f.check_box :is_banned %>
+			<span class="checkmark"></span>
+			<span class="label-text">アカウントをBANする</span>
+		</label>
+		<p class="text-danger mt-10 small-text">
+			※ BANすると、この会員はログインできなくなり、予約も全てキャンセルされます。
+		</p>
+	</div>
+
+	<div class="field mb-20">
+		<label class="custom-checkbox-label">
+			<%= f.check_box :special_member, id: "special_member_checkbox" %>
+			<span class="checkmark"></span>
+			<span class="label-text">特別会員として扱う</span>
+		</label>
+	</div>
+
+	<div class="field mb-20">
+		<%= f.label :comment, "自己紹介" %>
+		<%= f.text_area :comment %>
+	</div>
+
+	<div id="special_member_fields" class="<%= @member.special_member? ? '' : 'hidden' %>">
+		<%= render 'tag_selection' %>
+		<%= render 'region_selecion' %>
+
+		<div class="field mb-20">
+			<%= f.label :price_per_hour, "時給" %>
+			<%= f.number_field :price_per_hour %>
+		</div>
+	</div>
+
+	<div class="actions">
+		<%= f.submit (f.object.new_record? ? "登録する" : "更新する"), class: "btn-primary" %>
+	</div>
 <% end %>
 
 <div class="actions mt-20">

@@ -1,41 +1,41 @@
 <div class="schedule-container">
-  <table class="schedule-table">
-	<thead>
-	  <tr>
-		<th>時間</th>
-		<% dates.each do |date| %>
-		  <th>
-			<%= date.strftime("%-m/%-d") %>
-			<br>
-			(<%= %w(日 月 火 水 木 金 土)[date.wday] %>)
-		  </th>
-		<% end %>
-	  </tr>
-	</thead>
-	<tbody>
-	  <% (0..23).each do |hour| %>
-		<tr>
-		  <th><%= "#{hour}:00" %></th>
-		  <% dates.each do |date| %>
-			<% 
-			   current_datetime = Time.zone.parse("#{date} #{hour}:00:00")
-			   is_reservable = member.reservable?(current_datetime)
-			%>
-			<td class="<%= is_reservable ? 'reservable' : 'not-reservable' %>">
-			  <% if is_reservable %>
-				<a href="javascript:void(0)" 
-				   class="reservation-slot" 
-				   data-datetime="<%= current_datetime %>"
-				   data-display="<%= current_datetime.strftime('%Y年%m月%d日 %H:%M') %>">
-				   ◎
-				</a>
-			  <% else %>
-				<span class="text-disabled">-</span>
-			  <% end %>
-			</td>
-		  <% end %>
-		</tr>
-	  <% end %>
-	</tbody>
-  </table>
+  	<table class="schedule-table">
+		<thead>
+			<tr>
+				<th>時間</th>
+				<% dates.each do |date| %>
+					<th>
+						<%= date.strftime("%-m/%-d") %>
+						<br>
+						(<%= %w(日 月 火 水 木 金 土)[date.wday] %>)
+					</th>
+				<% end %>
+			</tr>
+		</thead>
+		<tbody>
+			<% (0..23).each do |hour| %>
+				<tr>
+					<th><%= "#{hour}:00" %></th>
+					<% dates.each do |date| %>
+						<% 
+						current_datetime = Time.zone.parse("#{date} #{hour}:00:00")
+						is_reservable = member.reservable?(current_datetime)
+						%>
+						<td class="<%= is_reservable ? 'reservable' : 'not-reservable' %>">
+							<% if is_reservable %>
+								<a href="javascript:void(0)" 
+								class="reservation-slot" 
+								data-datetime="<%= current_datetime %>"
+								data-display="<%= current_datetime.strftime('%Y年%m月%d日 %H:%M') %>">
+								◎
+								</a>
+							<% else %>
+								<span class="text-disabled">-</span>
+							<% end %>
+						</td>
+					<% end %>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
 </div>
