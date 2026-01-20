@@ -65,7 +65,7 @@ class ReservationsController < ApplicationController
   	private
 
 	def reservation_params
-		params.require(:reservation).permit(:target_member_id, :start_at, :hours)
+		params.require(:reservation).permit(:target_member_id, :start_at, :hours, :comment)
 	end
 	
 	def logged_in_member
