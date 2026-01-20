@@ -15,6 +15,7 @@ class Reservation < ApplicationRecord
 	validate :check_availability, on: :create
 	validates :start_at, presence: true
 	validates :hours, presence: true, numericality: { greater_than: 0 }
+	validates :comment, length: { maximum: 200 }
 
 	validate :check_blocking_status
 	validate :check_ban_status, on: :create
