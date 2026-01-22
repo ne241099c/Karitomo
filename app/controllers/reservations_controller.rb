@@ -28,18 +28,20 @@ class ReservationsController < ApplicationController
 	def confirm
 		@reservation = current_member.reservations.build(reservation_params)
 		@target_member = Member.find(reservation_params[:target_member_id])
+		@dates = (Date.tomorrow..Date.tomorrow + 13.days).to_a
 
 		if @reservation.invalid?(:create)
-			@dates = (Date.today..Date.today + 13.days).to_a
 			flash.now[:alert] = "入力内容に不備があります: " + @reservation.errors.full_messages.join(", ")
 			render 'new'
+		else
+			render 'confirm'
 		end
 	end
 
 	def new
         @target_member = Member.find(params[:member_id])
         @reservation = current_member.reservations.build(target_member: @target_member)
-        @dates = (Date.today..Date.today + 13.days).to_a
+        @dates = (Date.tomorrow..Date.tomorrow + 13.days).to_a
     end
 
 	def create
@@ -47,9 +49,9 @@ class ReservationsController < ApplicationController
 		@reservation = current_member.reservations.build(reservation_params)
 
 		if @reservation.save
-			redirect_to reservation_path(@reservation, created: true)
+			redirect_to reservation_path(@reservation, created: true), notice: "予約が完了しました！"
 		else
-			@dates = (Date.today..Date.today + 13.days).to_a
+			@dates = (Date.tomorrow..Date.tomorrow + 13.days).to_a
 			render :new
 		end
 	end
@@ -72,7 +74,7 @@ class ReservationsController < ApplicationController
   	private
 
 	def reservation_params
-		params.require(:reservation).permit(:target_member_id, :start_at, :hours)
+		params.require(:reservation).permit(:target_member_id, :start_at, :hours, :comment)
 	end
 	
 	def logged_in_member

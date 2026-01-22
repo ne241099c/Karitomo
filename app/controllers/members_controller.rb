@@ -19,6 +19,10 @@ class MembersController < ApplicationController
 			@members = @members.where(id: current_member.bookmarked_members.select(:id))
 		end
 
+		if params[:sex].present?
+			@members = @members.where(sex: params[:sex])
+		end
+
 		selected_tag_ids = params[:tag_ids]&.compact_blank
 
 		if selected_tag_ids.present?
@@ -50,7 +54,7 @@ class MembersController < ApplicationController
 	
 	def show
 		@member = Member.find(params[:id])
-		@dates = (Date.today..Date.today + 13.days).to_a
+		@dates = (Date.tomorrow..Date.tomorrow + 13.days).to_a
 		@reservation = Reservation.new
 	end
 end

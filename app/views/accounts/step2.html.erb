@@ -1,0 +1,45 @@
+<% @page_title = "新規会員登録 - ステップ 2/2" %>
+
+<h1>詳細情報の入力</h1>
+
+<%= form_with(model: @member, url: :account, local: true) do |f| %>
+    <%= render "shared/error_messages", object: f.object %>
+
+    <%= f.hidden_field :email %>
+    <%= f.hidden_field :password %>
+    <%= f.hidden_field :password_confirmation %>
+
+    <div class="field mb-20">
+        <%= f.label :name, "名前" %>
+        <%= f.text_field :name %>
+    </div>
+
+    <div class="field mb-20">
+        <%= f.label :birthday, "誕生日" %>
+            <%= f.date_select :birthday, 
+                start_year: 1950, 
+                end_year: Time.current.year,
+                use_month_numbers: true,
+                prompt: "--" %>
+    </div>
+
+    <div class="field mb-20">
+        <%= f.label :sex, "性別" %>
+        <div class="radio-group">
+            <%= f.radio_button :sex, 1 %> <%= f.label :sex_1, "男性" %>
+            <%= f.radio_button :sex, 2 %> <%= f.label :sex_2, "女性" %>
+        </div>
+    </div>
+
+    <div class="field mb-20">
+        <%= f.label :comment, "自己紹介" %>
+        <%= f.text_area :comment, rows: 5, placeholder: "趣味や活動内容などを記入してください" %>
+    </div>
+
+    <div class="actions">
+        <%= f.submit "会員登録を完了する", class: "btn-primary" %>
+        <div class="mt-10">
+            <%= link_to "入力をやり直す", new_account_path, class: "btn-secondary" %>
+        </div>
+    </div>
+<% end %>

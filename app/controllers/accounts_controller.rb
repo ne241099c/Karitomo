@@ -16,11 +16,19 @@ class AccountsController < ApplicationController
 
 	def create
 		@member = Member.new(member_params)
-		if @member.save
-			cookies_login(@member.id)
-			redirect_to :account, notice: "会員を登録しました。"
+		if params[:next_step]
+      		if @member.valid?
+				render "step2"
+			else
+				render "new"
+			end
 		else
-			render :new
+			if @member.valid?(:step2) && @member.save
+				cookies_login(@member.id)
+				redirect_to root_path, notice: "会員登録が完了しました"
+			else
+				render "step2"
+			end
 		end
 	end
 

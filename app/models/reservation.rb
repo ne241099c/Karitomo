@@ -9,12 +9,12 @@ class Reservation < ApplicationRecord
 
 	enum status: { pending: 0, approved: 1, rejected: 2, completed: 3, canceled: 4 }
 
-	# 管理画面からの強制ステータス変更を許可するためのフラグ
 	attr_accessor :admin_override
 
 	validate :check_availability, on: :create
 	validates :start_at, presence: true
 	validates :hours, presence: true, numericality: { greater_than: 0 }
+	validates :comment, length: { maximum: 200 }
 
 	validate :check_blocking_status
 	validate :check_ban_status, on: :create
@@ -53,7 +53,6 @@ class Reservation < ApplicationRecord
 		end
 	end
 
-	# canceled への変更、または canceled からの復帰は管理画面のみ許可
 	def admin_only_canceled_change
 		return unless will_save_change_to_status?
 
