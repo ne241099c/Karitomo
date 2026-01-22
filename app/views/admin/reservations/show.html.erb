@@ -83,16 +83,26 @@
     <% end %>
 <% end %>
 
-<% unless @reservation.completed? || @reservation.canceled? %>
+<% unless @reservation.completed? %>
     <div class="actions mt-30">
-        <%= button_to "予約をキャンセルする",
-                    cancel_admin_reservation_path(@reservation),
-                    method: :patch,
-                    data: {
-                        confirm: "この予約をキャンセルしますか？\n\n予約ID: #{@reservation.id}\n予約者: #{@reservation.member.name}\n対象者: #{@reservation.target_member.name}"
-                    },
-                    class: "btn-danger mb-20" %>
+        <% if @reservation.admin_canceled? %>
+            <%= button_to "キャンセルを取り消す",
+                        restore_admin_reservation_path(@reservation),
+                        method: :patch,
+                        data: {
+                            confirm: "この予約のキャンセルを取り消しますか？\n\n予約ID: #{@reservation.id}\n予約者: #{@reservation.member.name}\n対象者: #{@reservation.target_member.name}"
+                        },
+                        class: "btn-secondary mb-20" %>
+        <% elsif !@reservation.canceled? %>
+            <%= button_to "予約をキャンセルする",
+                        cancel_admin_reservation_path(@reservation),
+                        method: :patch,
+                        data: {
+                            confirm: "この予約をキャンセルしますか？\n\n予約ID: #{@reservation.id}\n予約者: #{@reservation.member.name}\n対象者: #{@reservation.target_member.name}"
+                        },
+                        class: "btn-danger mb-20" %>
+        <% end %>
     </div>
 <% end %>
 
-<%= link_to "予約管理一覧へ戻る", admin_reservations_path %>
+<%= link_to "予約一覧へ戻る", admin_reservations_path %>

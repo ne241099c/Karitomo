@@ -1,0 +1,40 @@
+<% @page_title = "ブロック一覧" %>
+
+<h1><%= @page_title %></h1>
+
+<div class="actions mb-20">
+	<%= link_to "管理TOPに戻る", :admin_root %>
+</div>
+
+<% if @blocked_members.any? %>
+	<table class="list">
+		<thead>
+			<tr>
+				<th>ブロック者</th>
+				<th>ブロック対象者</th>
+				<th>ブロック日時</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @blocked_members.each do |blocked| %>
+				<tr>
+					<td><%= link_to blocked.member.name, [:admin, blocked.member] %></td>
+					<td><%= link_to blocked.blocked.name, [:admin, blocked.blocked] %></td>
+					<td><%= blocked.created_at.strftime("%Y年%m月%d日 %H:%M") %></td>
+					<td>
+						<%= button_to "ブロック解除", admin_blocked_member_path(blocked), method: :delete,
+							data: { confirm: "このブロックを解除しますか？" },
+							class: "btn-secondary btn-small", form: { style: "display:inline" } %>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+<% else %>
+	<p>ブロック情報はありません。</p>
+<% end %>
+
+<div class="actions">
+	<%= link_to "管理TOPに戻る", :admin_root %>
+</div>

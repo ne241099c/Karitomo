@@ -1,2 +1,70 @@
-<h1>Top#index</h1>
-<p>Find me in app/views/top/index.html.erb</p>
+<h1>トップページ</h1>
+
+<% if current_member %>
+	<div class="welcome-section mb-30">
+		<h2>ようこそ、<%= current_member.name %> さん</h2>
+	</div>
+<% else %>
+	<div class="welcome-section mb-30">
+		<h2>Karitomoへようこそ</h2>
+		<p>
+			<%= link_to "ログイン", login_path, class: "btn-primary" %> | 
+			<%= link_to "新規登録", new_account_path, class: "btn-secondary" %>
+		</p>
+	</div>
+<% end %>
+
+<% if @recommended_members.any? %>
+	<div class="recommended-section">
+		<h2>おすすめの会員</h2>
+		<% @recommended_members.each do |member| %>
+			<table class="list member-table mb-20">
+				<tbody>
+					<% if member.profile_image.attached? %>
+						<tr>
+							<th style="width: 120px;">プロフィール画像</th>
+							<td>
+								<%= image_tag member.profile_image, alt: "#{member.name}のプロフィール画像", style: "max-width: 300px; max-height: 300px;" %>
+							</td>
+						</tr>
+					<% end %>
+					<tr>
+						<th style="width: 120px;">氏名</th>
+						<td><%= link_to member.name, member_path(member) %></td>
+					</tr>
+					<tr>
+						<th style="width: 120px;">性別</th>
+						<td><%= member.sex == 1 ? "男性" : "女性" %></td>
+					</tr>
+					<tr>
+						<th style="width: 120px;">時給</th>
+						<td><%= member.price_per_hour %> 円</td>
+					</tr>
+					<% if member.tags.any? %>
+						<tr>
+							<th style="width: 120px;">タグ</th>
+							<td>
+								<% member.tags.each do |tag| %>
+									<span class="tag-badge"><%= tag.name %></span>
+								<% end %>
+							</td>
+						</tr>
+					<% end %>
+					<% if member.comment.present? %>
+						<tr>
+							<th style="width: 120px;">自己紹介</th>
+							<td><%= simple_format(member.comment) %></td>
+						</tr>
+					<% end %>
+					<tr>
+						<th style="width: 120px;">操作</th>
+						<td>
+							<%= link_to "詳細を見る", member_path(member), class: "btn-small btn-primary" %>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		<% end %>
+	</div>
+<% end %>
+

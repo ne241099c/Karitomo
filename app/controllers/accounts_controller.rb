@@ -54,7 +54,8 @@ class AccountsController < ApplicationController
 		:password, 
 		:password_confirmation, 
 		:special_member, 
-		:price_per_hour, 
+		:price_per_hour,
+		:profile_image,
 		tag_ids: [], 
 		region_ids: [], 
 		free_candidates: []

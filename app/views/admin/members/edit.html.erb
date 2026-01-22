@@ -38,8 +38,8 @@
 	</div>
 
 	<div id="special_member_fields" class="<%= @member.special_member? ? '' : 'hidden' %>">
-		<%= render 'tag_selection' %>
-		<%= render 'region_selecion' %>
+		<%= render 'edit_tags', f: f %>
+		<%= render 'edit_regions', f: f %>
 
 		<div class="field mb-20">
 			<%= f.label :price_per_hour, "時給" %>

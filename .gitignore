@@ -31,3 +31,5 @@
 # Ignore configuration file for MacOS.
 .DS_Store
 
+# Ignore uploaded files
+/storage/*

@@ -16,14 +16,15 @@
 				<nav class="admin-nav">
 					<% if current_admin %>
 						<ul>
-						<li><%= link_to "ダッシュボード", :admin_root %></li>  
+						<li><%= link_to "TOP", :admin_root %></li>  
 						<li><%= link_to "会員一覧", :admin_members %></li>
-						<li><%= link_to "タグ管理", :admin_tags %></li>
-						<li><%= link_to "地域管理", :admin_regions %></li>
-						<li><%= link_to "予約管理", :admin_reservations %></li>
+						<li><%= link_to "タグ", :admin_tags %></li>
+						<li><%= link_to "地域", :admin_regions %></li>
+						<li><%= link_to "予約", :admin_reservations %></li>
 						<li><%= link_to "お問い合わせ", :admin_contacts %></li>
 						<li><%= link_to "通報", :admin_reports %></li>
-						<li><%= link_to "評価管理", :admin_reviews %></li>
+						<li><%= link_to "評価", :admin_reviews %></li>
+						<li><%= link_to "ブロック一覧", :admin_blocked_members %></li>
 						<li><%= button_to "ログアウト", :admin_session, method: :delete, class: "link-button" %></li>
 						</ul>
 					<% end %>

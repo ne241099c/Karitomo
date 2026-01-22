@@ -41,17 +41,20 @@ Rails.application.routes.draw do
     resources :members do
       patch :ban, on: :member
       patch :unban, on: :member
+      get :chats, on: :member
     end
     resources :tags
     resources :regions
     resources :reservations, only: [:index, :show] do
       get :chats, on: :member
       patch :cancel, on: :member
+      patch :restore, on: :member
     end
     resources :chats, only: [:destroy]
     resources :contacts
     resources :reports
     resources :reviews, only: [:index, :destroy]
+    resources :blocked_members, only: [:index, :destroy]
   end
 
   mount ActionCable.server => '/cable'

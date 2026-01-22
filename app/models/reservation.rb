@@ -73,6 +73,8 @@ class Reservation < ApplicationRecord
 	end
 
 	def check_blocking_status
+		return if admin_override
+		
 		if member.blocking?(target_member)
 			errors.add(:base, "このユーザーはブロックしているため予約できません")
 		end

@@ -17,6 +17,15 @@
 <% end %>
 
 <table class="list">
+	<% if @member.profile_image.attached? %>
+		<tr>
+			<th>プロフィール画像</th>
+			<td>
+				<%= image_tag @member.profile_image, alt: "#{@member.name}のプロフィール画像", style: "max-width: 400px; max-height: 400px;" %>
+			</td>
+		</tr>
+	<% end %>
+	
 	<tr>
 		<th>名前</th>
 		<td><%= @member.name %></td>

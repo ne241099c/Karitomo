@@ -1,0 +1,12 @@
+<div class="field mb-20">
+	<label>タグ</label>
+	<div class="checkbox-group">
+		<% @tags.each do |tag| %>
+			<label class="custom-checkbox-label">
+				<%= f.check_box :tag_ids, { multiple: true }, tag.id, nil %>
+				<span class="checkmark"></span>
+				<span class="label-text"><%= tag.name %></span>
+			</label>
+		<% end %>
+	</div>
+</div>

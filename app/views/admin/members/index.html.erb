@@ -50,7 +50,7 @@
                 <td><%= member.special_member ? "特別" : "一般" %></td>
                 <td><%= member.email %></td>
                 <td>
-                    <%= link_to "予約管理", admin_reservations_path(member_id: member.id), class: "btn-small" %> |
+                    <%= link_to "予約", admin_reservations_path(member_id: member.id), class: "btn-small" %> |
                     <%= link_to "詳細", [:admin, member] %> |
                     <% if member.is_banned %>
                         <%= button_to "BAN解除", unban_admin_member_path(member), method: :patch,

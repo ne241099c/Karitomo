@@ -34,8 +34,23 @@ class Admin::ReservationsController < Admin::BaseController
         end
 
         @reservation.admin_override = true
-        if @reservation.update(status: :canceled)
+        if @reservation.update(status: :admin_canceled)
             redirect_to admin_reservation_path(@reservation), notice: "予約をキャンセルしました。"
+        else
+            redirect_to admin_reservation_path(@reservation), alert: @reservation.errors.full_messages.join("、")
+        end
+    end
+
+    def restore
+        @reservation = Reservation.find(params[:id])
+        unless @reservation.admin_canceled?
+            redirect_to admin_reservation_path(@reservation), alert: "この予約はキャンセルされていません。"
+            return
+        end
+
+        @reservation.admin_override = true
+        if @reservation.update(status: :pending)
+            redirect_to admin_reservation_path(@reservation), notice: "予約のキャンセルを取り消しました。"
         else
             redirect_to admin_reservation_path(@reservation), alert: @reservation.errors.full_messages.join("、")
         end
