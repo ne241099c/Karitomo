@@ -1,0 +1,38 @@
+<% @page_title = "通報" %>
+<h1>予約に関する問題を通報する</h1>
+
+<div class="report-form-container">
+	<div class="mb-20">
+		<strong>予約番号:</strong> <%= @reservation.id %>
+	</div>
+	<div class="mb-20">
+		<strong>予約日時:</strong> 
+		<%= @reservation.start_at.strftime("%Y年%m月%d日 %H:%M") %> 〜 
+		<%= @reservation.end_at.strftime("%H:%M") %>
+	</div>
+	<div class="mb-20">
+		<% if @reservation.member_id == current_member.id %>
+			<strong>相手:</strong> <%= @reservation.target_member.name %> さん
+		<% else %>
+			<strong>相手:</strong> <%= @reservation.member.name %> さん
+		<% end %>
+	</div>
+
+	<div class="form-section">
+		<%= form_with(model: [@reservation, @report], url: reservation_report_path(@reservation), local: true) do |f| %>
+			<%= render "shared/error_messages", object: @report %>
+
+			<div class="field mb-20">
+				<%= f.label :content, "通報内容" %>
+				<p class="text-muted text-sm mb-10">具体的な問題や懸念事項をお書きください</p>
+				<%= f.text_area :content, placeholder: "例：時間に遅刻された、対応が不適切だった、など", rows: 8, class: "form-control" %>
+				<small class="text-muted">300文字以内</small>
+			</div>
+
+			<div class="actions">
+				<%= f.submit "通報を送信する", class: "btn-danger" %>
+				<%= link_to "キャンセル", reservation_path(@reservation), class: "btn-secondary" %>
+			</div>
+		<% end %>
+	</div>
+</div>

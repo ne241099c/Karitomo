@@ -1,0 +1,33 @@
+<% @page_title = "ブックマーク一覧" %>
+<h1><%= @page_title %></h1>
+
+<% if @bookmarked_members.present? %>
+	<table class="list">
+		<thead>
+			<tr>
+				<th>ユーザ名</th>
+				<th>性別</th>
+				<th>自己紹介</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @bookmarked_members.each do |member| %>
+				<tr>
+					<td><%= link_to member.name, member_path(member) %></td>
+					<td><%= member.sex == 1 ? "男性" : "女性" %></td>
+					<td><%= truncate(member.comment, length: 50) %></td>
+					<td>
+						<%= button_to "ブックマーク解除", member_bookmark_path(member), method: :delete, class: "btn-secondary btn-sm" %>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+<% else %>
+	<p>ブックマークした会員がありません。</p>
+<% end %>
+
+<div class="mt-20">
+	<%= link_to "戻る", root_path, class: "btn-secondary" %>
+</div>

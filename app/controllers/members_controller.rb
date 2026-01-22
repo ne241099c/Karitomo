@@ -2,7 +2,8 @@ class MembersController < ApplicationController
 	def index
 		@tags = Tag.all
 		@regions = Region.all
-		@members = Member.where(special_member: true)        
+		@members = Member.where(special_member: true)
+		@members = @members.where.not(id: current_member.blocking_members.select(:id)) if current_member
 	end
 
 	def search
@@ -10,6 +11,7 @@ class MembersController < ApplicationController
 		@regions = Region.all
 	
 		@members = Member.where(special_member: true)
+		@members = @members.where.not(id: current_member.blocking_members.select(:id)) if current_member
 
 		if params[:search_name].present?
 			@members = @members.search_name(params[:search_name])

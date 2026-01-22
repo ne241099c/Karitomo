@@ -1,6 +1,10 @@
 class BookmarksController < ApplicationController
 	before_action :login_required
 
+	def index
+		@bookmarked_members = current_member.bookmarked_members
+	end
+
 	def create
 		@target_member = Member.find(params[:member_id])
 		current_member.bookmarks.create(bookmarked_id: @target_member.id)

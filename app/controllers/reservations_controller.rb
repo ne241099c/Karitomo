@@ -64,10 +64,54 @@ class ReservationsController < ApplicationController
 			return redirect_to reservation_path(@reservation)
 		end
 
-		if @reservation.update(status: params[:status])
+		new_status = case params[:status]
+					when 'approved' then 'approved_unpaid'
+					when 'rejected' then 'rejected'
+					when 'pending' then 'pending'
+					else params[:status]
+					end
+
+		if @reservation.update(status: new_status)
 			redirect_to reservation_path(@reservation), notice: "ステータスを更新しました", status: :see_other
 		else
 			redirect_to reservation_path(@reservation), alert: "更新できませんでした: " + @reservation.errors.full_messages.join("、"), status: :see_other
+		end
+	end
+
+	def cancel
+		@reservation = Reservation.find(params[:id])
+
+		if @reservation.member_id != current_member.id
+			flash[:alert] = "この予約をキャンセルする権限がありません"
+			return redirect_to reservation_path(@reservation)
+		end
+
+		@reservation.admin_override = true
+		if @reservation.update(status: :canceled)
+			redirect_to reservations_path, notice: "予約をキャンセルしました", status: :see_other
+		else
+			flash[:alert] = "キャンセルできませんでした"
+			return redirect_to reservation_path(@reservation)
+		end
+	end
+
+	def pay
+		@reservation = Reservation.find(params[:id])
+
+		unless @reservation.member_id == current_member.id
+			flash[:alert] = "この予約の支払い権限がありません"
+			return redirect_to reservation_path(@reservation)
+		end
+
+		unless @reservation.approved_unpaid?
+			flash[:alert] = "支払い可能な状態ではありません"
+			return redirect_to reservation_path(@reservation)
+		end
+
+		if @reservation.update(status: :approved_paid)
+			redirect_to reservation_path(@reservation), notice: "支払いが完了しました", status: :see_other
+		else
+			redirect_to reservation_path(@reservation), alert: "支払い処理に失敗しました: " + @reservation.errors.full_messages.join("、"), status: :see_other
 		end
 	end
 

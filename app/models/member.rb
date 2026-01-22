@@ -27,12 +27,12 @@ class Member < ApplicationRecord
 
 	has_many :contacts, dependent: :destroy
 
-	validates :name,length: { maximum: 16 }, presence: true, on: :step2
+	validates :name, length: { maximum: 16 }, presence: true, on: [:step2, :edit]
 	validates :email, presence: true, uniqueness: true
-	validates :birthday, presence: true, on: :step2
-	validates :sex, presence: true, on: :step2
-	validate  :must_be_at_least_18, on: :step2
-	validates :comment, length: { maximum: 500 }
+	validates :birthday, presence: true, on: [:step2, :edit]
+	validates :sex, presence: true, on: [:step2, :edit]
+	validate  :must_be_at_least_18, on: [:step2, :edit]
+	validates :comment, length: { maximum: 200 }
 	validates :password, presence: true, length: { minimum: 8 }, on: :create
 	validates :email, email: { allow_blank: true, mode: :strict }, length: { maximum: 32 }
 

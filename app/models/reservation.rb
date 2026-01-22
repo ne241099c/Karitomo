@@ -7,7 +7,15 @@ class Reservation < ApplicationRecord
 	has_one :review, dependent: :destroy
 	has_many :reports, dependent: :destroy
 
-	enum status: { pending: 0, approved: 1, rejected: 2, completed: 3, canceled: 4 }
+	enum status: {
+		pending: 0,
+		rejected: 1,
+		approved_unpaid: 2,
+		approved_paid: 3,
+		completed: 4,
+		canceled: 5,
+		admin_canceled: 6
+	}
 
 	attr_accessor :admin_override
 
@@ -30,7 +38,7 @@ class Reservation < ApplicationRecord
 	end
 
 	def update_status_if_completed
-		if approved? && Time.current > end_at
+		if approved_paid? && Time.current > end_at
 			update(status: :completed)
 		end
 	end
@@ -40,9 +48,9 @@ class Reservation < ApplicationRecord
 	def manage_reserved_dates_on_status_change
 		return unless saved_change_to_status?
 
-		if rejected? || canceled?
+		if rejected? || canceled? || admin_canceled?
 			reserved_dates.destroy_all
-		elsif status_before_last_save == "rejected" || status_before_last_save == "canceled"
+		elsif status_before_last_save == "rejected" || status_before_last_save == "canceled" || status_before_last_save == "admin_canceled"
 			create_reserved_dates_records
 		end
 	end
@@ -59,7 +67,7 @@ class Reservation < ApplicationRecord
 		new_status = self.status
 		prev_status = status_was
 
-		if (new_status == "canceled" || prev_status == "canceled") && !admin_override
+		if ((new_status == "canceled" || new_status == "admin_canceled" || prev_status == "canceled" || prev_status == "admin_canceled") && !admin_override)
 			errors.add(:status, "キャンセルの変更は管理者画面からのみ可能です")
 		end
 	end
