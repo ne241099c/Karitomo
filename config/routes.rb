@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     get "search", on: :collection
     resource :block, only: [:create, :destroy]
     resource :bookmark, only: [:create, :destroy]
+    resources :reservations, only: [:new, :create]
   end
 
   resource :session, only: [:new, :create, :destroy]

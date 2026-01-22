@@ -1,0 +1,20 @@
+<% @page_title = "#{@target_member.name}さんへの予約" %>
+
+<div class="container">
+    <h1><%= @target_member.name %> さんを予約する</h1>
+
+    <div class="reservation-section">
+		<h3>予約状況・予約フォーム</h3>
+		<p>「◎」をクリックすると予約開始時間がセットされます。</p>
+
+		<%= render "shared/reservation_form", member: @target_member, reservation: @reservation %>
+
+		<% unless @target_member.is_banned || current_member&.is_banned %>
+		<%= render "shared/reservation_calendar", member: @target_member, dates: @dates %>
+		<% end %>
+	</div>
+
+    <div class="mt-20">
+        <%= link_to "会員詳細に戻る", member_path(@target_member) %>
+    </div>
+</div>

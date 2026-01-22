@@ -30,20 +30,27 @@ class ReservationsController < ApplicationController
 		@target_member = Member.find(reservation_params[:target_member_id])
 
 		if @reservation.invalid?(:create)
-			flash[:alert] = "入力内容に不備があります: " + @reservation.errors.full_messages.join(", ")
-			redirect_to member_path(@target_member)
+			@dates = (Date.today..Date.today + 13.days).to_a
+			flash.now[:alert] = "入力内容に不備があります: " + @reservation.errors.full_messages.join(", ")
+			render 'new'
 		end
 	end
 
+	def new
+        @target_member = Member.find(params[:member_id])
+        @reservation = current_member.reservations.build(target_member: @target_member)
+        @dates = (Date.today..Date.today + 13.days).to_a
+    end
+
 	def create
-		@target_member = Member.find(params[:reservation][:target_member_id])
+		@target_member = Member.find(reservation_params[:target_member_id])
 		@reservation = current_member.reservations.build(reservation_params)
 
 		if @reservation.save
 			redirect_to reservation_path(@reservation, created: true)
 		else
-			flash[:alert] = "予約に失敗しました: " + @reservation.errors.full_messages.join(", ")
-			redirect_to member_path(@target_member)
+			@dates = (Date.today..Date.today + 13.days).to_a
+			render :new
 		end
 	end
 

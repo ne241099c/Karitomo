@@ -21,6 +21,11 @@
 			<strong>利用時間: </strong>
 			<%= f.select :hours, [1], {}, class: "form-control w-auto d-inline", id: "reservation-hours" %> 時間
 		</div>
+
+		<div class="mt-10">
+			<strong>一言コメント: </strong>
+			<%= f.text_area :comment, class: "form-control", placeholder: "一言コメントを入力してください", rows: 2 %>
+		</div>
 		
 		<div class="mt-10">
 			<%= f.submit "この内容で予約する", class: "btn-primary", disabled: true, id: "submit-button" %>

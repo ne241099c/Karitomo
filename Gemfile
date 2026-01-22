@@ -36,3 +36,5 @@ end
 
 gem "bcrypt", "~> 3.1.8"
 
+gem 'email_validator', '~> 2.2'
+

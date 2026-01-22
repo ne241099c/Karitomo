@@ -33,6 +33,7 @@ class Member < ApplicationRecord
 	validates :sex, presence: true
 	validates :comment, length: { maximum: 200 }
 	validates :password, presence: true, length: { minimum: 4 }, on: :create
+	validates :email, email: { allow_blank: true, mode: :strict }
 
 	validates :price_per_hour, presence: true, numericality: { greater_than: 0 }, if: :special_member?
 
