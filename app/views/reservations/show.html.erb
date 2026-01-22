@@ -76,7 +76,7 @@
 		</tr>
 	</table>
 
-    <% if @reservation.canceled? %>
+    <% if @reservation.admin_canceled? %>
         <div class="alert">
             <% banned_name = @reservation.member.is_banned ? @reservation.member.name : (@reservation.target_member.is_banned ? @reservation.target_member.name : nil) %>
             <% if banned_name.present? %>
@@ -119,10 +119,10 @@
 	</div>
 
 	<div class="action-buttons mt-20">
-		<% if current_member.id == @reservation.member_id %>
-			<%= button_to "予約をキャンセルする", cancel_reservation_path(@reservation), method: :patch, class: "btn-danger", form: { data: { turbo_confirm: "この予約をキャンセルしますか？" } } %>
+		<% if current_member.id == @reservation.member_id && !@reservation.canceled? && !@reservation.completed? %>
+			<%= button_to "予約をキャンセルする", cancel_reservation_path(@reservation), method: :patch, class: "btn-danger", form: { data: { turbo: false }, onsubmit: "return confirm('本当にこの予約をキャンセルしますか？');" } %>
 			<% if @reservation.approved_unpaid? %>
-				<%= button_to "支払う", pay_reservation_path(@reservation), method: :patch, class: "btn-primary", form: { data: { turbo_confirm: "支払いを実行しますか？" } } %>
+				<%= button_to "支払う", pay_reservation_path(@reservation), method: :patch, class: "btn-primary", form: { data: { turbo: false }, onsubmit: "return confirm('支払いを実行しますか？');" } %>
 			<% end %>
 		<% end %>
 

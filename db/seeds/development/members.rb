@@ -28,10 +28,11 @@ end
     special_member: (i % 2 == 0),
     is_banned: false
   )
+  
+  create_member_with_image(member, image_path, filename)
+  
   member.regions = all_regions.sample(rand(1..[all_regions.size, 3].min))
   member.tags = all_tags.sample(rand(0..[all_tags.size, 10].min))
-
-  create_member_with_image(member, image_path, filename)
 end
 
 # 2. いとうたろう
@@ -46,9 +47,9 @@ taro = Member.new(
   special_member: true,
   is_banned: false
 )
+create_member_with_image(taro, image_path, filename)
 taro.regions = all_regions.sample(2)
 taro.tags = all_tags.sample(3)
-create_member_with_image(taro, image_path, filename)
 
 # 3. ハナコ
 hanako = Member.new(
@@ -62,6 +63,6 @@ hanako = Member.new(
   special_member: true,
   is_banned: false
 )
+create_member_with_image(hanako, image_path, filename)
 hanako.regions = all_regions.sample(2)
 hanako.tags = all_tags.sample(3)
-create_member_with_image(hanako, image_path, filename)

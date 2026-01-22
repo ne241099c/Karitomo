@@ -36,7 +36,18 @@
         <th>ステータス</th>
         <td>
             <span class="status-tag <%= @reservation.status %>">
-                <%= I18n.t("activerecord.attributes.reservation.status.#{@reservation.status}") %>
+                <% 
+                    status_labels = {
+                        'pending' => '未承認',
+                        'rejected' => '却下',
+                        'approved_unpaid' => '承諾(未払い)',
+                        'approved_paid' => '承諾(支払い済み)',
+                        'completed' => '完了',
+                        'canceled' => 'キャンセル',
+                        'admin_canceled' => '管理者キャンセル'
+                    }
+                %>
+                <%= status_labels[@reservation.status] || @reservation.status %>
             </span>
         </td>
     </tr>
@@ -85,7 +96,7 @@
 
 <% unless @reservation.completed? %>
     <div class="actions mt-30">
-        <% if @reservation.admin_canceled? %>
+        <% if @reservation.admin_canceled? || @reservation.canceled? %>
             <%= button_to "キャンセルを取り消す",
                         restore_admin_reservation_path(@reservation),
                         method: :patch,
@@ -93,7 +104,7 @@
                             confirm: "この予約のキャンセルを取り消しますか？\n\n予約ID: #{@reservation.id}\n予約者: #{@reservation.member.name}\n対象者: #{@reservation.target_member.name}"
                         },
                         class: "btn-secondary mb-20" %>
-        <% elsif !@reservation.canceled? %>
+        <% else %>
             <%= button_to "予約をキャンセルする",
                         cancel_admin_reservation_path(@reservation),
                         method: :patch,

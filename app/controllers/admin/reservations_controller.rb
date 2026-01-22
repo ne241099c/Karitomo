@@ -43,7 +43,7 @@ class Admin::ReservationsController < Admin::BaseController
 
     def restore
         @reservation = Reservation.find(params[:id])
-        unless @reservation.admin_canceled?
+        unless @reservation.admin_canceled? || @reservation.canceled?
             redirect_to admin_reservation_path(@reservation), alert: "この予約はキャンセルされていません。"
             return
         end

@@ -90,7 +90,7 @@ class ReservationsController < ApplicationController
 		if @reservation.update(status: :canceled)
 			redirect_to reservations_path, notice: "予約をキャンセルしました", status: :see_other
 		else
-			flash[:alert] = "キャンセルできませんでした"
+			flash[:alert] = "キャンセルできませんでした: " + @reservation.errors.full_messages.join(", ")
 			return redirect_to reservation_path(@reservation)
 		end
 	end
