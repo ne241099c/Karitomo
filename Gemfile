@@ -36,3 +36,7 @@ end
 
 gem "bcrypt", "~> 3.1.8"
 
+gem 'email_validator', '~> 2.2'
+
+gem 'image_processing', '~> 1.2'
+gem 'mini_magick', '~> 4.8'

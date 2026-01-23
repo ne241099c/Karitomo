@@ -36,9 +36,11 @@ en:
       reservation:
         status:
           pending: "承認待ち"
-          approved: "承認済み"
+          approved_unpaid: "承認済み（未払い）"
+          approved_paid: "承認済み（支払い済み）"
           rejected: "却下"
           completed: "完了"
           canceled: "キャンセル済み"
+          admin_canceled: "管理者によりキャンセル済み"
 
   

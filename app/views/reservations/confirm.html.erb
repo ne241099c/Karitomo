@@ -16,6 +16,10 @@
 			<td><%= @reservation.hours %> 時間</td>
 		</tr>
 		<tr>
+			<th>一言コメント</th>
+			<td><%= simple_format(@reservation.comment) %></td>
+		</tr>
+		<tr>
 			<th>合計金額</th>
 			<td>
 				<% total_price = @reservation.hours * @target_member.price_per_hour %>
@@ -29,6 +33,7 @@
 			<%= f.hidden_field :target_member_id %>
 			<%= f.hidden_field :start_at %>
 			<%= f.hidden_field :hours %>
+			<%= f.hidden_field :comment %>
 			
 			<%= f.submit "予約を確定する", class: "btn-primary" %>
 			<%= link_to "キャンセル", member_path(@target_member), class: "btn-secondary" %>

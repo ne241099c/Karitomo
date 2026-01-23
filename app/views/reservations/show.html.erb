@@ -5,12 +5,18 @@
 	<div class="status-display mb-20 font-bold">
 		現在のステータス: 
 		<span class="status-<%= @reservation.status %>">
-			<% case @reservation.status
-				when 'pending' then '未定'
-				when 'approved' then '承諾'
-				when 'rejected' then '却下'
-				when 'completed' then '完了'
-				end %>
+			<% 
+				status_labels = {
+					'pending' => '未承認',
+					'rejected' => '却下',
+					'approved_unpaid' => '承諾(未払い)',
+					'approved_paid' => '承諾(支払い済み)',
+					'completed' => '完了',
+					'canceled' => 'キャンセル',
+					'admin_canceled' => '管理者キャンセル'
+				}
+			%>
+			<%= status_labels[@reservation.status] || @reservation.status %>
 		</span>
 	</div>
 
@@ -47,15 +53,30 @@
 			<td><%= @reservation.hours %> 時間</td>
 		</tr>
 		<tr>
+			<th>一言コメント</th>
+			<td><%= simple_format(@reservation.comment) %></td>
+		</tr>
+		<tr>
 			<th>合計金額</th>
 			<td>
 				<% total_price = @reservation.hours * @reservation.target_member.price_per_hour %>
 				<%= number_with_delimiter(total_price) %> 円
 			</td>
 		</tr>
+		<tr>
+			<th>操作</th>
+			<td>
+				<% target_member = @reservation.member_id == current_member.id ? @reservation.target_member : @reservation.member %>
+				<% if current_member.blocking?(target_member) %>
+					<%= button_to "ブロック解除", member_block_path(target_member), method: :delete, class: "btn-secondary btn-sm", form: { data: { turbo_confirm: "本当に解除しますか？" } } %>
+				<% else %>
+					<%= button_to "ブロックする", member_block_path(target_member), method: :post, class: "btn-outline-danger btn-sm", form: { data: { turbo_confirm: "本当にブロックしますか？" } } %>
+				<% end %>
+			</td>
+		</tr>
 	</table>
 
-    <% if @reservation.canceled? %>
+    <% if @reservation.admin_canceled? %>
         <div class="alert">
             <% banned_name = @reservation.member.is_banned ? @reservation.member.name : (@reservation.target_member.is_banned ? @reservation.target_member.name : nil) %>
             <% if banned_name.present? %>
@@ -94,23 +115,17 @@
 	<% end %>
 
 	<div class="report-section">
-        <details>
-            <summary class="text-danger cursor-pointer">この予約に関する問題を通報する</summary>
-            <div class="report-details">
-                <%= form_with(model: [@reservation, Report.new], url: reservation_report_path(@reservation), local: true) do |f| %>
-                    <div class="field">
-                        <%= f.label :content, "通報内容" %><br>
-                        <%= f.text_area :content, placeholder: "具体的な問題を記入してください", rows: 3 %>
-                    </div>
-                    <div class="actions">
-                        <%= f.submit "通報を送信する", class: "btn-danger", data: { confirm: "本当に通報しますか？" } %>
-                    </div>
-                <% end %>
-            </div>
-        </details>
+		<%= link_to "この予約に関する問題を通報する", new_reservation_report_path(@reservation), class: "btn-danger" %>
 	</div>
 
 	<div class="action-buttons mt-20">
+		<% if current_member.id == @reservation.member_id && !@reservation.canceled? && !@reservation.completed? %>
+			<%= button_to "予約をキャンセルする", cancel_reservation_path(@reservation), method: :patch, class: "btn-danger", form: { data: { turbo: false }, onsubmit: "return confirm('本当にこの予約をキャンセルしますか？');" } %>
+			<% if @reservation.approved_unpaid? %>
+				<%= button_to "支払う", pay_reservation_path(@reservation), method: :patch, class: "btn-primary", form: { data: { turbo: false }, onsubmit: "return confirm('支払いを実行しますか？');" } %>
+			<% end %>
+		<% end %>
+
 		<% if current_member.id == @reservation.target_member_id %>
 			
 			<% if @reservation.pending? %>
@@ -119,11 +134,16 @@
                     <%= button_to "却下する", update_status_reservation_path(@reservation, status: 'rejected'), method: :patch, class: "btn-danger", form: { data: { turbo_confirm: "却下しますか？" } } %>
                 </div>
 
-			<% elsif @reservation.approved? %>
+			<% elsif @reservation.approved_unpaid? %>
                 <div class="status-alert-success mb-10">
-                    現在「承諾」しています。
+                    現在「承諾(未払い)」です。
                 </div>
                 <%= button_to "承諾を取り消す", update_status_reservation_path(@reservation, status: 'pending'), method: :patch, class: "btn-secondary" %>
+
+			<% elsif @reservation.approved_paid? %>
+                <div class="status-alert-success mb-10">
+                    現在「承諾(支払い済み)」です。
+                </div>
 
 			<% elsif @reservation.rejected? %>
                 <div class="alert mb-10">
@@ -135,7 +155,8 @@
 	</div>
 
 	<div class="actions">
+		<%= link_to "チャット", reservation_chats_path(@reservation), class: "btn-primary" %> |
 		<%= link_to "予約一覧へ戻る", reservations_path %> | 
-		<%= link_to "トップページへ", root_path %>
+		<%= link_to "トップページへ戻る", root_path %>
 	</div>
 </div>

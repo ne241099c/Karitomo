@@ -4,13 +4,25 @@
 
 <p>ようこそ、<%= @member.name %> さん</p>
 
+<div class="stats-section mb-30">
+	<div class="stats-box">
+		<h3>受けた評価</h3>
+		<p class="stats-number"><%= @member.reviews_count %></p>
+	</div>
+	<div class="stats-box">
+		<h3>ブックマークされた数</h3>
+		<p class="stats-number"><%= @member.bookmarked_count %></p>
+	</div>
+</div>
+
 <%= render "shared/member_show", member: @member %>
 
 <div class="actions">
-    <%= link_to "登録情報の編集", :edit_account %> | 
+    <%= link_to "プロフィールの編集", :edit_account %> | 
     <%= link_to "パスワードの変更", :edit_password %>
     <p>
         <%= link_to "予約一覧・履歴を見る", :reservations, class: "btn-primary" %>
         <%= link_to "ブロックしたユーザー一覧", :blocks, class: "btn-primary" %>
+        <%= link_to "お気に入り会員一覧", :bookmarks, class: "btn-primary" %>
     </p>
 </div>

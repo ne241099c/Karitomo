@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
 		member = Member.find_by(email: params[:session][:email])
 		if member&.authenticate(params[:session][:password])
 			cookies_login(member.id)
-			redirect_to :account, notice: "ログインしました"
+			redirect_to :root, notice: "ログインしました"
 		else
 			flash.alert = "名前とパスワードが一致しません"
 			redirect_to :login

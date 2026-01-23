@@ -203,12 +203,16 @@ table.schedule-table td {
     border-radius: 15px;
     font-size: 0.85rem;
     font-weight: bold;
-    color: white;
+    color: #249d92;
 }
 .status-pending { background-color: #bbb; }
 .status-approved { background-color: #28a745; }
+.status-approved-unpaid { background-color: #ffc107; }
+.status-approved-paid { background-color: #28a745; }
 .status-rejected { background-color: var(--danger-color); }
 .status-completed { background-color: var(--secondary-accent); }
+.status-canceled { background-color: #6c757d; }
+.status-admin-canceled { background-color: #6c757d; }
 
 /* Search Area */
 .search-field {

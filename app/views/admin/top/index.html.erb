@@ -1,4 +1,4 @@
-<% @page_title = "管理画面ダッシュボード" %>
+<% @page_title = "管理TOP" %>
 
 <h1><%= @page_title %></h1>
 
@@ -21,8 +21,9 @@
 	<ul class="admin-quick-links">
 		<li><%= link_to "タグの追加・編集", :admin_tags, class: "btn-secondary" %></li>
 		<li><%= link_to "地域の追加・編集", :admin_regions, class: "btn-secondary" %></li>
+		<li><%= link_to "ブロック一覧", :admin_blocked_members, class: "btn-secondary" %></li>
 		<li><%= link_to "お問い合わせ一覧", :admin_contacts, class: "btn-secondary" %></li>
 		<li><%= link_to "通報履歴の確認", :admin_reports, class: "btn-secondary" %></li>
-		<li><%= link_to "評価管理", :admin_reviews, class: "btn-secondary" %></li>
+		<li><%= link_to "評価", :admin_reviews, class: "btn-secondary" %></li>
 	</ul>
 </div>

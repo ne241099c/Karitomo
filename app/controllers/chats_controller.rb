@@ -24,18 +24,12 @@ class ChatsController < ApplicationController
 
 		@chat = @reservation.chats.build(chat_params)
 		@chat.member = current_member
+		@chats = @reservation.chats.order(:created_at)
 
 		if @chat.save
-			ActionCable.server.broadcast("room_channel_#{@reservation.id}", {
-				message: @chat.content,
-				member_name: @chat.member.name,
-				member_id: @chat.member.id,
-				created_at: @chat.created_at.strftime("%H:%M"),
-				is_current_user: false
-			})
-			head :ok
+			redirect_to reservation_chats_path(@reservation), notice: "メッセージを送信しました"
 		else
-			head :bad_request
+			render :index, status: :unprocessable_entity
 		end
   	end
 

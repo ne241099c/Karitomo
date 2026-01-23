@@ -64,7 +64,6 @@ class Admin::MembersController < Admin::BaseController
 		end
 	end
 
-	# BAN実行: 会員をBANし、関連する未完了予約を全てキャンセル
 	def ban
 		@member = Member.find(params[:id])
 		@member.update!(is_banned: true)
@@ -74,7 +73,7 @@ class Admin::MembersController < Admin::BaseController
 
 		affected.find_each do |res|
 			res.admin_override = true
-			res.update(status: :canceled)
+			res.update(status: :admin_canceled)
 		end
 
 		redirect_to [:admin, @member], notice: "会員『#{@member.name}』をBANし、関連する未完了予約をキャンセルしました。"
@@ -92,7 +91,8 @@ class Admin::MembersController < Admin::BaseController
 	def member_params
 		params.require(:member).permit(
 		:name, :email, :birthday, :sex, :comment, 
-		:special_member, :price_per_hour
+		:special_member, :price_per_hour, :profile_image,
+		tag_ids: [], region_ids: []
 		)
 	end
 end
