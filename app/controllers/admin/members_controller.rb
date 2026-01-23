@@ -73,7 +73,7 @@ class Admin::MembersController < Admin::BaseController
 
 		affected.find_each do |res|
 			res.admin_override = true
-			res.update(status: :canceled)
+			res.update(status: :admin_canceled)
 		end
 
 		redirect_to [:admin, @member], notice: "会員『#{@member.name}』をBANし、関連する未完了予約をキャンセルしました。"
