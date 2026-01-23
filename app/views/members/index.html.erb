@@ -8,6 +8,11 @@
 		<%= label_tag :search_name, "名前" %>
 		<%= text_field_tag :search_name, params[:search_name], placeholder: "名前の一部を入力" %>
 	</div>
+
+	<div class="search-field">
+		<%= label_tag :sex, "性別" %>
+		<%= select_tag :sex, options_for_select([["指定なし", ""], ["男性", 1], ["女性", 2]], params[:sex]), class: "form-control w-auto" %>
+	</div>
 	<% if current_member %>
 	  <div class="search-field">
 		<div class="simple-checkbox-wrapper">

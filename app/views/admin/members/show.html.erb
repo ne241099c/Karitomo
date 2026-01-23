@@ -3,7 +3,16 @@
 
 <div class="actions mb-20">
 	<%= link_to "プロフィールを編集する", edit_admin_member_path(@member), class: "btn-secondary" %> |
-	<%= link_to "この会員の予約履歴を見る", admin_reservations_path(member_id: @member.id), class: "btn-primary" %>
+	<%= link_to "この会員の予約履歴を見る", admin_reservations_path(member_id: @member.id), class: "btn-primary" %> |
+	<% if @member.is_banned %>
+		<%= button_to "BAN解除", unban_admin_member_path(@member), method: :patch,
+			data: { confirm: "会員『#{@member.name}』のBANを解除しますか？" },
+			class: "btn-secondary", form: { style: "display:inline" } %>
+	<% else %>
+		<%= button_to "BAN", ban_admin_member_path(@member), method: :patch,
+			data: { confirm: "会員『#{@member.name}』をBANします。未完了の予約は全てキャンセルされます。続行しますか？" },
+			class: "btn-danger", form: { style: "display:inline" } %>
+	<% end %>
 </div>
 
 <table class="list">

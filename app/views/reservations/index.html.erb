@@ -40,13 +40,18 @@
 					</td>
 					<td><%= reservation.start_at.strftime("%Y/%m/%d %H:%M") %></td>
 					<td>
-						<% status_label = case reservation.status 
-						when 'pending' then '未定'
-						when 'approved' then '承諾'
-						when 'rejected' then '却下'
-						when 'completed' then '済み'
-						end %>
-						<%= status_label %>
+					<% 
+						status_labels = {
+							'pending' => '未承認',
+							'rejected' => '却下',
+							'approved_unpaid' => '承諾(未払い)',
+							'approved_paid' => '承諾(支払い済み)',
+							'completed' => '完了',
+							'canceled' => 'キャンセル',
+							'admin_canceled' => '管理者キャンセル'
+						}
+					%>
+					<%= status_labels[reservation.status] || reservation.status %>
 					</td>
 					<td>
 						<%= link_to "チャットへ", reservation_chats_path(reservation), class: "btn" %>

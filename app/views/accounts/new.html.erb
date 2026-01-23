@@ -1,9 +1,26 @@
+<% @page_title = "新規会員登録 - ステップ 1/2" %>
 <h1>会員登録</h1>
 <%= form_for @member, url: :account do |form| %>
   	<div class="field">
-		<%= render "shared/member_form", form: form %>
+		<%= render "shared/error_messages", object: form.object %>
+
+		<div class="field">
+			<%= form.label :email, "メールアドレス" %>
+			<%= form.text_field :email %>
+		</div>
+
+		<div class="field">
+			<%= form.label :password, "パスワード" %>
+			<%= form.password_field :password %>
+		</div>
+
+		<div class="field">
+			<%= form.label :password_confirmation, "パスワード（確認）" %>
+			<%= form.password_field :password_confirmation %>
+		</div>
+
 		<div class="actions">
-			<%= form.submit "登録する" %>
+			<%= form.submit "次へ進む", name: "next_step", class: "btn-primary" %>
 		</div>
   	</div>
 <% end %>

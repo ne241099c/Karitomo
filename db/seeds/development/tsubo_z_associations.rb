@@ -128,7 +128,7 @@ active_res = Reservation.create!(
   target_member: first_member,
   start_at: 1.day.from_now.beginning_of_day + 14.hours,
   hours: 1,
-  status: :approved
+  status: :approved_paid
 )
 
 # 通報データを作成 (通報者が member_id になっていることを確認)

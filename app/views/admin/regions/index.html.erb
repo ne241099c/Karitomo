@@ -1,8 +1,21 @@
-<% @page_title = "地域管理" %>
+<% @page_title = "地域" %>
 
 <div class="admin-header">
 	<h1><%= @page_title %></h1>
-	<%= link_to "新規地域追加", new_admin_region_path, class: "btn-primary" %>
+</div>
+
+<div class="form-section mb-30">
+	<h2>新規地域追加</h2>
+	<%= form_with(model: [:admin, @region], local: true) do |f| %>
+		<%= render "shared/error_messages", object: @region %>
+		<div class="field mb-20">
+			<%= f.label :name, "地域名" %>
+			<%= f.text_field :name, placeholder: "地域名を入力" %>
+		</div>
+		<div class="actions">
+			<%= f.submit "追加する", class: "btn-primary" %>
+		</div>
+	<% end %>
 </div>
 
 <table class="list">

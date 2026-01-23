@@ -1,0 +1,12 @@
+<div class="field mb-20">
+	<label>地域</label>
+	<div class="checkbox-group">
+		<% @regions.each do |region| %>
+			<label class="custom-checkbox-label">
+				<%= f.check_box :region_ids, { multiple: true }, region.id, nil %>
+				<span class="checkmark"></span>
+				<span class="label-text"><%= region.name %></span>
+			</label>
+		<% end %>
+	</div>
+</div>

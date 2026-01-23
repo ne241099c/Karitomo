@@ -4,6 +4,17 @@
 </div>
 
 <div class="field">
+    <%= form.label :profile_image, "プロフィール画像" %>
+    <% if member&.profile_image&.attached? %>
+        <div class="mb-10">
+            <%= image_tag member.profile_image, alt: "プロフィール画像", style: "max-width: 200px; max-height: 200px;" %>
+        </div>
+    <% end %>
+    <%= form.file_field :profile_image, accept: "image/*" %>
+    <p class="small-text">※ 画像ファイルを選択してください（JPG, PNG, GIF等）</p>
+</div>
+
+<div class="field">
     <label>タグ</label>
 		<div class="checkbox-group">
 			<%= form.collection_check_boxes :tag_ids, tags, :id, :name do |b| %>

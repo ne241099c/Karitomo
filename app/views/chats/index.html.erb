@@ -12,6 +12,12 @@
 	</p>
 </div>
 
+<div class="mb-20">
+	<strong>予約日時:</strong> 
+	<%= @reservation.start_at.strftime("%Y/%m/%d %H:%M") %> 〜 
+	<%= @reservation.end_at.strftime("%H:%M") %>
+</div>
+
 <div class="chat-section">
 	<div id="chat-messages" class="chat-history"
 		data-reservation-id="<%= @reservation.id %>"
@@ -27,7 +33,8 @@
 		<% end %>
   	</div>
 
-  <%= form_with model: [@reservation, @chat], local: false, id: "chat-form" do |f| %>
+	<%= form_with model: [@reservation, @chat], local: true, id: "chat-form" do |f| %>
+		<%= render "shared/error_messages", object: f.object %>
 		<div class="d-flex gap-10">
 			<%= f.text_field :content, id: "chat-input", class: "field-col", placeholder: "メッセージを入力" %>
 			<%= f.submit "送信", class: "btn-primary" %>

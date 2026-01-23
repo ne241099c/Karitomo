@@ -7,14 +7,22 @@ class Reservation < ApplicationRecord
 	has_one :review, dependent: :destroy
 	has_many :reports, dependent: :destroy
 
-	enum status: { pending: 0, approved: 1, rejected: 2, completed: 3, canceled: 4 }
+	enum status: {
+		pending: 0,
+		rejected: 1,
+		approved_unpaid: 2,
+		approved_paid: 3,
+		completed: 4,
+		canceled: 5,
+		admin_canceled: 6
+	}
 
-	# 管理画面からの強制ステータス変更を許可するためのフラグ
 	attr_accessor :admin_override
 
 	validate :check_availability, on: :create
 	validates :start_at, presence: true
 	validates :hours, presence: true, numericality: { greater_than: 0 }
+	validates :comment, length: { maximum: 200 }
 
 	validate :check_blocking_status
 	validate :check_ban_status, on: :create
@@ -30,7 +38,7 @@ class Reservation < ApplicationRecord
 	end
 
 	def update_status_if_completed
-		if approved? && Time.current > end_at
+		if approved_paid? && Time.current > end_at
 			update(status: :completed)
 		end
 	end
@@ -40,9 +48,9 @@ class Reservation < ApplicationRecord
 	def manage_reserved_dates_on_status_change
 		return unless saved_change_to_status?
 
-		if rejected? || canceled?
+		if rejected? || canceled? || admin_canceled?
 			reserved_dates.destroy_all
-		elsif status_before_last_save == "rejected" || status_before_last_save == "canceled"
+		elsif status_before_last_save == "rejected" || status_before_last_save == "canceled" || status_before_last_save == "admin_canceled"
 			create_reserved_dates_records
 		end
 	end
@@ -53,19 +61,20 @@ class Reservation < ApplicationRecord
 		end
 	end
 
-	# canceled への変更、または canceled からの復帰は管理画面のみ許可
 	def admin_only_canceled_change
 		return unless will_save_change_to_status?
 
 		new_status = self.status
 		prev_status = status_was
 
-		if (new_status == "canceled" || prev_status == "canceled") && !admin_override
+		if ((new_status == "canceled" || new_status == "admin_canceled" || prev_status == "canceled" || prev_status == "admin_canceled") && !admin_override)
 			errors.add(:status, "キャンセルの変更は管理者画面からのみ可能です")
 		end
 	end
 
 	def check_blocking_status
+		return if admin_override
+		
 		if member.blocking?(target_member)
 			errors.add(:base, "このユーザーはブロックしているため予約できません")
 		end

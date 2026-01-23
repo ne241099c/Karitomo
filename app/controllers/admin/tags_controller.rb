@@ -1,6 +1,7 @@
 class Admin::TagsController < Admin::BaseController
 	def index
 		@tags = Tag.all
+		@tag = Tag.new
 	end
 
 	def new

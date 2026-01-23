@@ -12,7 +12,8 @@ class ReviewsController < ApplicationController
 		if @review.save
 			redirect_to reservation_path(@reservation), notice: "レビューを投稿しました。"
 		else
-			redirect_to reservation_path(@reservation), alert: "投稿に失敗しました。内容を確認してください。"
+			flash[:alert] = "投稿に失敗しました: " + @review.errors.full_messages.join(", ")
+			redirect_to reservation_path(@reservation)
 		end
 	end
 

@@ -16,18 +16,26 @@ class AccountsController < ApplicationController
 
 	def create
 		@member = Member.new(member_params)
-		if @member.save
-			cookies_login(@member.id)
-			redirect_to :account, notice: "会員を登録しました。"
+		if params[:next_step]
+      		if @member.valid?
+				render "step2"
+			else
+				render "new"
+			end
 		else
-			render :new
+			if @member.valid?(:step2) && @member.save
+				cookies_login(@member.id)
+				redirect_to root_path, notice: "会員登録が完了しました"
+			else
+				render "step2"
+			end
 		end
 	end
 
 	def update
 		@member = current_member
 		@member.assign_attributes(member_params)
-		if @member.save
+		if @member.valid?(:edit) && @member.save
 			redirect_to account_path, notice: "アカウント情報を更新しました"
 		else
 			render :edit
@@ -46,7 +54,8 @@ class AccountsController < ApplicationController
 		:password, 
 		:password_confirmation, 
 		:special_member, 
-		:price_per_hour, 
+		:price_per_hour,
+		:profile_image,
 		tag_ids: [], 
 		region_ids: [], 
 		free_candidates: []

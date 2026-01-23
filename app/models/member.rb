@@ -3,6 +3,9 @@ class Member < ApplicationRecord
     HOURS = 0..23
 	
     has_secure_password
+    
+    has_one_attached :profile_image
+	attribute :new_profile_image, :boolean, default: false
 
     has_many :member_tags, dependent: :destroy
     has_many :tags, through: :member_tags
@@ -27,14 +30,17 @@ class Member < ApplicationRecord
 
 	has_many :contacts, dependent: :destroy
 
-	validates :name, presence: true
+	validates :name, length: { maximum: 16 }, presence: true, on: [:step2, :edit]
 	validates :email, presence: true, uniqueness: true
-	validates :birthday, presence: true
-	validates :sex, presence: true
+	validates :birthday, presence: true, on: [:step2, :edit]
+	validates :sex, presence: true, on: [:step2, :edit]
+	validate  :must_be_at_least_18, on: [:step2, :edit]
 	validates :comment, length: { maximum: 200 }
-	validates :password, presence: true, length: { minimum: 4 }, on: :create
+	validates :password, presence: true, length: { minimum: 8, maximum: 32 }, on: :create
+	validates :email, email: { allow_blank: true, mode: :strict }, length: { maximum: 32 }
 
 	validates :price_per_hour, presence: true, numericality: { greater_than: 0 }, if: :special_member?
+	validate :profile_image_required_for_special_member, if: :special_member?
 
 	attr_accessor :free_candidates
 	before_save :save_free_dates
@@ -72,6 +78,21 @@ class Member < ApplicationRecord
 		bookmarked_members.include?(target_member)
 	end
 
+	def profile_image_required_for_special_member
+		return if profile_image.attached?
+		errors.add(:profile_image, "を選択してください")
+	end
+
+	# 評価された数を取得
+	def reviews_count
+		passive_reservations.completed.joins(:review).count
+	end
+
+	# ブックマークされた数を取得
+	def bookmarked_count
+		Bookmark.where(bookmarked_id: id).count
+	end
+
 	private
 
 	def check_password
@@ -79,6 +100,14 @@ class Member < ApplicationRecord
 			errors.add(:current_password, :current_password_invalid)
 		end
   	end
+
+	def must_be_at_least_18
+		return if birthday.blank?
+
+		if birthday > 18.years.ago.to_date
+			errors.add(:birthday, "は18歳以上である必要があります")
+		end
+	end
 
 	def save_free_dates
       return if free_candidates.nil?
