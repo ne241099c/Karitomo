@@ -126,7 +126,7 @@
 			<% end %>
 		<% end %>
 
-		<% if current_member.id == @reservation.target_member_id %>
+		<% if current_member.id == @reservation.target_member_id && !@reservation.canceled? && !@reservation.admin_canceled? %>
 			
 			<% if @reservation.pending? %>
                 <div class="d-flex gap-10">

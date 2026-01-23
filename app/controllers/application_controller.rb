@@ -1,8 +1,18 @@
 class ApplicationController < ActionController::Base
+	before_action :check_banned_user
+
 	private def current_member
 		Member.find_by(id: cookies.signed[:member_id]) if cookies.signed[:member_id]
 	end
 	helper_method :current_member
+
+	private def check_banned_user
+		if current_member&.is_banned
+			cookies.delete(:member_id)
+			flash[:alert] = "このアカウントはBANされています。"
+			redirect_to root_path
+		end
+	end
 
   	private def update_expiration_time
 		if current_member

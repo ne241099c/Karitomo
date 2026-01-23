@@ -51,8 +51,9 @@ class ReservationsController < ApplicationController
 		if @reservation.save
 			redirect_to reservation_path(@reservation, created: true), notice: "予約が完了しました！"
 		else
+			flash.now[:alert] = "予約に失敗しました: " + @reservation.errors.full_messages.join(", ")
 			@dates = (Date.tomorrow..Date.tomorrow + 13.days).to_a
-			render :new
+			render :confirm
 		end
 	end
 
@@ -61,6 +62,11 @@ class ReservationsController < ApplicationController
 
 		if @reservation.target_member_id != current_member.id
 			flash[:alert] = "操作権限がありません"
+			return redirect_to reservation_path(@reservation)
+		end
+
+		if @reservation.canceled? || @reservation.admin_canceled?
+			flash[:alert] = "キャンセル済みの予約はステータスを変更できません"
 			return redirect_to reservation_path(@reservation)
 		end
 
