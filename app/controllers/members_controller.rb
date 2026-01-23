@@ -3,7 +3,11 @@ class MembersController < ApplicationController
 		@tags = Tag.all
 		@regions = Region.all
 		@members = Member.where(special_member: true)
-		@members = @members.where.not(id: current_member.blocking_members.select(:id)) if current_member
+		if current_member
+			blocked_ids = current_member.blocking_members.select(:id)
+			blocker_ids = current_member.blockers.select(:id)
+			@members = @members.where.not(id: blocked_ids).where.not(id: blocker_ids)
+		end
 	end
 
 	def search
@@ -11,7 +15,11 @@ class MembersController < ApplicationController
 		@regions = Region.all
 	
 		@members = Member.where(special_member: true)
-		@members = @members.where.not(id: current_member.blocking_members.select(:id)) if current_member
+		if current_member
+			blocked_ids = current_member.blocking_members.select(:id)
+			blocker_ids = current_member.blockers.select(:id)
+			@members = @members.where.not(id: blocked_ids).where.not(id: blocker_ids)
+		end
 
 		if params[:search_name].present?
 			@members = @members.search_name(params[:search_name])

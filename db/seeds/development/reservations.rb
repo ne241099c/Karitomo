@@ -4,8 +4,8 @@
   
   res = Reservation.new(
     member: Member.where(id: 6..10).sample,
-    rent: Member.where(id: 1..5).where(special_member: true, is_banned: false).sample,
-    meeting_at: past_date,
+    target_member: Member.where(id: 1..5).where(special_member: true, is_banned: false).sample,
+    start_at: past_date,
     hours: 2,
     comment: "過去の完了済み予約テストデータ #{n + 1}",
     status: :completed
@@ -16,8 +16,8 @@ end
 
 res = Reservation.new(
   member: Member.find_by(name: "ハナコ"),
-  rent: Member.find_by(name: "いとうたろう"),
-  meeting_at: Time.zone.local(2030, 1, 1).change(hour: 12),
+  target_member: Member.find_by(name: "いとうたろう"),
+  start_at: Time.zone.local(2030, 1, 1).change(hour: 12),
   hours: 2,
   comment: "未来のデータ",
   status: :pending
@@ -27,8 +27,8 @@ res.save!(validate: false)
 
 res = Reservation.new(
   member: Member.find_by(name: "ハナコ"),
-  rent: Member.find_by(name: "いとうたろう"),
-  meeting_at: Time.zone.local(2010, 1, 1).change(hour: 12),
+  target_member: Member.find_by(name: "いとうたろう"),
+  start_at: Time.zone.local(2010, 1, 1).change(hour: 12),
   hours: 2,
   comment: "過去のデータ",
   status: :completed
