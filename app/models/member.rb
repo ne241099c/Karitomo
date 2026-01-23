@@ -35,7 +35,7 @@ class Member < ApplicationRecord
 	validates :birthday, presence: true, on: [:step2, :edit]
 	validates :sex, presence: true, on: [:step2, :edit]
 	validate  :must_be_at_least_18, on: [:step2, :edit]
-	validates :comment, length: { maximum: 200 }
+	validates :comment, length: { maximum: 500 }
 	validates :password, presence: true, length: { minimum: 8, maximum: 32 }, on: :create
 	validates :email, email: { allow_blank: true, mode: :strict }, length: { maximum: 32 }
 

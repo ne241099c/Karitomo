@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   namespace :admin do
     root "top#index"
     resource :session, only: [:new, :create, :destroy]
+    get "statistics", to: "statistics#index"
     
     resources :members do
       patch :ban, on: :member

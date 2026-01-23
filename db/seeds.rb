@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 if ENV["SEEDS"]
-    table_names = %w(admins regions tags members free_dates reservations)
+    table_names = %w(admins regions tags members free_dates reservations chats)
     table_names.each do |table_name|
         path = Rails.root.join("db/seeds", Rails.env, table_name + ".rb")
         if File.exist?(path)

@@ -32,7 +32,7 @@ class ReservationsController < ApplicationController
 
 		if @reservation.invalid?(:create)
 			flash.now[:alert] = "入力内容に不備があります: " + @reservation.errors.full_messages.join(", ")
-			render 'new'
+			render 'new', status: :unprocessable_entity
 		else
 			render 'confirm'
 		end
