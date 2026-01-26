@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
 		if current_member&.is_banned
 			cookies.delete(:member_id)
 			flash[:alert] = "このアカウントはBANされています。"
-			redirect_to root_path
+			redirect_to :login
 		end
 	end
 
